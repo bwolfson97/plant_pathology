@@ -4,6 +4,7 @@ __all__ = ["index", "modules", "custom_doc_links", "git_url"]
 
 index = {"load_data": "00_utils.ipynb",
          "create_folds": "00_utils.ipynb",
+         "kaggle_submit_command": "00_utils.ipynb",
          "get_datablock": "01_dataset.ipynb",
          "get_dls": "01_dataset.ipynb",
          "infer_on_test_set": "02_inference.ipynb",

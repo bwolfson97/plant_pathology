@@ -20,5 +20,5 @@ def get_datablock(path: Path, df: pd.DataFrame, presize: int=512,
 
 # Cell
 def get_dls(path: Path, df: pd.DataFrame, presize: int=512,
-            resize: int=256, val_fold: int=0) -> DataLoaders:
-    return get_datablock(path, df, presize, resize, val_fold).dataloaders(df)
+            resize: int=256, bs: int=256, val_fold: int=0) -> DataLoaders:
+    return get_datablock(path, df, presize, resize, val_fold).dataloaders(df, bs=bs)
