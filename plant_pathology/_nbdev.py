@@ -2,9 +2,16 @@
 
 __all__ = ["index", "modules", "custom_doc_links", "git_url"]
 
-index = {}
+index = {"load_data": "00_utils.ipynb",
+         "create_folds": "00_utils.ipynb",
+         "get_datablock": "01_dataset.ipynb",
+         "get_dls": "01_dataset.ipynb",
+         "infer_on_test_set": "02_inference.ipynb",
+         "format_submission": "02_inference.ipynb"}
 
-modules = []
+modules = ["utils.py",
+           "dataset.py",
+           "inference.py"]
 
 doc_url = "https://bwolfson97.github.io/plant_pathology/"
 
