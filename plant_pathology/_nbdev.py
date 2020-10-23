@@ -7,12 +7,17 @@ index = {"load_data": "00_utils.ipynb",
          "kaggle_submit_command": "00_utils.ipynb",
          "get_datablock": "01_dataset.ipynb",
          "get_dls": "01_dataset.ipynb",
-         "infer_on_test_set": "02_inference.ipynb",
-         "format_submission": "02_inference.ipynb"}
+         "get_dls_all_in_1": "01_dataset.ipynb",
+         "infer_on_test_set": "02_evaluate.ipynb",
+         "format_submission": "02_evaluate.ipynb",
+         "evaluate": "02_evaluate.ipynb",
+         "train": "03_train.ipynb",
+         "train_cv": "03_train.ipynb"}
 
 modules = ["utils.py",
            "dataset.py",
-           "inference.py"]
+           "evaluate.py",
+           "train.py"]
 
 doc_url = "https://bwolfson97.github.io/plant_pathology/"
 
