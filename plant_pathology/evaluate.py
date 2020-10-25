@@ -4,6 +4,7 @@ __all__ = ['infer_on_test_set', 'format_submission', 'evaluate']
 
 # Cell
 from fastai.vision.all import *
+from typing import *
 
 # Cell
 def infer_on_test_set(learn: Learner) -> Tensor:
@@ -14,9 +15,9 @@ def infer_on_test_set(learn: Learner) -> Tensor:
     return preds
 
 # Cell
-def format_submission(preds: Tensor, name: str="submission.csv"):
-    path = Path("/home/jupyter/kaggle/plant-pathology/data/plant-pathology-2020/")
-    submission = pd.read_csv(path/"sample_submission.csv")
+def format_submission(preds: Tensor, save_path: Union[Path, str]) -> Path:
+    data_path = Path("/home/jupyter/kaggle/plant-pathology/data/plant-pathology-2020/")
+    submission = pd.read_csv(data_path/"sample_submission.csv")
 
     # Update cols with preds
     submission["healthy"] = preds[:, 0]
@@ -24,12 +25,14 @@ def format_submission(preds: Tensor, name: str="submission.csv"):
     submission["rust"] = preds[:, 2]
     submission["scab"] = preds[:, 3]
 
-    save_path = path/name
+    # Make parent dirs
+    save_path = Path(save_path)
+    Path(save_path.parent).mkdir(parents=True, exist_ok=True)
     submission.to_csv(save_path, index=False)
     return save_path
 
 # Cell
-def evaluate(learn: Learner, name: str="submission.csv") -> Path:
+def evaluate(learn: Learner, save_path: Union[Path, str]=Path("./submission.csv")) -> Path:
     """Takes trained learner, evaluates on test set, formats and saves submission.csv."""
     preds = infer_on_test_set(learn)
-    return format_submission(preds, name)
+    return format_submission(preds, save_path)

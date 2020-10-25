@@ -3,7 +3,7 @@
     "Overview": "/",
     "Utils": "utils.html",
     "Dataset": "dataset.html",
-    "Inference": "evaluate.html",
+    "Evaluate": "evaluate.html",
     "Train": "train.html"
   }
 }
