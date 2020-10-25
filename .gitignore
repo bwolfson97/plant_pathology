@@ -144,3 +144,6 @@ data/
 
 # wandb
 wandb/
+
+# models
+*models/

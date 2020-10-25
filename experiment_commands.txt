@@ -25,13 +25,13 @@ optional arguments:
   --xtra XTRA          Parse for additional args (default: '')
   
 # Baseline
-python -m plant_pathology.train 25 1e-2 --frz 5 --pre 800 --re 256 --bs 256 --arch resnet18 --log True --eval_dir "./exps/baseline"
+python -m plant_pathology.train 53 1e-2 --frz 7 --pre 500 --re 256 --bs 350 --arch resnet18 --log True --eval_dir "./exps/baseline" > ./exp/baseline/log.txt
   
 # Label Smoothing
-python -m plant_pathology.train 25 1e-2 --frz 5 --pre 800 --re 256 --bs 256 --arch resnet18 --log True --eval_dir "./exps/smooth" --smooth True
+python -m plant_pathology.train 25 1e-2 --frz 5 --pre 500 --re 256 --bs 256 --arch resnet18 --log True --eval_dir "./exps/smooth" --smooth True
 
 # MixUp
-python -m plant_pathology.train 25 1e-2 --frz 5 --pre 800 --re 256 --bs 256 --arch resnet18 --log True --eval_dir "./exps/mixup" True --mixup 0.4
+python -m plant_pathology.train 25 1e-2 --frz 5 --pre 500 --re 256 --bs 256 --arch resnet18 --log True --eval_dir "./exps/mixup" True --mixup 0.4
 
 # TTA
-python -m plant_pathology.train 25 1e-2 --frz 5 --pre 800 --re 256 --bs 256 --arch resnet18 --log True --eval_dir "./exps/tta" True --tta True
+python -m plant_pathology.train 25 1e-2 --frz 5 --pre 500 --re 256 --bs 256 --arch resnet18 --log True --eval_dir "./exps/tta" True --tta True

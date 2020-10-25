@@ -26,8 +26,7 @@ def train(
     m = globals()[arch]
 
     # Add callbacks
-    cbs =[]
-    if log: cbs.append(*[WandbCallback(), SaveModelCallback()])
+    cbs = [WandbCallback(), SaveModelCallback()] if log else []
     if mixup: cbs.append(MixUp(mixup))
 
     # Build learner
@@ -61,13 +60,13 @@ def train_cv(
     fp16:     Param("Use mixed-precision", bool_arg)=False,
     eval_dir: Param("Evaluate model, save results in dir", Path)=None,
 ):
+    print(locals())
     scores = []
-    dls = get_dls_all_in_1(presize=pre, resize=re, bs=bs, val_fold=fold)
     for fold in range(5):
         print(f"\nTraining on fold {fold}")
         learn = train(epochs, lr, frz=frz, pre=pre, re=re, bs=bs, smooth=smooth,
                       arch=arch, dump=dump, log=log, fold=fold, mixup=mixup,
-                      fp16=fp16, dls=dls,)
+                      fp16=fp16,)
         scores.append(learn.final_record)
 
         # Create submission file for this model
