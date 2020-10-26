@@ -72,7 +72,7 @@ def train_cv(
         # Create submission file for this model
         if eval_dir:
             eval_dir = Path(eval_dir)
-            evaluate(learn, eval_dir/"predictions_fold_{fold}.csv")
+            evaluate(learn, eval_dir/f"predictions_fold_{fold}.csv")
 
         # Delete learner to avoid OOM
         del learn
