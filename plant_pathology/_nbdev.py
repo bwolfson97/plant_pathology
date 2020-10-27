@@ -11,6 +11,7 @@ index = {"load_data": "00_utils.ipynb",
          "infer_on_test_set": "02_evaluate.ipynb",
          "format_submission": "02_evaluate.ipynb",
          "evaluate": "02_evaluate.ipynb",
+         "timm_or_fastai_arch": "03_train.ipynb",
          "train": "03_train.ipynb",
          "train_cv": "03_train.ipynb"}
 
