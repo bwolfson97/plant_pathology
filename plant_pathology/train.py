@@ -9,12 +9,16 @@ from .evaluate import *
 from fastai.vision.all import *
 from fastcore.script import *
 from fastai.callback.wandb import *
+from wwf.vision.timm import *
+import timm
 import wandb
+from typing import *
+from sys import exit
 
 # Cell
 def train(
-    epochs: int, lr: float, frz: int=1, pre: int=800, re: int=256,
-    bs: int=256, fold: int=4, smooth: bool=True,
+    epochs: int, lr: Union[float, str], frz: int=1, pre: int=800, re: int=256,
+    bs: int=256, fold: int=4, smooth: bool=False,
     arch: str='resnet18', dump: bool=False, log: bool=False, mixup: float=0.,
     fp16: bool=False, dls: DataLoaders=None,
  ):
@@ -23,16 +27,17 @@ def train(
     if log: wandb.init(project="plant-pathology")
     if smooth: loss_func = LabelSmoothingCrossEntropyFlat()
     else:      loss_func = CrossEntropyLossFlat()
-    m = globals()[arch]
+    m, learner_func = timm_or_fastai_arch(arch)
 
     # Add callbacks
     cbs = [WandbCallback(), SaveModelCallback()] if log else []
     if mixup: cbs.append(MixUp(mixup))
 
     # Build learner
-    learn = cnn_learner(dls, m, loss_func=loss_func,
+    learn = learner_func(dls, m, loss_func=loss_func,
                     metrics=[accuracy, RocAuc()], cbs=cbs)
     if dump: print(learn.model); exit()
+    if lr=="find": learn.lr_find(); exit()
     if fp16: learn.to_fp16()
 
     # Train
@@ -51,13 +56,13 @@ def train_cv(
     pre:      Param("Presize", int)=800,
     re:       Param("Resize", int)=256,
     bs:       Param("Batch size", int)=256,
-    smooth:   Param("Label smoothing?", bool_arg)=False,
+    smooth:   Param("Label smoothing?", store_true)=False,
     arch:     Param("Architecture", str)='resnet18',
-    dump:     Param("Print model", bool_arg)=False,
-    log:      Param("Log w/ W&B", bool_arg)=False,
+    dump:     Param("Print model", store_true)=False,
+    log:      Param("Log w/ W&B", store_true)=False,
     mixup:    Param("Mixup", float)=0.0,
-    tta:      Param("Test-time augmentation", bool_arg)=False,
-    fp16:     Param("Use mixed-precision", bool_arg)=False,
+    tta:      Param("Test-time augmentation", store_true)=False,
+    fp16:     Param("Use mixed-precision", store_true)=False,
     eval_dir: Param("Evaluate model, save results in dir", Path)=None,
 ):
     print(locals())
@@ -67,12 +72,14 @@ def train_cv(
         learn = train(epochs, lr, frz=frz, pre=pre, re=re, bs=bs, smooth=smooth,
                       arch=arch, dump=dump, log=log, fold=fold, mixup=mixup,
                       fp16=fp16,)
-        scores.append(learn.final_record)
+        if tta:
+            preds, lbls = learn.tta()
+            res = [f(preds, lbls) for f in [learn.loss_func, accuracy, RocAuc()]]
+        else: res = learn.final_record
+        scores.append(res)
 
         # Create submission file for this model
-        if eval_dir:
-            eval_dir = Path(eval_dir)
-            evaluate(learn, eval_dir/f"predictions_fold_{fold}.csv")
+        if eval_dir: evaluate(learn, Path(eval_dir)/f"predictions_fold_{fold}.csv", tta=True)
 
         # Delete learner to avoid OOM
         del learn
