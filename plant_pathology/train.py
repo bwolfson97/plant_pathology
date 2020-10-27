@@ -14,7 +14,7 @@ import wandb
 # Cell
 def train(
     epochs: int, lr: float, frz: int=1, pre: int=800, re: int=256,
-    bs: int=256, fold: int=0, smooth: bool=True,
+    bs: int=256, fold: int=4, smooth: bool=True,
     arch: str='resnet18', dump: bool=False, log: bool=False, mixup: float=0.,
     fp16: bool=False, dls: DataLoaders=None,
  ):

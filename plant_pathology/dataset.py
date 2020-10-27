@@ -8,7 +8,7 @@ from .utils import *
 
 # Cell
 def get_datablock(path: Path, df: pd.DataFrame, presize: int=512,
-                  resize: int=256, val_fold: int=0) -> DataBlock:
+                  resize: int=256, val_fold: int=4) -> DataBlock:
     def get_y(row): return df.columns[row==1][0]
     return DataBlock(blocks=(ImageBlock, CategoryBlock),
                 get_x=ColReader("image_id", pref=path/'images', suff=".jpg"),
@@ -21,7 +21,7 @@ def get_datablock(path: Path, df: pd.DataFrame, presize: int=512,
 
 # Cell
 def get_dls(path: Path, df: pd.DataFrame, presize: int=512,
-            resize: int=256, bs: int=256, val_fold: int=0) -> DataLoaders:
+            resize: int=256, bs: int=256, val_fold: int=4) -> DataLoaders:
     return get_datablock(path, df, presize, resize, val_fold).dataloaders(df, bs=bs)
 
 # Cell
