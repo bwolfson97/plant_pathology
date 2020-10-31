@@ -5,6 +5,8 @@ __all__ = ["index", "modules", "custom_doc_links", "git_url"]
 index = {"load_data": "00_utils.ipynb",
          "create_folds": "00_utils.ipynb",
          "kaggle_submit_command": "00_utils.ipynb",
+         "average_preds": "00_utils.ipynb",
+         "save_average_preds": "00_utils.ipynb",
          "get_datablock": "01_dataset.ipynb",
          "get_dls": "01_dataset.ipynb",
          "get_dls_all_in_1": "01_dataset.ipynb",
@@ -13,12 +15,14 @@ index = {"load_data": "00_utils.ipynb",
          "evaluate": "02_evaluate.ipynb",
          "timm_or_fastai_arch": "03_train.ipynb",
          "train": "03_train.ipynb",
-         "train_cv": "03_train.ipynb"}
+         "train_cv": "03_train.ipynb",
+         "generate_pseudo_labels": "04_generate_pseudo_labels.ipynb"}
 
 modules = ["utils.py",
            "dataset.py",
            "evaluate.py",
-           "train.py"]
+           "train.py",
+           "generate_pseudo_labels.py"]
 
 doc_url = "https://bwolfson97.github.io/plant_pathology/"
 

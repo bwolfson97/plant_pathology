@@ -30,20 +30,22 @@ def train(
     epochs: int, lr: Union[float, str], frz: int=1, pre: int=800, re: int=256,
     bs: int=256, fold: int=4, smooth: bool=False,
     arch: str='resnet18', dump: bool=False, log: bool=False, mixup: float=0.,
-    fp16: bool=False, dls: DataLoaders=None,
+    fp16: bool=False, dls: DataLoaders=None, save: bool=False, pseudo: Path=None,
  ):
     # Prep Data, Opt, Loss, Arch
-    if dls is None: dls = get_dls_all_in_1(presize=pre, resize=re, bs=bs, val_fold=fold)
+    if dls is None: dls = get_dls_all_in_1(presize=pre, resize=re, bs=bs, val_fold=fold, pseudo=pseudo)
     if log: wandb.init(project="plant-pathology")
     if smooth: loss_func = LabelSmoothingCrossEntropyFlat()
     else:      loss_func = CrossEntropyLossFlat()
     m, learner_func = timm_or_fastai_arch(arch)
 
     # Add callbacks
-    cbs = [WandbCallback(), SaveModelCallback()] if log else []
+    cbs = [SaveModelCallback("roc_auc_score", fname=f"model_val_on_{fold}")] if save or log else []
+    if log: cbs.append(WandbCallback())
     if mixup: cbs.append(MixUp(mixup))
 
     # Build learner
+    print(f"# train exs: {len(dls.train_ds)}, val exs: {len(dls.valid_ds)}")
     learn = learner_func(dls, m, loss_func=loss_func,
                     metrics=[accuracy, RocAuc()], cbs=cbs)
     if dump: print(learn.model); exit()
@@ -70,29 +72,35 @@ def train_cv(
     arch:     Param("Architecture", str)='resnet18',
     dump:     Param("Print model", store_true)=False,
     log:      Param("Log w/ W&B", store_true)=False,
-    mixup:    Param("Mixup", float)=0.0,
+    save:     Param("Save model based on RocAuc", store_true)=False,
+    mixup:    Param("Mixup (0.4 is good)", float)=0.0,
     tta:      Param("Test-time augmentation", store_true)=False,
     fp16:     Param("Use mixed-precision", store_true)=False,
     eval_dir: Param("Evaluate model, save results in dir", Path)=None,
+    val_fold: Param("Only do 1 fold (4 is baseline, 9 for all data)", int)=None,
+    pseudo:   Param("Path to pseudo labels to train on", Path)=None,
 ):
     print(locals())
     scores = []
     for fold in range(5):
+        if val_fold is not None: fold = val_fold  # Not doing CV
         print(f"\nTraining on fold {fold}")
         learn = train(epochs, lr, frz=frz, pre=pre, re=re, bs=bs, smooth=smooth,
                       arch=arch, dump=dump, log=log, fold=fold, mixup=mixup,
-                      fp16=fp16,)
-        if tta:
+                      fp16=fp16, save=save, pseudo=pseudo)
+
+        if tta and val_fold != -1:  # There IS a valid set
             preds, lbls = learn.tta()
             res = [f(preds, lbls) for f in [learn.loss_func, accuracy, RocAuc()]]
         else: res = learn.final_record
         scores.append(res)
 
         # Create submission file for this model
-        if eval_dir: evaluate(learn, Path(eval_dir)/f"predictions_fold_{fold}.csv", tta=True)
+        if eval_dir: print("Evaluating"); evaluate(learn, Path(eval_dir)/f"predictions_fold_{fold}.csv", tta=tta)
 
         # Delete learner to avoid OOM
         del learn
+        if val_fold is not None: break
     scores = np.array(scores)
     print(f"Scores: {scores}\n")
-    print(f"Mean: {scores.mean(0)}")
+    if val_fold is None: print(f"Mean: {scores.mean(0)}")
