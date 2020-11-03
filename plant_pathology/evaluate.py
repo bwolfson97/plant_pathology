@@ -11,10 +11,6 @@ def infer_on_test_set(learn: Learner, tta: bool=False) -> Tensor:
     path_test = Path("~/kaggle/plant-pathology/data/plant-pathology-2020/test.csv")
     df_test = pd.read_csv(path_test)
     test_dl = learn.dls.test_dl(df_test)
-    if tta:
-        preds, _ = learn.tta(dl=test_dl)
-        # Softmax
-    else: learn.get_preds(dl=test_dl)
     preds, _ = (learn.tta if tta else learn.get_preds)(dl=test_dl)
     return preds
 

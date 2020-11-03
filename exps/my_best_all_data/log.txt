@@ -1,0 +1,33 @@
+{'epochs': 50, 'lr': 0.02, 'frz': 10, 'pre': (682, 1024), 're': 256, 'bs': 200, 'smooth': True, 'arch': 'seresnext26d_32x4d', 'dump': False, 'log': False, 'save': False, 'mixup': 0.4, 'tta': True, 'fp16': True, 'eval_dir': Path('.'), 'val_fold': 9, 'pseudo': None}
+
+Training on fold 9
+# train exs: 1821, val exs: 0
+█epoch     train_loss  valid_loss  accuracy  roc_auc_score  time    
+██0         2.497994    None        None      None           00:38     
+██1         2.008719    None        None      None           00:29     
+██2         1.626797    None        None      None           00:29     
+██3         1.397958    None        None      None           00:29     
+██4         1.246960    None        None      None           00:33     
+██5         1.144431    None        None      None           00:29     
+██6         1.065355    None        None      None           00:33     
+██7         1.006475    None        None      None           00:29     
+██8         0.958669    None        None      None           00:29     
+██9         0.925974    None        None      None           00:29     
+█epoch     train_loss  valid_loss  accuracy  roc_auc_score  time    
+██0         0.754344    None        None      None           00:38     
+██1         0.757454    None        None      None           00:32     
+██2         0.748659    None        None      None           00:34     
+██3         0.744184    None        None      None           00:32     
+██4         0.735985    None        None      None           00:33     
+██5         0.734797    None        None      None           00:32     
+██6         0.729607    None        None      None           00:32     
+██7         0.726715    None        None      None           00:32     
+██8         0.723653    None        None      None           00:32     
+██9         0.720101    None        None      None           00:32     
+██10        0.720709    None        None      None           00:33     
+██11        0.721584    None        None      None           00:32     
+██12        0.722194    None        None      None           00:32     
+██13        0.720205    None        None      None           00:32     
+██14        0.716695    None        None      None           00:32     
+██15        0.711392    None        None      None           00:34     
+█16        0.704357    00:33       

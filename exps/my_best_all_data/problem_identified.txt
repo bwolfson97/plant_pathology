@@ -1,0 +1,15 @@
+# Problem occured here when I added mixup
+
+python -m plant_pathology.train 1 2e-2 --frz 0 --pre 64 --re 64 --arch seresnext26d_32x4d --tta --mixup 0.4 --eval_dir exps/my_best_all_data > exps/my_best_all_data/log.txt &
+
+Not have to see what is problem with mixup, if it interferes with another flag:
+
+# Works when I remove TTA
+python -m plant_pathology.train 1 2e-2 --frz 0 --pre 64 --re 64 --arch seresnext26d_32x4d --mixup 0.4 --eval_dir exps/my_best_all_data > exps/my_best_all_data/log.txt &
+
+# Let's remove other flags
+
+python -m plant_pathology.train 1 2e-2 --frz 0 --pre 64 --re 64 --arch resnet18 --tta --mixup 0.4 --eval_dir exps/my_best_all_data/
+^^^ It fails with resnet18 too
+
+--> So I think that tta + mixup are causing the failure

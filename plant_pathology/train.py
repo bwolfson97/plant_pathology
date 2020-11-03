@@ -31,7 +31,7 @@ def train(
     bs: int=256, fold: int=4, smooth: bool=False,
     arch: str='resnet18', dump: bool=False, log: bool=False, mixup: float=0.,
     fp16: bool=False, dls: DataLoaders=None, save: bool=False, pseudo: Path=None,
- ):
+ ) -> Learner:
     # Prep Data, Opt, Loss, Arch
     if dls is None: dls = get_dls_all_in_1(presize=pre, resize=re, bs=bs, val_fold=fold, pseudo=pseudo)
     if log: wandb.init(project="plant-pathology")
@@ -65,7 +65,7 @@ def train_cv(
     epochs:   Param("Number of unfrozen epochs", int),
     lr:       Param("Initial learning rate", float),
     frz:      Param("Number of frozen epochs", int)=1,
-    pre:      Param("Presize", int)=800,
+    pre:      Param("Presize", tuple)=(682, 1024),
     re:       Param("Resize", int)=256,
     bs:       Param("Batch size", int)=256,
     smooth:   Param("Label smoothing?", store_true)=False,
@@ -89,7 +89,9 @@ def train_cv(
                       arch=arch, dump=dump, log=log, fold=fold, mixup=mixup,
                       fp16=fp16, save=save, pseudo=pseudo)
 
-        if tta and val_fold != -1:  # There IS a valid set
+        if hasattr(learn, "mixup") and tta: learn.remove_cb(MixUp)  # Bug when doing tta w/Mixup
+
+        if tta and val_fold != 9:  # There IS a valid set
             preds, lbls = learn.tta()
             res = [f(preds, lbls) for f in [learn.loss_func, accuracy, RocAuc()]]
         else: res = learn.final_record

@@ -35,3 +35,6 @@ python -m plant_pathology.train 25 1e-2 --frz 5 --pre 500 --re 256 --bs 256 --ar
 
 # TTA
 python -m plant_pathology.train 25 1e-2 --frz 5 --pre 500 --re 256 --bs 256 --arch resnet18 --log True --eval_dir "./exps/tta" True --tta True
+
+# My Best
+python -m plant_pathology.train 50 2e-2 --frz 10 --bs 200 --smooth --arch seresnext26d_32x4d --mixup 0.4 --tta --fp16 --eval_dir . --val_fold 9 > log.txt
