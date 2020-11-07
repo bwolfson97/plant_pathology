@@ -53,7 +53,38 @@ nb_path: "nbks/03_train.ipynb"
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="train" class="doc_header"><code>train</code><a href="https://github.com/bwolfson97/plant_pathology/tree/master/plant_pathology/train.py#L15" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>train</code>(<strong><code>epochs</code></strong>:<code>int</code>, <strong><code>lr</code></strong>:<code>float</code>, <strong><code>frz</code></strong>:<code>int</code>=<em><code>1</code></em>, <strong><code>pre</code></strong>:<code>int</code>=<em><code>800</code></em>, <strong><code>re</code></strong>:<code>int</code>=<em><code>256</code></em>, <strong><code>bs</code></strong>:<code>int</code>=<em><code>256</code></em>, <strong><code>fold</code></strong>:<code>int</code>=<em><code>4</code></em>, <strong><code>smooth</code></strong>:<code>bool</code>=<em><code>True</code></em>, <strong><code>arch</code></strong>:<code>str</code>=<em><code>'resnet18'</code></em>, <strong><code>dump</code></strong>:<code>bool</code>=<em><code>False</code></em>, <strong><code>log</code></strong>:<code>bool</code>=<em><code>False</code></em>, <strong><code>mixup</code></strong>:<code>float</code>=<em><code>0.0</code></em>, <strong><code>fp16</code></strong>:<code>bool</code>=<em><code>False</code></em>, <strong><code>dls</code></strong>:<code>DataLoaders</code>=<em><code>None</code></em>)</p>
+<h4 id="timm_or_fastai_arch" class="doc_header"><code>timm_or_fastai_arch</code><a href="https://github.com/bwolfson97/plant_pathology/tree/master/plant_pathology/train.py#L19" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>timm_or_fastai_arch</code>(<strong><code>arch</code></strong>:<code>str</code>)</p>
+</blockquote>
+
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+<div class="output_markdown rendered_html output_subarea ">
+<h4 id="train" class="doc_header"><code>train</code><a href="https://github.com/bwolfson97/plant_pathology/tree/master/plant_pathology/train.py#L29" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>train</code>(<strong><code>epochs</code></strong>:<code>int</code>, <strong><code>lr</code></strong>:<code>Union</code>[<code>float</code>, <code>str</code>], <strong><code>frz</code></strong>:<code>int</code>=<em><code>1</code></em>, <strong><code>pre</code></strong>:<code>int</code>=<em><code>800</code></em>, <strong><code>re</code></strong>:<code>int</code>=<em><code>256</code></em>, <strong><code>bs</code></strong>:<code>int</code>=<em><code>200</code></em>, <strong><code>fold</code></strong>:<code>int</code>=<em><code>4</code></em>, <strong><code>smooth</code></strong>:<code>bool</code>=<em><code>False</code></em>, <strong><code>arch</code></strong>:<code>str</code>=<em><code>'resnet18'</code></em>, <strong><code>dump</code></strong>:<code>bool</code>=<em><code>False</code></em>, <strong><code>log</code></strong>:<code>bool</code>=<em><code>False</code></em>, <strong><code>mixup</code></strong>:<code>float</code>=<em><code>0.0</code></em>, <strong><code>fp16</code></strong>:<code>bool</code>=<em><code>False</code></em>, <strong><code>dls</code></strong>:<code>DataLoaders</code>=<em><code>None</code></em>, <strong><code>save</code></strong>:<code>bool</code>=<em><code>False</code></em>, <strong><code>pseudo</code></strong>:<code>Path</code>=<em><code>None</code></em>)</p>
 </blockquote>
 
 </div>
@@ -108,11 +139,11 @@ nb_path: "nbks/03_train.ipynb"
   <tbody>
     <tr>
       <td>0</td>
-      <td>2.117751</td>
-      <td>1.265273</td>
-      <td>0.605479</td>
-      <td>0.803554</td>
-      <td>00:44</td>
+      <td>1.994526</td>
+      <td>1.320189</td>
+      <td>0.552198</td>
+      <td>0.774509</td>
+      <td>00:47</td>
     </tr>
   </tbody>
 </table>
@@ -148,7 +179,7 @@ nb_path: "nbks/03_train.ipynb"
 
 
 <div class="output_text output_subarea output_execute_result">
-<pre>(#4) [2.117751121520996,1.265272617340088,0.6054794788360596,0.8035537836126292]</pre>
+<pre>(#4) [1.9945262670516968,1.3201892375946045,0.5521978139877319,0.7745089188919971]</pre>
 </div>
 
 </div>
@@ -168,6 +199,98 @@ nb_path: "nbks/03_train.ipynb"
     {% raw %}
     
 <div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">softmax_RocAuc</span><span class="p">(</span><span class="n">logits</span><span class="p">,</span> <span class="n">labels</span><span class="p">):</span>
+    <span class="n">probs</span> <span class="o">=</span> <span class="n">logits</span><span class="o">.</span><span class="n">softmax</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">RocAuc</span><span class="p">()(</span><span class="n">probs</span><span class="p">,</span> <span class="n">labels</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">preds</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span>
+<span class="n">labels</span> <span class="o">=</span> <span class="n">tensor</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">])</span><span class="o">.</span><span class="n">unsqueeze</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">preds</span><span class="p">,</span> <span class="n">labels</span><span class="o">.</span><span class="n">shape</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>(tensor([[-0.0125,  0.6561, -1.4383,  0.6503, -0.8040],
+         [ 0.3989,  2.0122, -0.0940,  0.6556,  0.1049],
+         [-0.8033,  2.0776,  1.1644,  1.9944,  1.7843],
+         [ 1.7712,  0.5099, -1.2987,  0.9259, -0.0202],
+         [-0.8204, -0.3565,  0.1263, -0.3076, -1.1615]]),
+ torch.Size([5, 1]))</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">softmax_RocAuc</span><span class="p">(</span><span class="n">preds</span><span class="p">,</span> <span class="n">labels</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>0.75</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
 
 <div class="output_wrapper">
 <div class="output">
@@ -176,7 +299,7 @@ nb_path: "nbks/03_train.ipynb"
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="train_cv" class="doc_header"><code>train_cv</code><a href="https://github.com/bwolfson97/plant_pathology/tree/master/plant_pathology/train.py#L46" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>train_cv</code>(<strong><code>epochs</code></strong>:"Number of unfrozen epochs", <strong><code>lr</code></strong>:"Initial learning rate", <strong><code>frz</code></strong>:"Number of frozen epochs"=<em><code>1</code></em>, <strong><code>pre</code></strong>:"Presize"=<em><code>800</code></em>, <strong><code>re</code></strong>:"Resize"=<em><code>256</code></em>, <strong><code>bs</code></strong>:"Batch size"=<em><code>256</code></em>, <strong><code>smooth</code></strong>:"Label smoothing?"=<em><code>False</code></em>, <strong><code>arch</code></strong>:"Architecture"=<em><code>'resnet18'</code></em>, <strong><code>dump</code></strong>:"Print model"=<em><code>False</code></em>, <strong><code>log</code></strong>:"Log w/ W&amp;B"=<em><code>False</code></em>, <strong><code>mixup</code></strong>:"Mixup"=<em><code>0.0</code></em>, <strong><code>tta</code></strong>:"Test-time augmentation"=<em><code>False</code></em>, <strong><code>fp16</code></strong>:"Use mixed-precision"=<em><code>False</code></em>, <strong><code>eval_dir</code></strong>:"Evaluate model, save results in dir"=<em><code>None</code></em>)</p>
+<h4 id="train_cv" class="doc_header"><code>train_cv</code><a href="https://github.com/bwolfson97/plant_pathology/tree/master/plant_pathology/train.py#L63" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>train_cv</code>(<strong><code>epochs</code></strong>:"Number of unfrozen epochs", <strong><code>lr</code></strong>:"Initial learning rate", <strong><code>frz</code></strong>:"Number of frozen epochs"=<em><code>1</code></em>, <strong><code>pre</code></strong>:"Presize"=<em><code>(682, 1024)</code></em>, <strong><code>re</code></strong>:"Resize"=<em><code>256</code></em>, <strong><code>bs</code></strong>:"Batch size"=<em><code>256</code></em>, <strong><code>smooth</code></strong>:"Label smoothing?"=<em><code>False</code></em>, <strong><code>arch</code></strong>:"Architecture"=<em><code>'resnet18'</code></em>, <strong><code>dump</code></strong>:"Print model"=<em><code>False</code></em>, <strong><code>log</code></strong>:"Log w/ W&amp;B"=<em><code>False</code></em>, <strong><code>save</code></strong>:"Save model based on RocAuc"=<em><code>False</code></em>, <strong><code>mixup</code></strong>:"Mixup (0.4 is good)"=<em><code>0.0</code></em>, <strong><code>tta</code></strong>:"Test-time augmentation"=<em><code>False</code></em>, <strong><code>fp16</code></strong>:"Use mixed-precision"=<em><code>False</code></em>, <strong><code>eval_dir</code></strong>:"Evaluate model, save results in dir"=<em><code>None</code></em>, <strong><code>val_fold</code></strong>:"Only do 1 fold (4 is baseline, 9 for all data)"=<em><code>None</code></em>, <strong><code>pseudo</code></strong>:"Path to pseudo labels to train on"=<em><code>None</code></em>)</p>
 </blockquote>
 
 </div>
@@ -237,7 +360,7 @@ nb_path: "nbks/03_train.ipynb"
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">train_cv</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mf">2e-2</span><span class="p">,</span> <span class="n">eval_dir</span><span class="o">=</span><span class="s2">&quot;.&quot;</span><span class="p">)</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">train_cv</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mf">2e-2</span><span class="p">,</span> <span class="n">pre</span><span class="o">=</span><span class="mi">64</span><span class="p">,</span> <span class="n">re</span><span class="o">=</span><span class="mi">64</span><span class="p">,</span> <span class="n">bs</span><span class="o">=</span><span class="mi">512</span><span class="p">,</span> <span class="n">fp16</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">val_fold</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">tta</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">mixup</span><span class="o">=</span><span class="mf">0.4</span><span class="p">,</span> <span class="n">eval_dir</span><span class="o">=</span><span class="s2">&quot;test&quot;</span><span class="p">)</span>
 </pre></div>
 
     </div>
@@ -250,8 +373,10 @@ nb_path: "nbks/03_train.ipynb"
 <div class="output_area">
 
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>
-Training on fold 0
+<pre>{&#39;epochs&#39;: 0, &#39;lr&#39;: 0.02, &#39;frz&#39;: 1, &#39;pre&#39;: 64, &#39;re&#39;: 64, &#39;bs&#39;: 512, &#39;smooth&#39;: False, &#39;arch&#39;: &#39;resnet18&#39;, &#39;dump&#39;: False, &#39;log&#39;: False, &#39;save&#39;: False, &#39;mixup&#39;: 0.4, &#39;tta&#39;: True, &#39;fp16&#39;: True, &#39;eval_dir&#39;: &#39;test&#39;, &#39;val_fold&#39;: 4, &#39;pseudo&#39;: None}
+
+Training on fold 4
+# train exs: 1457, val exs: 364
 </pre>
 </div>
 </div>
@@ -274,10 +399,10 @@ Training on fold 0
   <tbody>
     <tr>
       <td>0</td>
-      <td>1.440475</td>
-      <td>5.252672</td>
-      <td>0.512329</td>
-      <td>0.838716</td>
+      <td>2.401971</td>
+      <td>3.247023</td>
+      <td>0.326923</td>
+      <td>0.541498</td>
       <td>00:42</td>
     </tr>
   </tbody>
@@ -290,28 +415,43 @@ Training on fold 0
 
 
 <div class="output_html rendered_html output_subarea ">
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: left;">
-      <th>epoch</th>
-      <th>train_loss</th>
-      <th>valid_loss</th>
-      <th>accuracy</th>
-      <th>roc_auc_score</th>
-      <th>time</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>0</td>
-      <td>0.787104</td>
-      <td>5.809550</td>
-      <td>0.523288</td>
-      <td>0.891827</td>
-      <td>00:42</td>
-    </tr>
-  </tbody>
-</table>
+
+    <div>
+        <style>
+            /* Turns off some styling */
+            progress {
+                /* gets rid of default border in Firefox and Opera. */
+                border: none;
+                /* Needs to be in here for Safari polyfill so background images work as expected. */
+                background-size: auto;
+            }
+            .progress-bar-interrupted, .progress-bar-interrupted::-webkit-progress-bar {
+                background: #F44336;
+            }
+        </style>
+      <progress value='0' class='' max='0' style='width:300px; height:20px; vertical-align: middle;'></progress>
+      
+    </div>
+    
+
+</div>
+
+</div>
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stderr output_text">
+<pre>/opt/conda/lib/python3.7/site-packages/fastprogress/fastprogress.py:74: UserWarning: Your generator is empty.
+  warn(&#34;Your generator is empty.&#34;)
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+
+<div class="output_html rendered_html output_subarea ">
+
 </div>
 
 </div>
@@ -321,18 +461,60 @@ Training on fold 0
 <div class="output_subarea output_text output_error">
 <pre>
 <span class="ansi-red-fg">---------------------------------------------------------------------------</span>
-<span class="ansi-red-fg">AttributeError</span>                            Traceback (most recent call last)
-<span class="ansi-green-fg">&lt;ipython-input-10-5dc0c4d73082&gt;</span> in <span class="ansi-cyan-fg">&lt;module&gt;</span>
-<span class="ansi-green-fg">----&gt; 1</span><span class="ansi-red-fg"> </span>train_cv<span class="ansi-blue-fg">(</span><span class="ansi-cyan-fg">1</span><span class="ansi-blue-fg">,</span> <span class="ansi-cyan-fg">2e-2</span><span class="ansi-blue-fg">,</span> eval_dir<span class="ansi-blue-fg">=</span><span class="ansi-blue-fg">&#34;.&#34;</span><span class="ansi-blue-fg">)</span>
+<span class="ansi-red-fg">ValueError</span>                                Traceback (most recent call last)
+<span class="ansi-green-fg">&lt;ipython-input-44-9b321bbe4345&gt;</span> in <span class="ansi-cyan-fg">&lt;module&gt;</span>
+<span class="ansi-green-fg">----&gt; 1</span><span class="ansi-red-fg"> </span>train_cv<span class="ansi-blue-fg">(</span><span class="ansi-cyan-fg">0</span><span class="ansi-blue-fg">,</span> <span class="ansi-cyan-fg">2e-2</span><span class="ansi-blue-fg">,</span> pre<span class="ansi-blue-fg">=</span><span class="ansi-cyan-fg">64</span><span class="ansi-blue-fg">,</span> re<span class="ansi-blue-fg">=</span><span class="ansi-cyan-fg">64</span><span class="ansi-blue-fg">,</span> bs<span class="ansi-blue-fg">=</span><span class="ansi-cyan-fg">512</span><span class="ansi-blue-fg">,</span> fp16<span class="ansi-blue-fg">=</span><span class="ansi-green-fg">True</span><span class="ansi-blue-fg">,</span> val_fold<span class="ansi-blue-fg">=</span><span class="ansi-cyan-fg">4</span><span class="ansi-blue-fg">,</span> tta<span class="ansi-blue-fg">=</span><span class="ansi-green-fg">True</span><span class="ansi-blue-fg">,</span> mixup<span class="ansi-blue-fg">=</span><span class="ansi-cyan-fg">0.4</span><span class="ansi-blue-fg">,</span> eval_dir<span class="ansi-blue-fg">=</span><span class="ansi-blue-fg">&#34;test&#34;</span><span class="ansi-blue-fg">)</span>
 
-<span class="ansi-green-fg">&lt;ipython-input-9-00f4e549bdf4&gt;</span> in <span class="ansi-cyan-fg">train_cv</span><span class="ansi-blue-fg">(epochs, lr, frz, pre, re, bs, smooth, arch, dump, log, mixup, tta, fp16, eval_dir)</span>
-<span class="ansi-green-intense-fg ansi-bold">     27</span>         <span class="ansi-red-fg"># Create submission file for this model</span>
-<span class="ansi-green-intense-fg ansi-bold">     28</span>         <span class="ansi-green-fg">if</span> eval_dir<span class="ansi-blue-fg">:</span>
-<span class="ansi-green-fg">---&gt; 29</span><span class="ansi-red-fg">             </span>eval_dir<span class="ansi-blue-fg">.</span>mkdir<span class="ansi-blue-fg">(</span>parents<span class="ansi-blue-fg">=</span><span class="ansi-green-fg">True</span><span class="ansi-blue-fg">,</span> exist_ok<span class="ansi-blue-fg">=</span><span class="ansi-green-fg">True</span><span class="ansi-blue-fg">)</span>
-<span class="ansi-green-intense-fg ansi-bold">     30</span>             evaluate<span class="ansi-blue-fg">(</span>learn<span class="ansi-blue-fg">,</span> eval_dir<span class="ansi-blue-fg">/</span><span class="ansi-blue-fg">&#34;predictions_fold_{fold}.csv&#34;</span><span class="ansi-blue-fg">)</span>
-<span class="ansi-green-intense-fg ansi-bold">     31</span> 
+<span class="ansi-green-fg">&lt;ipython-input-42-bda668963c60&gt;</span> in <span class="ansi-cyan-fg">train_cv</span><span class="ansi-blue-fg">(epochs, lr, frz, pre, re, bs, smooth, arch, dump, log, save, mixup, tta, fp16, eval_dir, val_fold, pseudo)</span>
+<span class="ansi-green-intense-fg ansi-bold">     33</span>         <span class="ansi-green-fg">if</span> tta <span class="ansi-green-fg">and</span> val_fold <span class="ansi-blue-fg">!=</span> <span class="ansi-cyan-fg">9</span><span class="ansi-blue-fg">:</span>  <span class="ansi-red-fg"># There IS a valid set</span>
+<span class="ansi-green-intense-fg ansi-bold">     34</span>             preds<span class="ansi-blue-fg">,</span> lbls <span class="ansi-blue-fg">=</span> learn<span class="ansi-blue-fg">.</span>tta<span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">)</span>
+<span class="ansi-green-fg">---&gt; 35</span><span class="ansi-red-fg">             </span>res <span class="ansi-blue-fg">=</span> <span class="ansi-blue-fg">[</span>f<span class="ansi-blue-fg">(</span>preds<span class="ansi-blue-fg">,</span> lbls<span class="ansi-blue-fg">)</span> <span class="ansi-green-fg">for</span> f <span class="ansi-green-fg">in</span> <span class="ansi-blue-fg">[</span>learn<span class="ansi-blue-fg">.</span>loss_func<span class="ansi-blue-fg">,</span> accuracy<span class="ansi-blue-fg">,</span> RocAuc<span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">)</span><span class="ansi-blue-fg">]</span><span class="ansi-blue-fg">]</span>
+<span class="ansi-green-intense-fg ansi-bold">     36</span>         <span class="ansi-green-fg">else</span><span class="ansi-blue-fg">:</span> res <span class="ansi-blue-fg">=</span> learn<span class="ansi-blue-fg">.</span>final_record
+<span class="ansi-green-intense-fg ansi-bold">     37</span>         scores<span class="ansi-blue-fg">.</span>append<span class="ansi-blue-fg">(</span>res<span class="ansi-blue-fg">)</span>
 
-<span class="ansi-red-fg">AttributeError</span>: &#39;str&#39; object has no attribute &#39;mkdir&#39;</pre>
+<span class="ansi-green-fg">&lt;ipython-input-42-bda668963c60&gt;</span> in <span class="ansi-cyan-fg">&lt;listcomp&gt;</span><span class="ansi-blue-fg">(.0)</span>
+<span class="ansi-green-intense-fg ansi-bold">     33</span>         <span class="ansi-green-fg">if</span> tta <span class="ansi-green-fg">and</span> val_fold <span class="ansi-blue-fg">!=</span> <span class="ansi-cyan-fg">9</span><span class="ansi-blue-fg">:</span>  <span class="ansi-red-fg"># There IS a valid set</span>
+<span class="ansi-green-intense-fg ansi-bold">     34</span>             preds<span class="ansi-blue-fg">,</span> lbls <span class="ansi-blue-fg">=</span> learn<span class="ansi-blue-fg">.</span>tta<span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">)</span>
+<span class="ansi-green-fg">---&gt; 35</span><span class="ansi-red-fg">             </span>res <span class="ansi-blue-fg">=</span> <span class="ansi-blue-fg">[</span>f<span class="ansi-blue-fg">(</span>preds<span class="ansi-blue-fg">,</span> lbls<span class="ansi-blue-fg">)</span> <span class="ansi-green-fg">for</span> f <span class="ansi-green-fg">in</span> <span class="ansi-blue-fg">[</span>learn<span class="ansi-blue-fg">.</span>loss_func<span class="ansi-blue-fg">,</span> accuracy<span class="ansi-blue-fg">,</span> RocAuc<span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">)</span><span class="ansi-blue-fg">]</span><span class="ansi-blue-fg">]</span>
+<span class="ansi-green-intense-fg ansi-bold">     36</span>         <span class="ansi-green-fg">else</span><span class="ansi-blue-fg">:</span> res <span class="ansi-blue-fg">=</span> learn<span class="ansi-blue-fg">.</span>final_record
+<span class="ansi-green-intense-fg ansi-bold">     37</span>         scores<span class="ansi-blue-fg">.</span>append<span class="ansi-blue-fg">(</span>res<span class="ansi-blue-fg">)</span>
+
+<span class="ansi-green-fg">/opt/conda/lib/python3.7/site-packages/fastai/metrics.py</span> in <span class="ansi-cyan-fg">__call__</span><span class="ansi-blue-fg">(self, preds, targs)</span>
+<span class="ansi-green-intense-fg ansi-bold">     59</span>         self<span class="ansi-blue-fg">.</span>reset<span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">)</span>
+<span class="ansi-green-intense-fg ansi-bold">     60</span>         self<span class="ansi-blue-fg">.</span>accum_values<span class="ansi-blue-fg">(</span>preds<span class="ansi-blue-fg">,</span>targs<span class="ansi-blue-fg">)</span>
+<span class="ansi-green-fg">---&gt; 61</span><span class="ansi-red-fg">         </span><span class="ansi-green-fg">return</span> self<span class="ansi-blue-fg">.</span>value
+<span class="ansi-green-intense-fg ansi-bold">     62</span> 
+<span class="ansi-green-intense-fg ansi-bold">     63</span>     <span class="ansi-blue-fg">@</span>property
+
+<span class="ansi-green-fg">/opt/conda/lib/python3.7/site-packages/fastai/metrics.py</span> in <span class="ansi-cyan-fg">value</span><span class="ansi-blue-fg">(self)</span>
+<span class="ansi-green-intense-fg ansi-bold">     67</span>         preds<span class="ansi-blue-fg">,</span>targs <span class="ansi-blue-fg">=</span> torch<span class="ansi-blue-fg">.</span>cat<span class="ansi-blue-fg">(</span>self<span class="ansi-blue-fg">.</span>preds<span class="ansi-blue-fg">)</span><span class="ansi-blue-fg">,</span>torch<span class="ansi-blue-fg">.</span>cat<span class="ansi-blue-fg">(</span>self<span class="ansi-blue-fg">.</span>targs<span class="ansi-blue-fg">)</span>
+<span class="ansi-green-intense-fg ansi-bold">     68</span>         <span class="ansi-green-fg">if</span> self<span class="ansi-blue-fg">.</span>to_np<span class="ansi-blue-fg">:</span> preds<span class="ansi-blue-fg">,</span>targs <span class="ansi-blue-fg">=</span> preds<span class="ansi-blue-fg">.</span>numpy<span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">)</span><span class="ansi-blue-fg">,</span>targs<span class="ansi-blue-fg">.</span>numpy<span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">)</span>
+<span class="ansi-green-fg">---&gt; 69</span><span class="ansi-red-fg">         </span><span class="ansi-green-fg">return</span> self<span class="ansi-blue-fg">.</span>func<span class="ansi-blue-fg">(</span>targs<span class="ansi-blue-fg">,</span> preds<span class="ansi-blue-fg">,</span> <span class="ansi-blue-fg">**</span>self<span class="ansi-blue-fg">.</span>kwargs<span class="ansi-blue-fg">)</span> <span class="ansi-green-fg">if</span> self<span class="ansi-blue-fg">.</span>invert_args <span class="ansi-green-fg">else</span> self<span class="ansi-blue-fg">.</span>func<span class="ansi-blue-fg">(</span>preds<span class="ansi-blue-fg">,</span> targs<span class="ansi-blue-fg">,</span> <span class="ansi-blue-fg">**</span>self<span class="ansi-blue-fg">.</span>kwargs<span class="ansi-blue-fg">)</span>
+<span class="ansi-green-intense-fg ansi-bold">     70</span> 
+<span class="ansi-green-intense-fg ansi-bold">     71</span>     <span class="ansi-blue-fg">@</span>property
+
+<span class="ansi-green-fg">/opt/conda/lib/python3.7/site-packages/sklearn/utils/validation.py</span> in <span class="ansi-cyan-fg">inner_f</span><span class="ansi-blue-fg">(*args, **kwargs)</span>
+<span class="ansi-green-intense-fg ansi-bold">     70</span>                           FutureWarning)
+<span class="ansi-green-intense-fg ansi-bold">     71</span>         kwargs<span class="ansi-blue-fg">.</span>update<span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">{</span>k<span class="ansi-blue-fg">:</span> arg <span class="ansi-green-fg">for</span> k<span class="ansi-blue-fg">,</span> arg <span class="ansi-green-fg">in</span> zip<span class="ansi-blue-fg">(</span>sig<span class="ansi-blue-fg">.</span>parameters<span class="ansi-blue-fg">,</span> args<span class="ansi-blue-fg">)</span><span class="ansi-blue-fg">}</span><span class="ansi-blue-fg">)</span>
+<span class="ansi-green-fg">---&gt; 72</span><span class="ansi-red-fg">         </span><span class="ansi-green-fg">return</span> f<span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">**</span>kwargs<span class="ansi-blue-fg">)</span>
+<span class="ansi-green-intense-fg ansi-bold">     73</span>     <span class="ansi-green-fg">return</span> inner_f
+<span class="ansi-green-intense-fg ansi-bold">     74</span> 
+
+<span class="ansi-green-fg">/opt/conda/lib/python3.7/site-packages/sklearn/metrics/_ranking.py</span> in <span class="ansi-cyan-fg">roc_auc_score</span><span class="ansi-blue-fg">(y_true, y_score, average, sample_weight, max_fpr, multi_class, labels)</span>
+<span class="ansi-green-intense-fg ansi-bold">    384</span>             <span class="ansi-green-fg">raise</span> ValueError<span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">&#34;multi_class must be in (&#39;ovo&#39;, &#39;ovr&#39;)&#34;</span><span class="ansi-blue-fg">)</span>
+<span class="ansi-green-intense-fg ansi-bold">    385</span>         return _multiclass_roc_auc_score(y_true, y_score, labels,
+<span class="ansi-green-fg">--&gt; 386</span><span class="ansi-red-fg">                                          multi_class, average, sample_weight)
+</span><span class="ansi-green-intense-fg ansi-bold">    387</span>     <span class="ansi-green-fg">elif</span> y_type <span class="ansi-blue-fg">==</span> <span class="ansi-blue-fg">&#34;binary&#34;</span><span class="ansi-blue-fg">:</span>
+<span class="ansi-green-intense-fg ansi-bold">    388</span>         labels <span class="ansi-blue-fg">=</span> np<span class="ansi-blue-fg">.</span>unique<span class="ansi-blue-fg">(</span>y_true<span class="ansi-blue-fg">)</span>
+
+<span class="ansi-green-fg">/opt/conda/lib/python3.7/site-packages/sklearn/metrics/_ranking.py</span> in <span class="ansi-cyan-fg">_multiclass_roc_auc_score</span><span class="ansi-blue-fg">(y_true, y_score, labels, multi_class, average, sample_weight)</span>
+<span class="ansi-green-intense-fg ansi-bold">    443</span>     <span class="ansi-green-fg">if</span> <span class="ansi-green-fg">not</span> np<span class="ansi-blue-fg">.</span>allclose<span class="ansi-blue-fg">(</span><span class="ansi-cyan-fg">1</span><span class="ansi-blue-fg">,</span> y_score<span class="ansi-blue-fg">.</span>sum<span class="ansi-blue-fg">(</span>axis<span class="ansi-blue-fg">=</span><span class="ansi-cyan-fg">1</span><span class="ansi-blue-fg">)</span><span class="ansi-blue-fg">)</span><span class="ansi-blue-fg">:</span>
+<span class="ansi-green-intense-fg ansi-bold">    444</span>         raise ValueError(
+<span class="ansi-green-fg">--&gt; 445</span><span class="ansi-red-fg">             </span><span class="ansi-blue-fg">&#34;Target scores need to be probabilities for multiclass &#34;</span>
+<span class="ansi-green-intense-fg ansi-bold">    446</span>             &#34;roc_auc, i.e. they should sum up to 1.0 over classes&#34;)
+<span class="ansi-green-intense-fg ansi-bold">    447</span> 
+
+<span class="ansi-red-fg">ValueError</span>: Target scores need to be probabilities for multiclass roc_auc, i.e. they should sum up to 1.0 over classes</pre>
 </div>
 </div>
 

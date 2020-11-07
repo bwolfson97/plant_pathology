@@ -21,6 +21,12 @@ entries:
     - output: web,pdf
       title: Train
       url: train.html
+    - output: web,pdf
+      title: Generate Pseudo Labels
+      url: generate_pseudo_labels.html
+    - output: web,pdf
+      title: Self-Knowledge Distillation
+      url: self_knowledge_distillation.html
     output: web
     title: plant_pathology
   output: web

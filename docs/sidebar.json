@@ -4,6 +4,8 @@
     "Utils": "utils.html",
     "Dataset": "dataset.html",
     "Evaluate": "evaluate.html",
-    "Train": "train.html"
+    "Train": "train.html",
+    "Generate Pseudo Labels": "generate_pseudo_labels.html",
+    "Self-Knowledge Distillation": "self_knowledge_distillation.html"
   }
 }

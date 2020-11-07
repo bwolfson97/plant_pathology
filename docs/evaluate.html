@@ -71,7 +71,7 @@ nb_path: "nbks/02_evaluate.ipynb"
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="infer_on_test_set" class="doc_header"><code>infer_on_test_set</code><a href="https://github.com/bwolfson97/plant_pathology/tree/master/plant_pathology/evaluate.py#L10" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>infer_on_test_set</code>(<strong><code>learn</code></strong>:<code>Learner</code>)</p>
+<h4 id="infer_on_test_set" class="doc_header"><code>infer_on_test_set</code><a href="https://github.com/bwolfson97/plant_pathology/tree/master/plant_pathology/evaluate.py#L10" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>infer_on_test_set</code>(<strong><code>learn</code></strong>:<code>Learner</code>, <strong><code>tta</code></strong>:<code>bool</code>=<em><code>False</code></em>)</p>
 </blockquote>
 
 </div>
@@ -98,8 +98,10 @@ nb_path: "nbks/02_evaluate.ipynb"
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">path</span><span class="p">,</span> <span class="n">df</span> <span class="o">=</span> <span class="n">load_data</span><span class="p">()</span>
-<span class="n">dls</span> <span class="o">=</span> <span class="n">get_dls</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">df</span><span class="p">)</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">learn</span> <span class="o">=</span> <span class="n">cnn_learner</span><span class="p">(</span><span class="n">dls</span><span class="p">,</span> <span class="n">resnet18</span><span class="p">)</span>
+<span class="n">preds</span> <span class="o">=</span> <span class="n">infer_on_test_set</span><span class="p">(</span><span class="n">learn</span><span class="p">,</span> <span class="n">tta</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="n">test_close</span><span class="p">(</span><span class="n">preds</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="mi">1</span><span class="p">),</span> <span class="mf">1.</span><span class="p">)</span>  <span class="c1"># cnn_learner applies softmax after tta</span>
 </pre></div>
 
     </div>
@@ -116,8 +118,8 @@ nb_path: "nbks/02_evaluate.ipynb"
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">learn</span> <span class="o">=</span> <span class="n">cnn_learner</span><span class="p">(</span><span class="n">dls</span><span class="p">,</span> <span class="n">resnet18</span><span class="p">)</span>
-<span class="n">infer_on_test_set</span><span class="p">(</span><span class="n">learn</span><span class="p">)</span><span class="o">.</span><span class="n">shape</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">timm_learn</span> <span class="o">=</span> <span class="n">timm_learner</span><span class="p">(</span><span class="n">dls</span><span class="p">,</span> <span class="s2">&quot;seresnext26d_32x4d&quot;</span><span class="p">)</span>
+<span class="n">preds</span> <span class="o">=</span> <span class="n">infer_on_test_set</span><span class="p">(</span><span class="n">timm_learn</span><span class="p">,</span> <span class="n">tta</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 </pre></div>
 
     </div>
@@ -132,6 +134,24 @@ nb_path: "nbks/02_evaluate.ipynb"
 
 <div class="output_html rendered_html output_subarea ">
 
+    <div>
+        <style>
+            /* Turns off some styling */
+            progress {
+                /* gets rid of default border in Firefox and Opera. */
+                border: none;
+                /* Needs to be in here for Safari polyfill so background images work as expected. */
+                background-size: auto;
+            }
+            .progress-bar-interrupted, .progress-bar-interrupted::-webkit-progress-bar {
+                background: #F44336;
+            }
+        </style>
+      <progress value='0' class='' max='1' style='width:300px; height:20px; vertical-align: middle;'></progress>
+      
+    </div>
+    
+
 </div>
 
 </div>
@@ -139,9 +159,47 @@ nb_path: "nbks/02_evaluate.ipynb"
 <div class="output_area">
 
 
+<div class="output_html rendered_html output_subarea ">
+
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">preds</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
 
 <div class="output_text output_subarea output_execute_result">
-<pre>torch.Size([1821, 4])</pre>
+<pre>tensor([[8.7005e-01, 1.8312e-03, 1.2757e-01, 5.4920e-04],
+        [6.1381e-01, 2.4086e-01, 1.3975e-01, 5.5811e-03],
+        [9.9843e-01, 1.1407e-03, 3.3470e-04, 9.0708e-05],
+        ...,
+        [7.8401e-01, 3.3753e-02, 1.6062e-01, 2.1611e-02],
+        [7.9484e-01, 2.0938e-02, 1.5667e-01, 2.7547e-02],
+        [8.1854e-01, 5.1929e-03, 1.7611e-01, 1.5711e-04]])</pre>
 </div>
 
 </div>
@@ -274,7 +332,7 @@ nb_path: "nbks/02_evaluate.ipynb"
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="evaluate" class="doc_header"><code>evaluate</code><a href="https://github.com/bwolfson97/plant_pathology/tree/master/plant_pathology/evaluate.py#L35" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>evaluate</code>(<strong><code>learn</code></strong>:<code>Learner</code>, <strong><code>save_path</code></strong>:<code>Union</code>[<code>Path</code>, <code>str</code>]=<em><code>Path('submission.csv')</code></em>)</p>
+<h4 id="evaluate" class="doc_header"><code>evaluate</code><a href="https://github.com/bwolfson97/plant_pathology/tree/master/plant_pathology/evaluate.py#L35" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>evaluate</code>(<strong><code>learn</code></strong>:<code>Learner</code>, <strong><code>save_path</code></strong>:<code>Union</code>[<code>Path</code>, <code>str</code>]=<em><code>Path('submission.csv')</code></em>, <strong><code>tta</code></strong>:<code>bool</code>=<em><code>False</code></em>)</p>
 </blockquote>
 <p>Takes trained learner, evaluates on test set, formats and saves submission.csv.</p>
 
