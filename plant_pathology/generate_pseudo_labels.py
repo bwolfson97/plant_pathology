@@ -10,13 +10,12 @@ from .utils import *
 # Cell
 @call_parse
 def generate_pseudo_labels(
-    path:   Param("Directory of prediction CSVs to average", Path),
+    path:   Param("Directory of prediction CSVs to average", Path)=".",
     name:   Param("File name", str)="pseudo_labels.csv",
     thresh: Param("Min probabilty for pseudo label", float)=0.95,
 ) -> Path:
     """Generates pseudo labels and saves in path dir."""
     avg_preds = average_preds(path)
-#     avg_preds["fold"] = -1  # Add fold as -1
 
     # Only keep preds with high enough confidence
     pseudo_labels = (avg_preds.iloc[:, 1:] >= thresh)*1.0

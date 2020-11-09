@@ -40,7 +40,7 @@ def kaggle_submit_command() -> str:
 
 # Cell
 def average_preds(path: Path) -> pd.DataFrame:
-    dfs = pd.concat([pd.read_csv(f) for f in path.glob("predictions_fold_[0-9].csv")])
+    dfs = pd.concat([pd.read_csv(f) for f in path.glob("predictions_fold_[0-4].csv")])
     avg_preds = dfs.groupby(dfs.index).mean()
     avg_preds.insert(0, "image_id", dfs["image_id"].unique())
     return avg_preds
