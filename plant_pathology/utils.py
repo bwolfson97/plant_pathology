@@ -8,14 +8,13 @@ import pandas as pd
 from sklearn.model_selection import StratifiedKFold
 
 # Cell
-def load_data(with_folds=True, path_pseudo_labels: str=None) -> (Path, pd.DataFrame):
-    path = Path("/home/jupyter/kaggle/plant-pathology/data/plant-pathology-2020/")
-    path_train = path/('train_folds.csv' if with_folds else 'train.csv')
+def load_data(path_data: Path=Path("/home/brandon/projects/plant_pathology/data"), with_folds: bool=True, path_pseudo_labels: str=None, ) -> (Path, pd.DataFrame):
+    path_train = path_data/('train_folds.csv' if with_folds else 'train.csv')
     df_train = pd.read_csv(path_train)
     if path_pseudo_labels is not None:
         pseudo_labels = pd.read_csv(path_pseudo_labels)
         df_train = pd.concat([df_train, pseudo_labels], ignore_index=True)
-    return path, df_train
+    return path_data, df_train
 
 # Cell
 def create_folds(path: Path, df: pd.DataFrame, prn_stats: bool = False) -> pd.DataFrame:

@@ -7,17 +7,15 @@ from fastai.vision.all import *
 from typing import *
 
 # Cell
-def infer_on_test_set(learn: Learner, tta: bool=False) -> Tensor:
-    path_test = Path("~/kaggle/plant-pathology/data/plant-pathology-2020/test.csv")
+def infer_on_test_set(learn: Learner, tta: bool=False, path_test: Path=Path("/home/brandon/projects/plant_pathology/data/test.csv")) -> Tensor:
     df_test = pd.read_csv(path_test)
     test_dl = learn.dls.test_dl(df_test)
     preds, _ = (learn.tta if tta else learn.get_preds)(dl=test_dl)
     return preds
 
 # Cell
-def format_submission(preds: Tensor, save_path: Union[Path, str]) -> Path:
-    data_path = Path("/home/jupyter/kaggle/plant-pathology/data/plant-pathology-2020/")
-    submission = pd.read_csv(data_path/"sample_submission.csv")
+def format_submission(preds: Tensor, save_path: Union[Path, str], path_data: Path=Path("/home/brandon/projects/plant_pathology/data")) -> Path:
+    submission = pd.read_csv(path_data/"sample_submission.csv")
 
     # Update cols with preds
     submission["healthy"] = preds[:, 0]

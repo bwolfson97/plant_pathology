@@ -53,7 +53,7 @@ nb_path: "nbks/00_utils.ipynb"
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="load_data" class="doc_header"><code>load_data</code><a href="https://github.com/bwolfson97/plant_pathology/tree/master/plant_pathology/utils.py#L11" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>load_data</code>(<strong><code>with_folds</code></strong>=<em><code>True</code></em>, <strong><code>path_pseudo_labels</code></strong>:<code>str</code>=<em><code>None</code></em>)</p>
+<h4 id="load_data" class="doc_header"><code>load_data</code><a href="https://github.com/bwolfson97/plant_pathology/tree/master/plant_pathology/utils.py#L11" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>load_data</code>(<strong><code>with_folds</code></strong>=<em><code>True</code></em>, <strong><code>path_pseudo_labels</code></strong>:<code>str</code>=<em><code>None</code></em>, <strong><code>path_data</code></strong>:<code>Path</code>=<em><code>Path('~/projects/plant_pathology')</code></em>)</p>
 </blockquote>
 
 </div>
@@ -93,19 +93,62 @@ nb_path: "nbks/00_utils.ipynb"
 
 <div class="output_area">
 
+<div class="output_subarea output_text output_error">
+<pre>
+<span class="ansi-red-fg">---------------------------------------------------------------------------</span>
+<span class="ansi-red-fg">FileNotFoundError</span>                         Traceback (most recent call last)
+<span class="ansi-green-fg">&lt;ipython-input-5-ba23e389fafd&gt;</span> in <span class="ansi-cyan-fg">&lt;module&gt;</span>
+<span class="ansi-green-fg">----&gt; 1</span><span class="ansi-red-fg"> </span>path<span class="ansi-blue-fg">,</span> df <span class="ansi-blue-fg">=</span> load_data<span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">)</span>
+<span class="ansi-green-intense-fg ansi-bold">      2</span> df<span class="ansi-blue-fg">.</span>head<span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">)</span><span class="ansi-blue-fg">,</span> path<span class="ansi-blue-fg">.</span>ls<span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">)</span><span class="ansi-blue-fg">,</span> len<span class="ansi-blue-fg">(</span>df<span class="ansi-blue-fg">)</span>
 
+<span class="ansi-green-fg">&lt;ipython-input-4-c1407ecfc6fa&gt;</span> in <span class="ansi-cyan-fg">load_data</span><span class="ansi-blue-fg">(with_folds, path_pseudo_labels, path_data)</span>
+<span class="ansi-green-intense-fg ansi-bold">      2</span> <span class="ansi-green-fg">def</span> load_data<span class="ansi-blue-fg">(</span>with_folds<span class="ansi-blue-fg">=</span><span class="ansi-green-fg">True</span><span class="ansi-blue-fg">,</span> path_pseudo_labels<span class="ansi-blue-fg">:</span> str<span class="ansi-blue-fg">=</span><span class="ansi-green-fg">None</span><span class="ansi-blue-fg">,</span> path_data<span class="ansi-blue-fg">:</span> Path<span class="ansi-blue-fg">=</span>Path<span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">&#34;~/projects/plant_pathology&#34;</span><span class="ansi-blue-fg">)</span><span class="ansi-blue-fg">)</span> <span class="ansi-blue-fg">-&gt;</span> <span class="ansi-blue-fg">(</span>Path<span class="ansi-blue-fg">,</span> pd<span class="ansi-blue-fg">.</span>DataFrame<span class="ansi-blue-fg">)</span><span class="ansi-blue-fg">:</span>
+<span class="ansi-green-intense-fg ansi-bold">      3</span>     path_train <span class="ansi-blue-fg">=</span> path_data<span class="ansi-blue-fg">/</span><span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">&#39;train_folds.csv&#39;</span> <span class="ansi-green-fg">if</span> with_folds <span class="ansi-green-fg">else</span> <span class="ansi-blue-fg">&#39;train.csv&#39;</span><span class="ansi-blue-fg">)</span>
+<span class="ansi-green-fg">----&gt; 4</span><span class="ansi-red-fg">     </span>df_train <span class="ansi-blue-fg">=</span> pd<span class="ansi-blue-fg">.</span>read_csv<span class="ansi-blue-fg">(</span>path_train<span class="ansi-blue-fg">)</span>
+<span class="ansi-green-intense-fg ansi-bold">      5</span>     <span class="ansi-green-fg">if</span> path_pseudo_labels <span class="ansi-green-fg">is</span> <span class="ansi-green-fg">not</span> <span class="ansi-green-fg">None</span><span class="ansi-blue-fg">:</span>
+<span class="ansi-green-intense-fg ansi-bold">      6</span>         pseudo_labels <span class="ansi-blue-fg">=</span> pd<span class="ansi-blue-fg">.</span>read_csv<span class="ansi-blue-fg">(</span>path_pseudo_labels<span class="ansi-blue-fg">)</span>
 
-<div class="output_text output_subarea output_execute_result">
-<pre>(     image_id  healthy  multiple_diseases  rust  scab  fold
- 0  Train_1511        0                  0     1     0   0.0
- 1  Train_1799        1                  0     0     0   0.0
- 2   Train_135        1                  0     0     0   0.0
- 3   Train_408        0                  0     1     0   0.0
- 4  Train_1693        1                  0     0     0   0.0,
- (#13) [Path(&#39;/home/jupyter/kaggle/plant-pathology/data/plant-pathology-2020/test.csv&#39;),Path(&#39;/home/jupyter/kaggle/plant-pathology/data/plant-pathology-2020/train_folds.csv&#39;),Path(&#39;/home/jupyter/kaggle/plant-pathology/data/plant-pathology-2020/images&#39;),Path(&#39;/home/jupyter/kaggle/plant-pathology/data/plant-pathology-2020/predictions_fold_4.csv&#39;),Path(&#39;/home/jupyter/kaggle/plant-pathology/data/plant-pathology-2020/TESTING.csv&#39;),Path(&#39;/home/jupyter/kaggle/plant-pathology/data/plant-pathology-2020/.ipynb_checkpoints&#39;),Path(&#39;/home/jupyter/kaggle/plant-pathology/data/plant-pathology-2020/predictions_fold_1.csv&#39;),Path(&#39;/home/jupyter/kaggle/plant-pathology/data/plant-pathology-2020/train.csv&#39;),Path(&#39;/home/jupyter/kaggle/plant-pathology/data/plant-pathology-2020/submission.csv&#39;),Path(&#39;/home/jupyter/kaggle/plant-pathology/data/plant-pathology-2020/sample_submission.csv&#39;)...],
- 1821)</pre>
+<span class="ansi-green-fg">~/miniconda3/lib/python3.8/site-packages/pandas/io/parsers.py</span> in <span class="ansi-cyan-fg">read_csv</span><span class="ansi-blue-fg">(filepath_or_buffer, sep, delimiter, header, names, index_col, usecols, squeeze, prefix, mangle_dupe_cols, dtype, engine, converters, true_values, false_values, skipinitialspace, skiprows, skipfooter, nrows, na_values, keep_default_na, na_filter, verbose, skip_blank_lines, parse_dates, infer_datetime_format, keep_date_col, date_parser, dayfirst, cache_dates, iterator, chunksize, compression, thousands, decimal, lineterminator, quotechar, quoting, doublequote, escapechar, comment, encoding, dialect, error_bad_lines, warn_bad_lines, delim_whitespace, low_memory, memory_map, float_precision)</span>
+<span class="ansi-green-intense-fg ansi-bold">    686</span>     )
+<span class="ansi-green-intense-fg ansi-bold">    687</span> 
+<span class="ansi-green-fg">--&gt; 688</span><span class="ansi-red-fg">     </span><span class="ansi-green-fg">return</span> _read<span class="ansi-blue-fg">(</span>filepath_or_buffer<span class="ansi-blue-fg">,</span> kwds<span class="ansi-blue-fg">)</span>
+<span class="ansi-green-intense-fg ansi-bold">    689</span> 
+<span class="ansi-green-intense-fg ansi-bold">    690</span> 
+
+<span class="ansi-green-fg">~/miniconda3/lib/python3.8/site-packages/pandas/io/parsers.py</span> in <span class="ansi-cyan-fg">_read</span><span class="ansi-blue-fg">(filepath_or_buffer, kwds)</span>
+<span class="ansi-green-intense-fg ansi-bold">    452</span> 
+<span class="ansi-green-intense-fg ansi-bold">    453</span>     <span class="ansi-red-fg"># Create the parser.</span>
+<span class="ansi-green-fg">--&gt; 454</span><span class="ansi-red-fg">     </span>parser <span class="ansi-blue-fg">=</span> TextFileReader<span class="ansi-blue-fg">(</span>fp_or_buf<span class="ansi-blue-fg">,</span> <span class="ansi-blue-fg">**</span>kwds<span class="ansi-blue-fg">)</span>
+<span class="ansi-green-intense-fg ansi-bold">    455</span> 
+<span class="ansi-green-intense-fg ansi-bold">    456</span>     <span class="ansi-green-fg">if</span> chunksize <span class="ansi-green-fg">or</span> iterator<span class="ansi-blue-fg">:</span>
+
+<span class="ansi-green-fg">~/miniconda3/lib/python3.8/site-packages/pandas/io/parsers.py</span> in <span class="ansi-cyan-fg">__init__</span><span class="ansi-blue-fg">(self, f, engine, **kwds)</span>
+<span class="ansi-green-intense-fg ansi-bold">    946</span>             self<span class="ansi-blue-fg">.</span>options<span class="ansi-blue-fg">[</span><span class="ansi-blue-fg">&#34;has_index_names&#34;</span><span class="ansi-blue-fg">]</span> <span class="ansi-blue-fg">=</span> kwds<span class="ansi-blue-fg">[</span><span class="ansi-blue-fg">&#34;has_index_names&#34;</span><span class="ansi-blue-fg">]</span>
+<span class="ansi-green-intense-fg ansi-bold">    947</span> 
+<span class="ansi-green-fg">--&gt; 948</span><span class="ansi-red-fg">         </span>self<span class="ansi-blue-fg">.</span>_make_engine<span class="ansi-blue-fg">(</span>self<span class="ansi-blue-fg">.</span>engine<span class="ansi-blue-fg">)</span>
+<span class="ansi-green-intense-fg ansi-bold">    949</span> 
+<span class="ansi-green-intense-fg ansi-bold">    950</span>     <span class="ansi-green-fg">def</span> close<span class="ansi-blue-fg">(</span>self<span class="ansi-blue-fg">)</span><span class="ansi-blue-fg">:</span>
+
+<span class="ansi-green-fg">~/miniconda3/lib/python3.8/site-packages/pandas/io/parsers.py</span> in <span class="ansi-cyan-fg">_make_engine</span><span class="ansi-blue-fg">(self, engine)</span>
+<span class="ansi-green-intense-fg ansi-bold">   1178</span>     <span class="ansi-green-fg">def</span> _make_engine<span class="ansi-blue-fg">(</span>self<span class="ansi-blue-fg">,</span> engine<span class="ansi-blue-fg">=</span><span class="ansi-blue-fg">&#34;c&#34;</span><span class="ansi-blue-fg">)</span><span class="ansi-blue-fg">:</span>
+<span class="ansi-green-intense-fg ansi-bold">   1179</span>         <span class="ansi-green-fg">if</span> engine <span class="ansi-blue-fg">==</span> <span class="ansi-blue-fg">&#34;c&#34;</span><span class="ansi-blue-fg">:</span>
+<span class="ansi-green-fg">-&gt; 1180</span><span class="ansi-red-fg">             </span>self<span class="ansi-blue-fg">.</span>_engine <span class="ansi-blue-fg">=</span> CParserWrapper<span class="ansi-blue-fg">(</span>self<span class="ansi-blue-fg">.</span>f<span class="ansi-blue-fg">,</span> <span class="ansi-blue-fg">**</span>self<span class="ansi-blue-fg">.</span>options<span class="ansi-blue-fg">)</span>
+<span class="ansi-green-intense-fg ansi-bold">   1181</span>         <span class="ansi-green-fg">else</span><span class="ansi-blue-fg">:</span>
+<span class="ansi-green-intense-fg ansi-bold">   1182</span>             <span class="ansi-green-fg">if</span> engine <span class="ansi-blue-fg">==</span> <span class="ansi-blue-fg">&#34;python&#34;</span><span class="ansi-blue-fg">:</span>
+
+<span class="ansi-green-fg">~/miniconda3/lib/python3.8/site-packages/pandas/io/parsers.py</span> in <span class="ansi-cyan-fg">__init__</span><span class="ansi-blue-fg">(self, src, **kwds)</span>
+<span class="ansi-green-intense-fg ansi-bold">   2008</span>         kwds<span class="ansi-blue-fg">[</span><span class="ansi-blue-fg">&#34;usecols&#34;</span><span class="ansi-blue-fg">]</span> <span class="ansi-blue-fg">=</span> self<span class="ansi-blue-fg">.</span>usecols
+<span class="ansi-green-intense-fg ansi-bold">   2009</span> 
+<span class="ansi-green-fg">-&gt; 2010</span><span class="ansi-red-fg">         </span>self<span class="ansi-blue-fg">.</span>_reader <span class="ansi-blue-fg">=</span> parsers<span class="ansi-blue-fg">.</span>TextReader<span class="ansi-blue-fg">(</span>src<span class="ansi-blue-fg">,</span> <span class="ansi-blue-fg">**</span>kwds<span class="ansi-blue-fg">)</span>
+<span class="ansi-green-intense-fg ansi-bold">   2011</span>         self<span class="ansi-blue-fg">.</span>unnamed_cols <span class="ansi-blue-fg">=</span> self<span class="ansi-blue-fg">.</span>_reader<span class="ansi-blue-fg">.</span>unnamed_cols
+<span class="ansi-green-intense-fg ansi-bold">   2012</span> 
+
+<span class="ansi-green-fg">pandas/_libs/parsers.pyx</span> in <span class="ansi-cyan-fg">pandas._libs.parsers.TextReader.__cinit__</span><span class="ansi-blue-fg">()</span>
+
+<span class="ansi-green-fg">pandas/_libs/parsers.pyx</span> in <span class="ansi-cyan-fg">pandas._libs.parsers.TextReader._setup_parser_source</span><span class="ansi-blue-fg">()</span>
+
+<span class="ansi-red-fg">FileNotFoundError</span>: [Errno 2] No such file or directory: &#39;/home/brandon/projects/plant_pathology/train_folds.csv&#39;</pre>
 </div>
-
 </div>
 
 </div>
@@ -293,7 +336,7 @@ nb_path: "nbks/00_utils.ipynb"
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="create_folds" class="doc_header"><code>create_folds</code><a href="https://github.com/bwolfson97/plant_pathology/tree/master/plant_pathology/utils.py#L21" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>create_folds</code>(<strong><code>path</code></strong>:<code>Path</code>, <strong><code>df</code></strong>:<code>DataFrame</code>, <strong><code>prn_stats</code></strong>:<code>bool</code>=<em><code>False</code></em>)</p>
+<h4 id="create_folds" class="doc_header"><code>create_folds</code><a href="https://github.com/bwolfson97/plant_pathology/tree/master/plant_pathology/utils.py#L20" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>create_folds</code>(<strong><code>path</code></strong>:<code>Path</code>, <strong><code>df</code></strong>:<code>DataFrame</code>, <strong><code>prn_stats</code></strong>:<code>bool</code>=<em><code>False</code></em>)</p>
 </blockquote>
 
 </div>
@@ -348,7 +391,7 @@ nb_path: "nbks/00_utils.ipynb"
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="kaggle_submit_command" class="doc_header"><code>kaggle_submit_command</code><a href="https://github.com/bwolfson97/plant_pathology/tree/master/plant_pathology/utils.py#L38" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>kaggle_submit_command</code>()</p>
+<h4 id="kaggle_submit_command" class="doc_header"><code>kaggle_submit_command</code><a href="https://github.com/bwolfson97/plant_pathology/tree/master/plant_pathology/utils.py#L37" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>kaggle_submit_command</code>()</p>
 </blockquote>
 
 </div>
@@ -416,7 +459,7 @@ nb_path: "nbks/00_utils.ipynb"
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="average_preds" class="doc_header"><code>average_preds</code><a href="https://github.com/bwolfson97/plant_pathology/tree/master/plant_pathology/utils.py#L42" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>average_preds</code>(<strong><code>path</code></strong>:<code>Path</code>)</p>
+<h4 id="average_preds" class="doc_header"><code>average_preds</code><a href="https://github.com/bwolfson97/plant_pathology/tree/master/plant_pathology/utils.py#L41" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>average_preds</code>(<strong><code>path</code></strong>:<code>Path</code>)</p>
 </blockquote>
 
 </div>
@@ -458,7 +501,7 @@ nb_path: "nbks/00_utils.ipynb"
 
 
 <div class="output_text output_subarea output_execute_result">
-<pre>(#5) [Path(&#39;/home/jupyter/kaggle/plant-pathology/exps/baseline/log.txt&#39;),Path(&#39;/home/jupyter/kaggle/plant-pathology/exps/baseline/.ipynb_checkpoints&#39;),Path(&#39;/home/jupyter/kaggle/plant-pathology/exps/baseline/predictions_fold_1.csv&#39;),Path(&#39;/home/jupyter/kaggle/plant-pathology/exps/baseline/predictions_fold_2.csv&#39;),Path(&#39;/home/jupyter/kaggle/plant-pathology/exps/baseline/predictions_fold_3.csv&#39;)]</pre>
+<pre>(#8) [Path(&#39;/home/jupyter/kaggle/plant-pathology/exps/baseline/my_best_all_data&#39;),Path(&#39;/home/jupyter/kaggle/plant-pathology/exps/baseline/log.txt&#39;),Path(&#39;/home/jupyter/kaggle/plant-pathology/exps/baseline/.ipynb_checkpoints&#39;),Path(&#39;/home/jupyter/kaggle/plant-pathology/exps/baseline/predictions_fold_1.csv&#39;),Path(&#39;/home/jupyter/kaggle/plant-pathology/exps/baseline/predictions_fold_2.csv&#39;),Path(&#39;/home/jupyter/kaggle/plant-pathology/exps/baseline/TESTING_PSEUDO_LABELS.csv&#39;),Path(&#39;/home/jupyter/kaggle/plant-pathology/exps/baseline/predictions_fold_3.csv&#39;),Path(&#39;/home/jupyter/kaggle/plant-pathology/exps/baseline/wandb&#39;)]</pre>
 </div>
 
 </div>
@@ -505,7 +548,7 @@ nb_path: "nbks/00_utils.ipynb"
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="save_average_preds" class="doc_header"><code>save_average_preds</code><a href="https://github.com/bwolfson97/plant_pathology/tree/master/plant_pathology/utils.py#L49" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>save_average_preds</code>(<strong><code>path</code></strong>:"Path to prediction CSVs"=<em><code>'.'</code></em>, <strong><code>name</code></strong>:"Name"=<em><code>'averaged_predictions.csv'</code></em>)</p>
+<h4 id="save_average_preds" class="doc_header"><code>save_average_preds</code><a href="https://github.com/bwolfson97/plant_pathology/tree/master/plant_pathology/utils.py#L48" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>save_average_preds</code>(<strong><code>path</code></strong>:"Path to prediction CSVs"=<em><code>'.'</code></em>, <strong><code>name</code></strong>:"Name"=<em><code>'averaged_predictions.csv'</code></em>)</p>
 </blockquote>
 <p>Average predictions from multiple folds.</p>
 

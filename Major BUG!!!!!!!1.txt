@@ -1,3 +1,0 @@
-# Major Problem I Discovered
-
-When doing TTA, evaluate returns raw-logits CSV. (ie. softmax has not been applied to class predictions, this probably massively screws up results??)
