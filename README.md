@@ -20,7 +20,7 @@ I built this model using [Nbdev](https://nbdev.fast.ai/), which provides an [lit
 ```python
 from plant_pathology.pretrained_models import get_model
 
-model = get_model("plant_pathology_resnet18_2021-6-4")
+model = get_model("plant_pathology_resnet18_2021-06-04")
 prediction = model.predict("/path/to/image.jpg")
 ```
 
