@@ -3,7 +3,6 @@
 __all__ = ["index", "modules", "custom_doc_links", "git_url"]
 
 index = {"load_data": "00_utils.ipynb",
-         "create_folds": "00_utils.ipynb",
          "kaggle_submit_command": "00_utils.ipynb",
          "average_preds": "00_utils.ipynb",
          "get_averaged_preds": "00_utils.ipynb",
@@ -18,6 +17,7 @@ index = {"load_data": "00_utils.ipynb",
          "softmax_RocAuc": "03_train.ipynb",
          "train_cv": "03_train.ipynb",
          "generate_pseudo_labels": "04_generate_pseudo_labels.ipynb",
+         "create_folds": "06_create_folds.ipynb",
          "DATA_PATH": "config.ipynb"}
 
 modules = ["utils.py",
@@ -26,6 +26,7 @@ modules = ["utils.py",
            "train.py",
            "generate_pseudo_labels.py",
            "self_knowledge_distillation.py",
+           "create_folds.py",
            "config.py"]
 
 doc_url = "https://bwolfson97.github.io/plant_pathology/"
