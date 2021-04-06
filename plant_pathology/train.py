@@ -27,13 +27,16 @@ def timm_or_fastai_arch(arch: str) -> (Union[Any, str], Callable[..., Learner]):
 
 # Cell
 def train(
-    epochs: int, lr: Union[float, str], frz: int=1, pre: int=800, re: int=256,
+    data_path: Path, epochs: int, lr: Union[float, str], frz: int=1, pre: int=800, re: int=256,
     bs: int=200, fold: int=4, smooth: bool=False,
     arch: str='resnet18', dump: bool=False, log: bool=False, mixup: float=0.,
     fp16: bool=False, dls: DataLoaders=None, save: bool=False, pseudo: Path=None,
  ) -> Learner:
     # Prep Data, Opt, Loss, Arch
-    if dls is None: dls = get_dls_all_in_1(presize=pre, resize=re, bs=bs, val_fold=fold, pseudo=pseudo)
+    if dls is None:
+        dls = get_dls_all_in_1(
+            data_path=data_path, presize=pre, resize=re, bs=bs, val_fold=fold, pseudo_labels_path=pseudo
+        )
     if log: wandb.init(project="plant-pathology")
     if smooth: loss_func = LabelSmoothingCrossEntropyFlat()
     else:      loss_func = CrossEntropyLossFlat()
@@ -67,22 +70,24 @@ def softmax_RocAuc(logits, labels):
 # Cell
 @call_parse
 def train_cv(
+    path:     Param("Path to data dir", Path),
     epochs:   Param("Number of unfrozen epochs", int),
     lr:       Param("Initial learning rate", float),
     frz:      Param("Number of frozen epochs", int)=1,
-    pre:      Param("Presize", tuple)=(682, 1024),
-    re:       Param("Resize", int)=256,
+    pre:      Param("Image presize", tuple)=(682, 1024),
+    re:       Param("Image resize", int)=256,
     bs:       Param("Batch size", int)=256,
     smooth:   Param("Label smoothing?", store_true)=False,
     arch:     Param("Architecture", str)='resnet18',
-    dump:     Param("Print model", store_true)=False,
+    dump:     Param("Don't train, just print model", store_true)=False,
     log:      Param("Log w/ W&B", store_true)=False,
     save:     Param("Save model based on RocAuc", store_true)=False,
     mixup:    Param("Mixup (0.4 is good)", float)=0.0,
     tta:      Param("Test-time augmentation", store_true)=False,
-    fp16:     Param("Use mixed-precision", store_true)=False,
-    eval_dir: Param("Evaluate model, save results in dir", Path)=None,
-    val_fold: Param("Only do 1 fold (4 is baseline, 9 for all data)", int)=None,
+    fp16:     Param("Mixed-precision training", store_true)=False,
+    eval_dir: Param("Evaluate model and save results in dir", Path)=None,
+    val_fold: Param("Don't go cross-validation, just do 1 fold (or pass 9 "
+                    "to train on all data)", int)=None,
     pseudo:   Param("Path to pseudo labels to train on", Path)=None,
 ):
     print(locals())
@@ -90,9 +95,9 @@ def train_cv(
     for fold in range(5):
         if val_fold is not None: fold = val_fold  # Not doing CV
         print(f"\nTraining on fold {fold}")
-        learn = train(epochs, lr, frz=frz, pre=pre, re=re, bs=bs, smooth=smooth,
-                      arch=arch, dump=dump, log=log, fold=fold, mixup=mixup,
-                      fp16=fp16, save=save, pseudo=pseudo)
+        learn = train(data_path=path, epochs=epochs, lr=lr, frz=frz, pre=pre,
+                      re=re, bs=bs, smooth=smooth, arch=arch, dump=dump, log=log,
+                      fold=fold, mixup=mixup, fp16=fp16, save=save, pseudo=pseudo)
 
         if hasattr(learn, "mixup") and tta: learn.remove_cb(MixUp)  # Bug when doing tta w/Mixup
 
