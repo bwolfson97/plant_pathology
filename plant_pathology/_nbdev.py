@@ -17,14 +17,15 @@ index = {"load_data": "00_utils.ipynb",
          "train": "03_train.ipynb",
          "softmax_RocAuc": "03_train.ipynb",
          "train_cv": "03_train.ipynb",
-         "generate_pseudo_labels": "04_generate_pseudo_labels.ipynb"}
+         "DATA_PATH": "config.ipynb"}
 
 modules = ["utils.py",
            "dataset.py",
            "evaluate.py",
            "train.py",
            "generate_pseudo_labels.py",
-           "self_knowledge_distillation.py"]
+           "self_knowledge_distillation.py",
+           "config.py"]
 
 doc_url = "https://bwolfson97.github.io/plant_pathology/"
 
