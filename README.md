@@ -24,23 +24,6 @@ model = get_model("**FIXME**")
 prediction = model.predict("/path/to/image.jpg")
 ```
 
-
-    ---------------------------------------------------------------------------
-
-    ModuleNotFoundError                       Traceback (most recent call last)
-
-    <ipython-input-8-14608c339b37> in <module>
-    ----> 1 from plant_pathology.pretrained_models import get_model
-          2 
-          3 model = get_model("**FIXME**")
-          4 prediction = model.predict(image_path)
-
-
-    ModuleNotFoundError: No module named 'plant_pathology.pretrained_models'
-
-
-**FIXME**: Colab notebook with an example: ![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)
-
 ### Training
 
 ### Run training script
