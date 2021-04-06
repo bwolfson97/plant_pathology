@@ -27,6 +27,6 @@ def get_dls(path: Path, df: pd.DataFrame, presize: Union[tuple, int]=(682, 1024)
 
 # Cell
 @delegates(get_dls)
-def get_dls_all_in_1(pseudo: str=None, **kwargs) -> DataLoaders:
-    path, df = load_data(path_pseudo_labels=pseudo)
+def get_dls_all_in_1(data_path: Path, pseudo_labels_path: str=None, **kwargs) -> DataLoaders:
+    path, df = load_data(data_path, with_folds=True, pseudo_labels_path=pseudo_labels_path)
     return get_dls(path, df, **kwargs)
