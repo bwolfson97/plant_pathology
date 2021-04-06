@@ -27,6 +27,12 @@ entries:
     - output: web,pdf
       title: Self-Knowledge Distillation
       url: self_knowledge_distillation.html
+    - output: web,pdf
+      title: Create Cross Validation Folds
+      url: create_folds.html
+    - output: web,pdf
+      title: Config
+      url: config.html
     output: web
     title: plant_pathology
   output: web

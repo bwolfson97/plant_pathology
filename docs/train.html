@@ -84,7 +84,7 @@ nb_path: "nbks/03_train.ipynb"
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="train" class="doc_header"><code>train</code><a href="https://github.com/bwolfson97/plant_pathology/tree/master/plant_pathology/train.py#L29" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>train</code>(<strong><code>epochs</code></strong>:<code>int</code>, <strong><code>lr</code></strong>:<code>Union</code>[<code>float</code>, <code>str</code>], <strong><code>frz</code></strong>:<code>int</code>=<em><code>1</code></em>, <strong><code>pre</code></strong>:<code>int</code>=<em><code>800</code></em>, <strong><code>re</code></strong>:<code>int</code>=<em><code>256</code></em>, <strong><code>bs</code></strong>:<code>int</code>=<em><code>200</code></em>, <strong><code>fold</code></strong>:<code>int</code>=<em><code>4</code></em>, <strong><code>smooth</code></strong>:<code>bool</code>=<em><code>False</code></em>, <strong><code>arch</code></strong>:<code>str</code>=<em><code>'resnet18'</code></em>, <strong><code>dump</code></strong>:<code>bool</code>=<em><code>False</code></em>, <strong><code>log</code></strong>:<code>bool</code>=<em><code>False</code></em>, <strong><code>mixup</code></strong>:<code>float</code>=<em><code>0.0</code></em>, <strong><code>fp16</code></strong>:<code>bool</code>=<em><code>False</code></em>, <strong><code>dls</code></strong>:<code>DataLoaders</code>=<em><code>None</code></em>, <strong><code>save</code></strong>:<code>bool</code>=<em><code>False</code></em>, <strong><code>pseudo</code></strong>:<code>Path</code>=<em><code>None</code></em>)</p>
+<h4 id="train" class="doc_header"><code>train</code><a href="https://github.com/bwolfson97/plant_pathology/tree/master/plant_pathology/train.py#L29" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>train</code>(<strong><code>data_path</code></strong>:<code>Path</code>, <strong><code>epochs</code></strong>:<code>int</code>, <strong><code>lr</code></strong>:<code>Union</code>[<code>float</code>, <code>str</code>], <strong><code>frz</code></strong>:<code>int</code>=<em><code>1</code></em>, <strong><code>pre</code></strong>:<code>int</code>=<em><code>800</code></em>, <strong><code>re</code></strong>:<code>int</code>=<em><code>256</code></em>, <strong><code>bs</code></strong>:<code>int</code>=<em><code>200</code></em>, <strong><code>fold</code></strong>:<code>int</code>=<em><code>4</code></em>, <strong><code>smooth</code></strong>:<code>bool</code>=<em><code>False</code></em>, <strong><code>arch</code></strong>:<code>str</code>=<em><code>'resnet18'</code></em>, <strong><code>dump</code></strong>:<code>bool</code>=<em><code>False</code></em>, <strong><code>log</code></strong>:<code>bool</code>=<em><code>False</code></em>, <strong><code>mixup</code></strong>:<code>float</code>=<em><code>0.0</code></em>, <strong><code>fp16</code></strong>:<code>bool</code>=<em><code>False</code></em>, <strong><code>dls</code></strong>:<code>DataLoaders</code>=<em><code>None</code></em>, <strong><code>save</code></strong>:<code>bool</code>=<em><code>False</code></em>, <strong><code>pseudo</code></strong>:<code>Path</code>=<em><code>None</code></em>)</p>
 </blockquote>
 
 </div>
@@ -111,7 +111,7 @@ nb_path: "nbks/03_train.ipynb"
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">learn</span> <span class="o">=</span> <span class="n">train</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mf">0.001</span><span class="p">,</span> <span class="n">bs</span><span class="o">=</span><span class="mi">256</span><span class="p">,</span> <span class="n">log</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">learn</span> <span class="o">=</span> <span class="n">train</span><span class="p">(</span><span class="n">DATA_PATH</span><span class="p">,</span> <span class="n">epochs</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">lr</span><span class="o">=</span><span class="mf">0.001</span><span class="p">,</span> <span class="n">bs</span><span class="o">=</span><span class="mi">256</span><span class="p">,</span> <span class="n">log</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 </pre></div>
 
     </div>
@@ -120,6 +120,14 @@ nb_path: "nbks/03_train.ipynb"
 
 <div class="output_wrapper">
 <div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre># train exs: 1457, val exs: 364
+</pre>
+</div>
+</div>
 
 <div class="output_area">
 
@@ -139,11 +147,41 @@ nb_path: "nbks/03_train.ipynb"
   <tbody>
     <tr>
       <td>0</td>
-      <td>1.994526</td>
-      <td>1.320189</td>
-      <td>0.552198</td>
-      <td>0.774509</td>
-      <td>00:47</td>
+      <td>1.889500</td>
+      <td>1.936094</td>
+      <td>0.252747</td>
+      <td>0.712214</td>
+      <td>00:25</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+</div>
+
+<div class="output_area">
+
+
+<div class="output_html rendered_html output_subarea ">
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: left;">
+      <th>epoch</th>
+      <th>train_loss</th>
+      <th>valid_loss</th>
+      <th>accuracy</th>
+      <th>roc_auc_score</th>
+      <th>time</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>0</td>
+      <td>1.113675</td>
+      <td>1.158887</td>
+      <td>0.516484</td>
+      <td>0.819043</td>
+      <td>00:23</td>
     </tr>
   </tbody>
 </table>
@@ -179,11 +217,137 @@ nb_path: "nbks/03_train.ipynb"
 
 
 <div class="output_text output_subarea output_execute_result">
-<pre>(#4) [1.9945262670516968,1.3201892375946045,0.5521978139877319,0.7745089188919971]</pre>
+<pre>(#4) [1.113674521446228,1.1588870286941528,0.5164835453033447,0.8190431853439027]</pre>
 </div>
 
 </div>
 
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">learn</span> <span class="o">=</span> <span class="n">train</span><span class="p">(</span><span class="n">DATA_PATH</span><span class="p">,</span> <span class="n">epochs</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">lr</span><span class="o">=</span><span class="mf">1e-2</span><span class="p">,</span> <span class="n">frz</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">pre</span><span class="o">=</span><span class="mi">32</span><span class="p">,</span> <span class="n">re</span><span class="o">=</span><span class="mi">32</span><span class="p">,</span> <span class="n">bs</span><span class="o">=</span><span class="mi">1024</span><span class="p">,</span> <span class="n">save</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre># train exs: 1457, val exs: 364
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+
+<div class="output_html rendered_html output_subarea ">
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: left;">
+      <th>epoch</th>
+      <th>train_loss</th>
+      <th>valid_loss</th>
+      <th>accuracy</th>
+      <th>roc_auc_score</th>
+      <th>time</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>0</td>
+      <td>2.366957</td>
+      <td>1.406226</td>
+      <td>0.277473</td>
+      <td>0.534237</td>
+      <td>00:36</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+</div>
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>Better model found at epoch 0 with roc_auc_score value: 0.5342371971413922.
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+
+<div class="output_html rendered_html output_subarea ">
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: left;">
+      <th>epoch</th>
+      <th>train_loss</th>
+      <th>valid_loss</th>
+      <th>accuracy</th>
+      <th>roc_auc_score</th>
+      <th>time</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>0</td>
+      <td>2.195788</td>
+      <td>1.380212</td>
+      <td>0.315934</td>
+      <td>0.543238</td>
+      <td>00:34</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+</div>
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>Better model found at epoch 0 with roc_auc_score value: 0.543238294717209.
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">saved_model_path</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="s2">&quot;./models/model_val_on_4.pth&quot;</span><span class="p">)</span> 
+<span class="k">assert</span> <span class="n">saved_model_path</span><span class="o">.</span><span class="n">exists</span><span class="p">()</span>
+<span class="n">saved_model_path</span><span class="o">.</span><span class="n">unlink</span><span class="p">()</span>
+</pre></div>
+
+    </div>
 </div>
 </div>
 
@@ -199,18 +363,30 @@ nb_path: "nbks/03_train.ipynb"
     {% raw %}
     
 <div class="cell border-box-sizing code_cell rendered">
-<div class="input">
 
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">softmax_RocAuc</span><span class="p">(</span><span class="n">logits</span><span class="p">,</span> <span class="n">labels</span><span class="p">):</span>
-    <span class="n">probs</span> <span class="o">=</span> <span class="n">logits</span><span class="o">.</span><span class="n">softmax</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">RocAuc</span><span class="p">()(</span><span class="n">probs</span><span class="p">,</span> <span class="n">labels</span><span class="p">)</span>
-</pre></div>
+<div class="output_wrapper">
+<div class="output">
 
-    </div>
+<div class="output_area">
+
+
+<div class="output_markdown rendered_html output_subarea ">
+<h4 id="softmax_RocAuc" class="doc_header"><code>softmax_RocAuc</code><a href="https://github.com/bwolfson97/plant_pathology/tree/master/plant_pathology/train.py#L66" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>softmax_RocAuc</code>(<strong><code>logits</code></strong>, <strong><code>labels</code></strong>)</p>
+</blockquote>
+
+</div>
+
+</div>
+
 </div>
 </div>
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
 
 </div>
     {% endraw %}
@@ -239,11 +415,11 @@ nb_path: "nbks/03_train.ipynb"
 
 
 <div class="output_text output_subarea output_execute_result">
-<pre>(tensor([[-0.0125,  0.6561, -1.4383,  0.6503, -0.8040],
-         [ 0.3989,  2.0122, -0.0940,  0.6556,  0.1049],
-         [-0.8033,  2.0776,  1.1644,  1.9944,  1.7843],
-         [ 1.7712,  0.5099, -1.2987,  0.9259, -0.0202],
-         [-0.8204, -0.3565,  0.1263, -0.3076, -1.1615]]),
+<pre>(tensor([[-1.8089, -1.0325,  0.0798,  0.7559, -0.1851],
+         [-1.1922, -0.9417, -0.5189, -0.2025,  0.8527],
+         [-0.6867, -0.6207, -0.0188,  1.2670, -0.0194],
+         [ 1.7436,  1.4802,  0.0136, -0.0302,  0.2295],
+         [ 2.0069, -1.4194, -2.0926,  1.4072,  1.0432]]),
  torch.Size([5, 1]))</pre>
 </div>
 
@@ -277,7 +453,7 @@ nb_path: "nbks/03_train.ipynb"
 
 
 <div class="output_text output_subarea output_execute_result">
-<pre>0.75</pre>
+<pre>0.45</pre>
 </div>
 
 </div>
@@ -299,7 +475,7 @@ nb_path: "nbks/03_train.ipynb"
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="train_cv" class="doc_header"><code>train_cv</code><a href="https://github.com/bwolfson97/plant_pathology/tree/master/plant_pathology/train.py#L63" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>train_cv</code>(<strong><code>epochs</code></strong>:"Number of unfrozen epochs", <strong><code>lr</code></strong>:"Initial learning rate", <strong><code>frz</code></strong>:"Number of frozen epochs"=<em><code>1</code></em>, <strong><code>pre</code></strong>:"Presize"=<em><code>(682, 1024)</code></em>, <strong><code>re</code></strong>:"Resize"=<em><code>256</code></em>, <strong><code>bs</code></strong>:"Batch size"=<em><code>256</code></em>, <strong><code>smooth</code></strong>:"Label smoothing?"=<em><code>False</code></em>, <strong><code>arch</code></strong>:"Architecture"=<em><code>'resnet18'</code></em>, <strong><code>dump</code></strong>:"Print model"=<em><code>False</code></em>, <strong><code>log</code></strong>:"Log w/ W&amp;B"=<em><code>False</code></em>, <strong><code>save</code></strong>:"Save model based on RocAuc"=<em><code>False</code></em>, <strong><code>mixup</code></strong>:"Mixup (0.4 is good)"=<em><code>0.0</code></em>, <strong><code>tta</code></strong>:"Test-time augmentation"=<em><code>False</code></em>, <strong><code>fp16</code></strong>:"Use mixed-precision"=<em><code>False</code></em>, <strong><code>eval_dir</code></strong>:"Evaluate model, save results in dir"=<em><code>None</code></em>, <strong><code>val_fold</code></strong>:"Only do 1 fold (4 is baseline, 9 for all data)"=<em><code>None</code></em>, <strong><code>pseudo</code></strong>:"Path to pseudo labels to train on"=<em><code>None</code></em>)</p>
+<h4 id="train_cv" class="doc_header"><code>train_cv</code><a href="https://github.com/bwolfson97/plant_pathology/tree/master/plant_pathology/train.py#L71" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>train_cv</code>(<strong><code>path</code></strong>:"Path to data dir", <strong><code>epochs</code></strong>:"Number of unfrozen epochs", <strong><code>lr</code></strong>:"Initial learning rate", <strong><code>frz</code></strong>:"Number of frozen epochs"=<em><code>1</code></em>, <strong><code>pre</code></strong>:"Image presize"=<em><code>(682, 1024)</code></em>, <strong><code>re</code></strong>:"Image resize"=<em><code>256</code></em>, <strong><code>bs</code></strong>:"Batch size"=<em><code>256</code></em>, <strong><code>smooth</code></strong>:"Label smoothing?"=<em><code>False</code></em>, <strong><code>arch</code></strong>:"Architecture"=<em><code>'resnet18'</code></em>, <strong><code>dump</code></strong>:"Don't train, just print model"=<em><code>False</code></em>, <strong><code>log</code></strong>:"Log w/ W&amp;B"=<em><code>False</code></em>, <strong><code>save</code></strong>:"Save model based on RocAuc"=<em><code>False</code></em>, <strong><code>mixup</code></strong>:"Mixup (0.4 is good)"=<em><code>0.0</code></em>, <strong><code>tta</code></strong>:"Test-time augmentation"=<em><code>False</code></em>, <strong><code>fp16</code></strong>:"Mixed-precision training"=<em><code>False</code></em>, <strong><code>eval_dir</code></strong>:"Evaluate model and save results in dir"=<em><code>None</code></em>, <strong><code>val_fold</code></strong>:"Don't go cross-validation, just do 1 fold (or pass 9 to train on all data)"=<em><code>None</code></em>, <strong><code>pseudo</code></strong>:"Path to pseudo labels to train on"=<em><code>None</code></em>)</p>
 </blockquote>
 
 </div>
@@ -360,7 +536,7 @@ nb_path: "nbks/03_train.ipynb"
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">train_cv</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mf">2e-2</span><span class="p">,</span> <span class="n">pre</span><span class="o">=</span><span class="mi">64</span><span class="p">,</span> <span class="n">re</span><span class="o">=</span><span class="mi">64</span><span class="p">,</span> <span class="n">bs</span><span class="o">=</span><span class="mi">512</span><span class="p">,</span> <span class="n">fp16</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">val_fold</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">tta</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">mixup</span><span class="o">=</span><span class="mf">0.4</span><span class="p">,</span> <span class="n">eval_dir</span><span class="o">=</span><span class="s2">&quot;test&quot;</span><span class="p">)</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">train_cv</span><span class="p">(</span><span class="n">DATA_PATH</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mf">2e-2</span><span class="p">,</span> <span class="n">pre</span><span class="o">=</span><span class="mi">64</span><span class="p">,</span> <span class="n">re</span><span class="o">=</span><span class="mi">64</span><span class="p">,</span> <span class="n">bs</span><span class="o">=</span><span class="mi">512</span><span class="p">,</span> <span class="n">fp16</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">val_fold</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">tta</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">mixup</span><span class="o">=</span><span class="mf">0.4</span><span class="p">,</span> <span class="n">eval_dir</span><span class="o">=</span><span class="s2">&quot;test&quot;</span><span class="p">)</span>
 </pre></div>
 
     </div>
@@ -373,7 +549,7 @@ nb_path: "nbks/03_train.ipynb"
 <div class="output_area">
 
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>{&#39;epochs&#39;: 0, &#39;lr&#39;: 0.02, &#39;frz&#39;: 1, &#39;pre&#39;: 64, &#39;re&#39;: 64, &#39;bs&#39;: 512, &#39;smooth&#39;: False, &#39;arch&#39;: &#39;resnet18&#39;, &#39;dump&#39;: False, &#39;log&#39;: False, &#39;save&#39;: False, &#39;mixup&#39;: 0.4, &#39;tta&#39;: True, &#39;fp16&#39;: True, &#39;eval_dir&#39;: &#39;test&#39;, &#39;val_fold&#39;: 4, &#39;pseudo&#39;: None}
+<pre>{&#39;path&#39;: Path(&#39;/home/brandon/kaggle/plant_pathology/data&#39;), &#39;epochs&#39;: 0, &#39;lr&#39;: 0.02, &#39;frz&#39;: 1, &#39;pre&#39;: 64, &#39;re&#39;: 64, &#39;bs&#39;: 512, &#39;smooth&#39;: False, &#39;arch&#39;: &#39;resnet18&#39;, &#39;dump&#39;: False, &#39;log&#39;: False, &#39;save&#39;: False, &#39;mixup&#39;: 0.4, &#39;tta&#39;: True, &#39;fp16&#39;: True, &#39;eval_dir&#39;: &#39;test&#39;, &#39;val_fold&#39;: 4, &#39;pseudo&#39;: None}
 
 Training on fold 4
 # train exs: 1457, val exs: 364
@@ -399,11 +575,11 @@ Training on fold 4
   <tbody>
     <tr>
       <td>0</td>
-      <td>2.401971</td>
-      <td>3.247023</td>
-      <td>0.326923</td>
-      <td>0.541498</td>
-      <td>00:42</td>
+      <td>2.503063</td>
+      <td>5.348638</td>
+      <td>0.343407</td>
+      <td>0.530162</td>
+      <td>00:24</td>
     </tr>
   </tbody>
 </table>
@@ -441,7 +617,7 @@ Training on fold 4
 <div class="output_area">
 
 <div class="output_subarea output_stream output_stderr output_text">
-<pre>/opt/conda/lib/python3.7/site-packages/fastprogress/fastprogress.py:74: UserWarning: Your generator is empty.
+<pre>/home/brandon/miniconda3/lib/python3.8/site-packages/fastprogress/fastprogress.py:74: UserWarning: Your generator is empty.
   warn(&#34;Your generator is empty.&#34;)
 </pre>
 </div>
@@ -461,60 +637,123 @@ Training on fold 4
 <div class="output_subarea output_text output_error">
 <pre>
 <span class="ansi-red-fg">---------------------------------------------------------------------------</span>
-<span class="ansi-red-fg">ValueError</span>                                Traceback (most recent call last)
-<span class="ansi-green-fg">&lt;ipython-input-44-9b321bbe4345&gt;</span> in <span class="ansi-cyan-fg">&lt;module&gt;</span>
-<span class="ansi-green-fg">----&gt; 1</span><span class="ansi-red-fg"> </span>train_cv<span class="ansi-blue-fg">(</span><span class="ansi-cyan-fg">0</span><span class="ansi-blue-fg">,</span> <span class="ansi-cyan-fg">2e-2</span><span class="ansi-blue-fg">,</span> pre<span class="ansi-blue-fg">=</span><span class="ansi-cyan-fg">64</span><span class="ansi-blue-fg">,</span> re<span class="ansi-blue-fg">=</span><span class="ansi-cyan-fg">64</span><span class="ansi-blue-fg">,</span> bs<span class="ansi-blue-fg">=</span><span class="ansi-cyan-fg">512</span><span class="ansi-blue-fg">,</span> fp16<span class="ansi-blue-fg">=</span><span class="ansi-green-fg">True</span><span class="ansi-blue-fg">,</span> val_fold<span class="ansi-blue-fg">=</span><span class="ansi-cyan-fg">4</span><span class="ansi-blue-fg">,</span> tta<span class="ansi-blue-fg">=</span><span class="ansi-green-fg">True</span><span class="ansi-blue-fg">,</span> mixup<span class="ansi-blue-fg">=</span><span class="ansi-cyan-fg">0.4</span><span class="ansi-blue-fg">,</span> eval_dir<span class="ansi-blue-fg">=</span><span class="ansi-blue-fg">&#34;test&#34;</span><span class="ansi-blue-fg">)</span>
+<span class="ansi-red-fg">KeyboardInterrupt</span>                         Traceback (most recent call last)
+<span class="ansi-green-fg">&lt;ipython-input-42-bf8c7fe646f0&gt;</span> in <span class="ansi-cyan-fg">&lt;module&gt;</span>
+<span class="ansi-green-fg">----&gt; 1</span><span class="ansi-red-fg"> </span>train_cv<span class="ansi-blue-fg">(</span>DATA_PATH<span class="ansi-blue-fg">,</span> <span class="ansi-cyan-fg">0</span><span class="ansi-blue-fg">,</span> <span class="ansi-cyan-fg">2e-2</span><span class="ansi-blue-fg">,</span> pre<span class="ansi-blue-fg">=</span><span class="ansi-cyan-fg">64</span><span class="ansi-blue-fg">,</span> re<span class="ansi-blue-fg">=</span><span class="ansi-cyan-fg">64</span><span class="ansi-blue-fg">,</span> bs<span class="ansi-blue-fg">=</span><span class="ansi-cyan-fg">512</span><span class="ansi-blue-fg">,</span> fp16<span class="ansi-blue-fg">=</span><span class="ansi-green-fg">True</span><span class="ansi-blue-fg">,</span> val_fold<span class="ansi-blue-fg">=</span><span class="ansi-cyan-fg">4</span><span class="ansi-blue-fg">,</span> tta<span class="ansi-blue-fg">=</span><span class="ansi-green-fg">True</span><span class="ansi-blue-fg">,</span> mixup<span class="ansi-blue-fg">=</span><span class="ansi-cyan-fg">0.4</span><span class="ansi-blue-fg">,</span> eval_dir<span class="ansi-blue-fg">=</span><span class="ansi-blue-fg">&#34;test&#34;</span><span class="ansi-blue-fg">)</span>
 
-<span class="ansi-green-fg">&lt;ipython-input-42-bda668963c60&gt;</span> in <span class="ansi-cyan-fg">train_cv</span><span class="ansi-blue-fg">(epochs, lr, frz, pre, re, bs, smooth, arch, dump, log, save, mixup, tta, fp16, eval_dir, val_fold, pseudo)</span>
-<span class="ansi-green-intense-fg ansi-bold">     33</span>         <span class="ansi-green-fg">if</span> tta <span class="ansi-green-fg">and</span> val_fold <span class="ansi-blue-fg">!=</span> <span class="ansi-cyan-fg">9</span><span class="ansi-blue-fg">:</span>  <span class="ansi-red-fg"># There IS a valid set</span>
-<span class="ansi-green-intense-fg ansi-bold">     34</span>             preds<span class="ansi-blue-fg">,</span> lbls <span class="ansi-blue-fg">=</span> learn<span class="ansi-blue-fg">.</span>tta<span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">)</span>
-<span class="ansi-green-fg">---&gt; 35</span><span class="ansi-red-fg">             </span>res <span class="ansi-blue-fg">=</span> <span class="ansi-blue-fg">[</span>f<span class="ansi-blue-fg">(</span>preds<span class="ansi-blue-fg">,</span> lbls<span class="ansi-blue-fg">)</span> <span class="ansi-green-fg">for</span> f <span class="ansi-green-fg">in</span> <span class="ansi-blue-fg">[</span>learn<span class="ansi-blue-fg">.</span>loss_func<span class="ansi-blue-fg">,</span> accuracy<span class="ansi-blue-fg">,</span> RocAuc<span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">)</span><span class="ansi-blue-fg">]</span><span class="ansi-blue-fg">]</span>
-<span class="ansi-green-intense-fg ansi-bold">     36</span>         <span class="ansi-green-fg">else</span><span class="ansi-blue-fg">:</span> res <span class="ansi-blue-fg">=</span> learn<span class="ansi-blue-fg">.</span>final_record
-<span class="ansi-green-intense-fg ansi-bold">     37</span>         scores<span class="ansi-blue-fg">.</span>append<span class="ansi-blue-fg">(</span>res<span class="ansi-blue-fg">)</span>
+<span class="ansi-green-fg">&lt;ipython-input-40-ef63e0b945c2&gt;</span> in <span class="ansi-cyan-fg">train_cv</span><span class="ansi-blue-fg">(path, epochs, lr, frz, pre, re, bs, smooth, arch, dump, log, save, mixup, tta, fp16, eval_dir, val_fold, pseudo)</span>
+<span class="ansi-green-intense-fg ansi-bold">     34</span> 
+<span class="ansi-green-intense-fg ansi-bold">     35</span>         <span class="ansi-green-fg">if</span> tta <span class="ansi-green-fg">and</span> val_fold <span class="ansi-blue-fg">!=</span> <span class="ansi-cyan-fg">9</span><span class="ansi-blue-fg">:</span>  <span class="ansi-red-fg"># There IS a valid set</span>
+<span class="ansi-green-fg">---&gt; 36</span><span class="ansi-red-fg">             </span>preds<span class="ansi-blue-fg">,</span> lbls <span class="ansi-blue-fg">=</span> learn<span class="ansi-blue-fg">.</span>tta<span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">)</span>
+<span class="ansi-green-intense-fg ansi-bold">     37</span>             res <span class="ansi-blue-fg">=</span> <span class="ansi-blue-fg">[</span>f<span class="ansi-blue-fg">(</span>preds<span class="ansi-blue-fg">,</span> lbls<span class="ansi-blue-fg">)</span> <span class="ansi-green-fg">for</span> f <span class="ansi-green-fg">in</span> <span class="ansi-blue-fg">[</span>learn<span class="ansi-blue-fg">.</span>loss_func<span class="ansi-blue-fg">,</span> accuracy<span class="ansi-blue-fg">,</span> softmax_RocAuc<span class="ansi-blue-fg">]</span><span class="ansi-blue-fg">]</span>
+<span class="ansi-green-intense-fg ansi-bold">     38</span>         <span class="ansi-green-fg">else</span><span class="ansi-blue-fg">:</span> res <span class="ansi-blue-fg">=</span> learn<span class="ansi-blue-fg">.</span>final_record
 
-<span class="ansi-green-fg">&lt;ipython-input-42-bda668963c60&gt;</span> in <span class="ansi-cyan-fg">&lt;listcomp&gt;</span><span class="ansi-blue-fg">(.0)</span>
-<span class="ansi-green-intense-fg ansi-bold">     33</span>         <span class="ansi-green-fg">if</span> tta <span class="ansi-green-fg">and</span> val_fold <span class="ansi-blue-fg">!=</span> <span class="ansi-cyan-fg">9</span><span class="ansi-blue-fg">:</span>  <span class="ansi-red-fg"># There IS a valid set</span>
-<span class="ansi-green-intense-fg ansi-bold">     34</span>             preds<span class="ansi-blue-fg">,</span> lbls <span class="ansi-blue-fg">=</span> learn<span class="ansi-blue-fg">.</span>tta<span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">)</span>
-<span class="ansi-green-fg">---&gt; 35</span><span class="ansi-red-fg">             </span>res <span class="ansi-blue-fg">=</span> <span class="ansi-blue-fg">[</span>f<span class="ansi-blue-fg">(</span>preds<span class="ansi-blue-fg">,</span> lbls<span class="ansi-blue-fg">)</span> <span class="ansi-green-fg">for</span> f <span class="ansi-green-fg">in</span> <span class="ansi-blue-fg">[</span>learn<span class="ansi-blue-fg">.</span>loss_func<span class="ansi-blue-fg">,</span> accuracy<span class="ansi-blue-fg">,</span> RocAuc<span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">)</span><span class="ansi-blue-fg">]</span><span class="ansi-blue-fg">]</span>
-<span class="ansi-green-intense-fg ansi-bold">     36</span>         <span class="ansi-green-fg">else</span><span class="ansi-blue-fg">:</span> res <span class="ansi-blue-fg">=</span> learn<span class="ansi-blue-fg">.</span>final_record
-<span class="ansi-green-intense-fg ansi-bold">     37</span>         scores<span class="ansi-blue-fg">.</span>append<span class="ansi-blue-fg">(</span>res<span class="ansi-blue-fg">)</span>
+<span class="ansi-green-fg">~/miniconda3/lib/python3.8/site-packages/fastai/learner.py</span> in <span class="ansi-cyan-fg">tta</span><span class="ansi-blue-fg">(self, ds_idx, dl, n, item_tfms, batch_tfms, beta, use_max)</span>
+<span class="ansi-green-intense-fg ansi-bold">    579</span>             <span class="ansi-green-fg">for</span> i <span class="ansi-green-fg">in</span> self<span class="ansi-blue-fg">.</span>progress<span class="ansi-blue-fg">.</span>mbar <span class="ansi-green-fg">if</span> hasattr<span class="ansi-blue-fg">(</span>self<span class="ansi-blue-fg">,</span><span class="ansi-blue-fg">&#39;progress&#39;</span><span class="ansi-blue-fg">)</span> <span class="ansi-green-fg">else</span> range<span class="ansi-blue-fg">(</span>n<span class="ansi-blue-fg">)</span><span class="ansi-blue-fg">:</span>
+<span class="ansi-green-intense-fg ansi-bold">    580</span>                 self<span class="ansi-blue-fg">.</span>epoch <span class="ansi-blue-fg">=</span> i <span class="ansi-red-fg">#To keep track of progress on mbar since the progress callback will use self.epoch</span>
+<span class="ansi-green-fg">--&gt; 581</span><span class="ansi-red-fg">                 </span>aug_preds<span class="ansi-blue-fg">.</span>append<span class="ansi-blue-fg">(</span>self<span class="ansi-blue-fg">.</span>get_preds<span class="ansi-blue-fg">(</span>dl<span class="ansi-blue-fg">=</span>dl<span class="ansi-blue-fg">,</span> inner<span class="ansi-blue-fg">=</span><span class="ansi-green-fg">True</span><span class="ansi-blue-fg">)</span><span class="ansi-blue-fg">[</span><span class="ansi-cyan-fg">0</span><span class="ansi-blue-fg">]</span><span class="ansi-blue-fg">[</span><span class="ansi-green-fg">None</span><span class="ansi-blue-fg">]</span><span class="ansi-blue-fg">)</span>
+<span class="ansi-green-intense-fg ansi-bold">    582</span>         aug_preds <span class="ansi-blue-fg">=</span> torch<span class="ansi-blue-fg">.</span>cat<span class="ansi-blue-fg">(</span>aug_preds<span class="ansi-blue-fg">)</span>
+<span class="ansi-green-intense-fg ansi-bold">    583</span>         aug_preds <span class="ansi-blue-fg">=</span> aug_preds<span class="ansi-blue-fg">.</span>max<span class="ansi-blue-fg">(</span><span class="ansi-cyan-fg">0</span><span class="ansi-blue-fg">)</span><span class="ansi-blue-fg">[</span><span class="ansi-cyan-fg">0</span><span class="ansi-blue-fg">]</span> <span class="ansi-green-fg">if</span> use_max <span class="ansi-green-fg">else</span> aug_preds<span class="ansi-blue-fg">.</span>mean<span class="ansi-blue-fg">(</span><span class="ansi-cyan-fg">0</span><span class="ansi-blue-fg">)</span>
 
-<span class="ansi-green-fg">/opt/conda/lib/python3.7/site-packages/fastai/metrics.py</span> in <span class="ansi-cyan-fg">__call__</span><span class="ansi-blue-fg">(self, preds, targs)</span>
-<span class="ansi-green-intense-fg ansi-bold">     59</span>         self<span class="ansi-blue-fg">.</span>reset<span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">)</span>
-<span class="ansi-green-intense-fg ansi-bold">     60</span>         self<span class="ansi-blue-fg">.</span>accum_values<span class="ansi-blue-fg">(</span>preds<span class="ansi-blue-fg">,</span>targs<span class="ansi-blue-fg">)</span>
-<span class="ansi-green-fg">---&gt; 61</span><span class="ansi-red-fg">         </span><span class="ansi-green-fg">return</span> self<span class="ansi-blue-fg">.</span>value
-<span class="ansi-green-intense-fg ansi-bold">     62</span> 
-<span class="ansi-green-intense-fg ansi-bold">     63</span>     <span class="ansi-blue-fg">@</span>property
+<span class="ansi-green-fg">~/miniconda3/lib/python3.8/site-packages/fastai/learner.py</span> in <span class="ansi-cyan-fg">get_preds</span><span class="ansi-blue-fg">(self, ds_idx, dl, with_input, with_decoded, with_loss, act, inner, reorder, cbs, **kwargs)</span>
+<span class="ansi-green-intense-fg ansi-bold">    241</span>         <span class="ansi-green-fg">if</span> with_loss<span class="ansi-blue-fg">:</span> ctx_mgrs<span class="ansi-blue-fg">.</span>append<span class="ansi-blue-fg">(</span>self<span class="ansi-blue-fg">.</span>loss_not_reduced<span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">)</span><span class="ansi-blue-fg">)</span>
+<span class="ansi-green-intense-fg ansi-bold">    242</span>         <span class="ansi-green-fg">with</span> ContextManagers<span class="ansi-blue-fg">(</span>ctx_mgrs<span class="ansi-blue-fg">)</span><span class="ansi-blue-fg">:</span>
+<span class="ansi-green-fg">--&gt; 243</span><span class="ansi-red-fg">             </span>self<span class="ansi-blue-fg">.</span>_do_epoch_validate<span class="ansi-blue-fg">(</span>dl<span class="ansi-blue-fg">=</span>dl<span class="ansi-blue-fg">)</span>
+<span class="ansi-green-intense-fg ansi-bold">    244</span>             <span class="ansi-green-fg">if</span> act <span class="ansi-green-fg">is</span> <span class="ansi-green-fg">None</span><span class="ansi-blue-fg">:</span> act <span class="ansi-blue-fg">=</span> getattr<span class="ansi-blue-fg">(</span>self<span class="ansi-blue-fg">.</span>loss_func<span class="ansi-blue-fg">,</span> <span class="ansi-blue-fg">&#39;activation&#39;</span><span class="ansi-blue-fg">,</span> noop<span class="ansi-blue-fg">)</span>
+<span class="ansi-green-intense-fg ansi-bold">    245</span>             res <span class="ansi-blue-fg">=</span> cb<span class="ansi-blue-fg">.</span>all_tensors<span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">)</span>
 
-<span class="ansi-green-fg">/opt/conda/lib/python3.7/site-packages/fastai/metrics.py</span> in <span class="ansi-cyan-fg">value</span><span class="ansi-blue-fg">(self)</span>
-<span class="ansi-green-intense-fg ansi-bold">     67</span>         preds<span class="ansi-blue-fg">,</span>targs <span class="ansi-blue-fg">=</span> torch<span class="ansi-blue-fg">.</span>cat<span class="ansi-blue-fg">(</span>self<span class="ansi-blue-fg">.</span>preds<span class="ansi-blue-fg">)</span><span class="ansi-blue-fg">,</span>torch<span class="ansi-blue-fg">.</span>cat<span class="ansi-blue-fg">(</span>self<span class="ansi-blue-fg">.</span>targs<span class="ansi-blue-fg">)</span>
-<span class="ansi-green-intense-fg ansi-bold">     68</span>         <span class="ansi-green-fg">if</span> self<span class="ansi-blue-fg">.</span>to_np<span class="ansi-blue-fg">:</span> preds<span class="ansi-blue-fg">,</span>targs <span class="ansi-blue-fg">=</span> preds<span class="ansi-blue-fg">.</span>numpy<span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">)</span><span class="ansi-blue-fg">,</span>targs<span class="ansi-blue-fg">.</span>numpy<span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">)</span>
-<span class="ansi-green-fg">---&gt; 69</span><span class="ansi-red-fg">         </span><span class="ansi-green-fg">return</span> self<span class="ansi-blue-fg">.</span>func<span class="ansi-blue-fg">(</span>targs<span class="ansi-blue-fg">,</span> preds<span class="ansi-blue-fg">,</span> <span class="ansi-blue-fg">**</span>self<span class="ansi-blue-fg">.</span>kwargs<span class="ansi-blue-fg">)</span> <span class="ansi-green-fg">if</span> self<span class="ansi-blue-fg">.</span>invert_args <span class="ansi-green-fg">else</span> self<span class="ansi-blue-fg">.</span>func<span class="ansi-blue-fg">(</span>preds<span class="ansi-blue-fg">,</span> targs<span class="ansi-blue-fg">,</span> <span class="ansi-blue-fg">**</span>self<span class="ansi-blue-fg">.</span>kwargs<span class="ansi-blue-fg">)</span>
-<span class="ansi-green-intense-fg ansi-bold">     70</span> 
-<span class="ansi-green-intense-fg ansi-bold">     71</span>     <span class="ansi-blue-fg">@</span>property
+<span class="ansi-green-fg">~/miniconda3/lib/python3.8/site-packages/fastai/learner.py</span> in <span class="ansi-cyan-fg">_do_epoch_validate</span><span class="ansi-blue-fg">(self, ds_idx, dl)</span>
+<span class="ansi-green-intense-fg ansi-bold">    191</span>         <span class="ansi-green-fg">if</span> dl <span class="ansi-green-fg">is</span> <span class="ansi-green-fg">None</span><span class="ansi-blue-fg">:</span> dl <span class="ansi-blue-fg">=</span> self<span class="ansi-blue-fg">.</span>dls<span class="ansi-blue-fg">[</span>ds_idx<span class="ansi-blue-fg">]</span>
+<span class="ansi-green-intense-fg ansi-bold">    192</span>         self<span class="ansi-blue-fg">.</span>dl <span class="ansi-blue-fg">=</span> dl
+<span class="ansi-green-fg">--&gt; 193</span><span class="ansi-red-fg">         </span><span class="ansi-green-fg">with</span> torch<span class="ansi-blue-fg">.</span>no_grad<span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">)</span><span class="ansi-blue-fg">:</span> self<span class="ansi-blue-fg">.</span>_with_events<span class="ansi-blue-fg">(</span>self<span class="ansi-blue-fg">.</span>all_batches<span class="ansi-blue-fg">,</span> <span class="ansi-blue-fg">&#39;validate&#39;</span><span class="ansi-blue-fg">,</span> CancelValidException<span class="ansi-blue-fg">)</span>
+<span class="ansi-green-intense-fg ansi-bold">    194</span> 
+<span class="ansi-green-intense-fg ansi-bold">    195</span>     <span class="ansi-green-fg">def</span> _do_epoch<span class="ansi-blue-fg">(</span>self<span class="ansi-blue-fg">)</span><span class="ansi-blue-fg">:</span>
 
-<span class="ansi-green-fg">/opt/conda/lib/python3.7/site-packages/sklearn/utils/validation.py</span> in <span class="ansi-cyan-fg">inner_f</span><span class="ansi-blue-fg">(*args, **kwargs)</span>
-<span class="ansi-green-intense-fg ansi-bold">     70</span>                           FutureWarning)
-<span class="ansi-green-intense-fg ansi-bold">     71</span>         kwargs<span class="ansi-blue-fg">.</span>update<span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">{</span>k<span class="ansi-blue-fg">:</span> arg <span class="ansi-green-fg">for</span> k<span class="ansi-blue-fg">,</span> arg <span class="ansi-green-fg">in</span> zip<span class="ansi-blue-fg">(</span>sig<span class="ansi-blue-fg">.</span>parameters<span class="ansi-blue-fg">,</span> args<span class="ansi-blue-fg">)</span><span class="ansi-blue-fg">}</span><span class="ansi-blue-fg">)</span>
-<span class="ansi-green-fg">---&gt; 72</span><span class="ansi-red-fg">         </span><span class="ansi-green-fg">return</span> f<span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">**</span>kwargs<span class="ansi-blue-fg">)</span>
-<span class="ansi-green-intense-fg ansi-bold">     73</span>     <span class="ansi-green-fg">return</span> inner_f
-<span class="ansi-green-intense-fg ansi-bold">     74</span> 
+<span class="ansi-green-fg">~/miniconda3/lib/python3.8/site-packages/fastai/learner.py</span> in <span class="ansi-cyan-fg">_with_events</span><span class="ansi-blue-fg">(self, f, event_type, ex, final)</span>
+<span class="ansi-green-intense-fg ansi-bold">    158</span> 
+<span class="ansi-green-intense-fg ansi-bold">    159</span>     <span class="ansi-green-fg">def</span> _with_events<span class="ansi-blue-fg">(</span>self<span class="ansi-blue-fg">,</span> f<span class="ansi-blue-fg">,</span> event_type<span class="ansi-blue-fg">,</span> ex<span class="ansi-blue-fg">,</span> final<span class="ansi-blue-fg">=</span>noop<span class="ansi-blue-fg">)</span><span class="ansi-blue-fg">:</span>
+<span class="ansi-green-fg">--&gt; 160</span><span class="ansi-red-fg">         </span><span class="ansi-green-fg">try</span><span class="ansi-blue-fg">:</span> self<span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">f&#39;before_{event_type}&#39;</span><span class="ansi-blue-fg">)</span><span class="ansi-blue-fg">;</span>  f<span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">)</span>
+<span class="ansi-green-intense-fg ansi-bold">    161</span>         <span class="ansi-green-fg">except</span> ex<span class="ansi-blue-fg">:</span> self<span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">f&#39;after_cancel_{event_type}&#39;</span><span class="ansi-blue-fg">)</span>
+<span class="ansi-green-intense-fg ansi-bold">    162</span>         self<span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">f&#39;after_{event_type}&#39;</span><span class="ansi-blue-fg">)</span><span class="ansi-blue-fg">;</span>  final<span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">)</span>
 
-<span class="ansi-green-fg">/opt/conda/lib/python3.7/site-packages/sklearn/metrics/_ranking.py</span> in <span class="ansi-cyan-fg">roc_auc_score</span><span class="ansi-blue-fg">(y_true, y_score, average, sample_weight, max_fpr, multi_class, labels)</span>
-<span class="ansi-green-intense-fg ansi-bold">    384</span>             <span class="ansi-green-fg">raise</span> ValueError<span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">&#34;multi_class must be in (&#39;ovo&#39;, &#39;ovr&#39;)&#34;</span><span class="ansi-blue-fg">)</span>
-<span class="ansi-green-intense-fg ansi-bold">    385</span>         return _multiclass_roc_auc_score(y_true, y_score, labels,
-<span class="ansi-green-fg">--&gt; 386</span><span class="ansi-red-fg">                                          multi_class, average, sample_weight)
-</span><span class="ansi-green-intense-fg ansi-bold">    387</span>     <span class="ansi-green-fg">elif</span> y_type <span class="ansi-blue-fg">==</span> <span class="ansi-blue-fg">&#34;binary&#34;</span><span class="ansi-blue-fg">:</span>
-<span class="ansi-green-intense-fg ansi-bold">    388</span>         labels <span class="ansi-blue-fg">=</span> np<span class="ansi-blue-fg">.</span>unique<span class="ansi-blue-fg">(</span>y_true<span class="ansi-blue-fg">)</span>
+<span class="ansi-green-fg">~/miniconda3/lib/python3.8/site-packages/fastai/learner.py</span> in <span class="ansi-cyan-fg">all_batches</span><span class="ansi-blue-fg">(self)</span>
+<span class="ansi-green-intense-fg ansi-bold">    164</span>     <span class="ansi-green-fg">def</span> all_batches<span class="ansi-blue-fg">(</span>self<span class="ansi-blue-fg">)</span><span class="ansi-blue-fg">:</span>
+<span class="ansi-green-intense-fg ansi-bold">    165</span>         self<span class="ansi-blue-fg">.</span>n_iter <span class="ansi-blue-fg">=</span> len<span class="ansi-blue-fg">(</span>self<span class="ansi-blue-fg">.</span>dl<span class="ansi-blue-fg">)</span>
+<span class="ansi-green-fg">--&gt; 166</span><span class="ansi-red-fg">         </span><span class="ansi-green-fg">for</span> o <span class="ansi-green-fg">in</span> enumerate<span class="ansi-blue-fg">(</span>self<span class="ansi-blue-fg">.</span>dl<span class="ansi-blue-fg">)</span><span class="ansi-blue-fg">:</span> self<span class="ansi-blue-fg">.</span>one_batch<span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">*</span>o<span class="ansi-blue-fg">)</span>
+<span class="ansi-green-intense-fg ansi-bold">    167</span> 
+<span class="ansi-green-intense-fg ansi-bold">    168</span>     <span class="ansi-green-fg">def</span> _do_one_batch<span class="ansi-blue-fg">(</span>self<span class="ansi-blue-fg">)</span><span class="ansi-blue-fg">:</span>
 
-<span class="ansi-green-fg">/opt/conda/lib/python3.7/site-packages/sklearn/metrics/_ranking.py</span> in <span class="ansi-cyan-fg">_multiclass_roc_auc_score</span><span class="ansi-blue-fg">(y_true, y_score, labels, multi_class, average, sample_weight)</span>
-<span class="ansi-green-intense-fg ansi-bold">    443</span>     <span class="ansi-green-fg">if</span> <span class="ansi-green-fg">not</span> np<span class="ansi-blue-fg">.</span>allclose<span class="ansi-blue-fg">(</span><span class="ansi-cyan-fg">1</span><span class="ansi-blue-fg">,</span> y_score<span class="ansi-blue-fg">.</span>sum<span class="ansi-blue-fg">(</span>axis<span class="ansi-blue-fg">=</span><span class="ansi-cyan-fg">1</span><span class="ansi-blue-fg">)</span><span class="ansi-blue-fg">)</span><span class="ansi-blue-fg">:</span>
-<span class="ansi-green-intense-fg ansi-bold">    444</span>         raise ValueError(
-<span class="ansi-green-fg">--&gt; 445</span><span class="ansi-red-fg">             </span><span class="ansi-blue-fg">&#34;Target scores need to be probabilities for multiclass &#34;</span>
-<span class="ansi-green-intense-fg ansi-bold">    446</span>             &#34;roc_auc, i.e. they should sum up to 1.0 over classes&#34;)
-<span class="ansi-green-intense-fg ansi-bold">    447</span> 
+<span class="ansi-green-fg">~/miniconda3/lib/python3.8/site-packages/fastai/data/load.py</span> in <span class="ansi-cyan-fg">__iter__</span><span class="ansi-blue-fg">(self)</span>
+<span class="ansi-green-intense-fg ansi-bold">    107</span>         self<span class="ansi-blue-fg">.</span>before_iter<span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">)</span>
+<span class="ansi-green-intense-fg ansi-bold">    108</span>         self<span class="ansi-blue-fg">.</span>__idxs<span class="ansi-blue-fg">=</span>self<span class="ansi-blue-fg">.</span>get_idxs<span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">)</span> <span class="ansi-red-fg"># called in context of main process (not workers/subprocesses)</span>
+<span class="ansi-green-fg">--&gt; 109</span><span class="ansi-red-fg">         </span><span class="ansi-green-fg">for</span> b <span class="ansi-green-fg">in</span> _loaders<span class="ansi-blue-fg">[</span>self<span class="ansi-blue-fg">.</span>fake_l<span class="ansi-blue-fg">.</span>num_workers<span class="ansi-blue-fg">==</span><span class="ansi-cyan-fg">0</span><span class="ansi-blue-fg">]</span><span class="ansi-blue-fg">(</span>self<span class="ansi-blue-fg">.</span>fake_l<span class="ansi-blue-fg">)</span><span class="ansi-blue-fg">:</span>
+<span class="ansi-green-intense-fg ansi-bold">    110</span>             <span class="ansi-green-fg">if</span> self<span class="ansi-blue-fg">.</span>device <span class="ansi-green-fg">is</span> <span class="ansi-green-fg">not</span> <span class="ansi-green-fg">None</span><span class="ansi-blue-fg">:</span> b <span class="ansi-blue-fg">=</span> to_device<span class="ansi-blue-fg">(</span>b<span class="ansi-blue-fg">,</span> self<span class="ansi-blue-fg">.</span>device<span class="ansi-blue-fg">)</span>
+<span class="ansi-green-intense-fg ansi-bold">    111</span>             <span class="ansi-green-fg">yield</span> self<span class="ansi-blue-fg">.</span>after_batch<span class="ansi-blue-fg">(</span>b<span class="ansi-blue-fg">)</span>
 
-<span class="ansi-red-fg">ValueError</span>: Target scores need to be probabilities for multiclass roc_auc, i.e. they should sum up to 1.0 over classes</pre>
+<span class="ansi-green-fg">~/miniconda3/lib/python3.8/site-packages/torch/utils/data/dataloader.py</span> in <span class="ansi-cyan-fg">__next__</span><span class="ansi-blue-fg">(self)</span>
+<span class="ansi-green-intense-fg ansi-bold">    433</span>         <span class="ansi-green-fg">if</span> self<span class="ansi-blue-fg">.</span>_sampler_iter <span class="ansi-green-fg">is</span> <span class="ansi-green-fg">None</span><span class="ansi-blue-fg">:</span>
+<span class="ansi-green-intense-fg ansi-bold">    434</span>             self<span class="ansi-blue-fg">.</span>_reset<span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">)</span>
+<span class="ansi-green-fg">--&gt; 435</span><span class="ansi-red-fg">         </span>data <span class="ansi-blue-fg">=</span> self<span class="ansi-blue-fg">.</span>_next_data<span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">)</span>
+<span class="ansi-green-intense-fg ansi-bold">    436</span>         self<span class="ansi-blue-fg">.</span>_num_yielded <span class="ansi-blue-fg">+=</span> <span class="ansi-cyan-fg">1</span>
+<span class="ansi-green-intense-fg ansi-bold">    437</span>         <span class="ansi-green-fg">if</span> self<span class="ansi-blue-fg">.</span>_dataset_kind <span class="ansi-blue-fg">==</span> _DatasetKind<span class="ansi-blue-fg">.</span>Iterable <span class="ansi-green-fg">and</span><span class="ansi-red-fg"> </span><span class="ansi-red-fg">\</span>
+
+<span class="ansi-green-fg">~/miniconda3/lib/python3.8/site-packages/torch/utils/data/dataloader.py</span> in <span class="ansi-cyan-fg">_next_data</span><span class="ansi-blue-fg">(self)</span>
+<span class="ansi-green-intense-fg ansi-bold">   1066</span> 
+<span class="ansi-green-intense-fg ansi-bold">   1067</span>             <span class="ansi-green-fg">assert</span> <span class="ansi-green-fg">not</span> self<span class="ansi-blue-fg">.</span>_shutdown <span class="ansi-green-fg">and</span> self<span class="ansi-blue-fg">.</span>_tasks_outstanding <span class="ansi-blue-fg">&gt;</span> <span class="ansi-cyan-fg">0</span>
+<span class="ansi-green-fg">-&gt; 1068</span><span class="ansi-red-fg">             </span>idx<span class="ansi-blue-fg">,</span> data <span class="ansi-blue-fg">=</span> self<span class="ansi-blue-fg">.</span>_get_data<span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">)</span>
+<span class="ansi-green-intense-fg ansi-bold">   1069</span>             self<span class="ansi-blue-fg">.</span>_tasks_outstanding <span class="ansi-blue-fg">-=</span> <span class="ansi-cyan-fg">1</span>
+<span class="ansi-green-intense-fg ansi-bold">   1070</span>             <span class="ansi-green-fg">if</span> self<span class="ansi-blue-fg">.</span>_dataset_kind <span class="ansi-blue-fg">==</span> _DatasetKind<span class="ansi-blue-fg">.</span>Iterable<span class="ansi-blue-fg">:</span>
+
+<span class="ansi-green-fg">~/miniconda3/lib/python3.8/site-packages/torch/utils/data/dataloader.py</span> in <span class="ansi-cyan-fg">_get_data</span><span class="ansi-blue-fg">(self)</span>
+<span class="ansi-green-intense-fg ansi-bold">   1032</span>         <span class="ansi-green-fg">else</span><span class="ansi-blue-fg">:</span>
+<span class="ansi-green-intense-fg ansi-bold">   1033</span>             <span class="ansi-green-fg">while</span> <span class="ansi-green-fg">True</span><span class="ansi-blue-fg">:</span>
+<span class="ansi-green-fg">-&gt; 1034</span><span class="ansi-red-fg">                 </span>success<span class="ansi-blue-fg">,</span> data <span class="ansi-blue-fg">=</span> self<span class="ansi-blue-fg">.</span>_try_get_data<span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">)</span>
+<span class="ansi-green-intense-fg ansi-bold">   1035</span>                 <span class="ansi-green-fg">if</span> success<span class="ansi-blue-fg">:</span>
+<span class="ansi-green-intense-fg ansi-bold">   1036</span>                     <span class="ansi-green-fg">return</span> data
+
+<span class="ansi-green-fg">~/miniconda3/lib/python3.8/site-packages/torch/utils/data/dataloader.py</span> in <span class="ansi-cyan-fg">_try_get_data</span><span class="ansi-blue-fg">(self, timeout)</span>
+<span class="ansi-green-intense-fg ansi-bold">    870</span>         <span class="ansi-red-fg">#   (bool: whether successfully get data, any: data if successful else None)</span>
+<span class="ansi-green-intense-fg ansi-bold">    871</span>         <span class="ansi-green-fg">try</span><span class="ansi-blue-fg">:</span>
+<span class="ansi-green-fg">--&gt; 872</span><span class="ansi-red-fg">             </span>data <span class="ansi-blue-fg">=</span> self<span class="ansi-blue-fg">.</span>_data_queue<span class="ansi-blue-fg">.</span>get<span class="ansi-blue-fg">(</span>timeout<span class="ansi-blue-fg">=</span>timeout<span class="ansi-blue-fg">)</span>
+<span class="ansi-green-intense-fg ansi-bold">    873</span>             <span class="ansi-green-fg">return</span> <span class="ansi-blue-fg">(</span><span class="ansi-green-fg">True</span><span class="ansi-blue-fg">,</span> data<span class="ansi-blue-fg">)</span>
+<span class="ansi-green-intense-fg ansi-bold">    874</span>         <span class="ansi-green-fg">except</span> Exception <span class="ansi-green-fg">as</span> e<span class="ansi-blue-fg">:</span>
+
+<span class="ansi-green-fg">~/miniconda3/lib/python3.8/multiprocessing/queues.py</span> in <span class="ansi-cyan-fg">get</span><span class="ansi-blue-fg">(self, block, timeout)</span>
+<span class="ansi-green-intense-fg ansi-bold">    105</span>                 <span class="ansi-green-fg">if</span> block<span class="ansi-blue-fg">:</span>
+<span class="ansi-green-intense-fg ansi-bold">    106</span>                     timeout <span class="ansi-blue-fg">=</span> deadline <span class="ansi-blue-fg">-</span> time<span class="ansi-blue-fg">.</span>monotonic<span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">)</span>
+<span class="ansi-green-fg">--&gt; 107</span><span class="ansi-red-fg">                     </span><span class="ansi-green-fg">if</span> <span class="ansi-green-fg">not</span> self<span class="ansi-blue-fg">.</span>_poll<span class="ansi-blue-fg">(</span>timeout<span class="ansi-blue-fg">)</span><span class="ansi-blue-fg">:</span>
+<span class="ansi-green-intense-fg ansi-bold">    108</span>                         <span class="ansi-green-fg">raise</span> Empty
+<span class="ansi-green-intense-fg ansi-bold">    109</span>                 <span class="ansi-green-fg">elif</span> <span class="ansi-green-fg">not</span> self<span class="ansi-blue-fg">.</span>_poll<span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">)</span><span class="ansi-blue-fg">:</span>
+
+<span class="ansi-green-fg">~/miniconda3/lib/python3.8/multiprocessing/connection.py</span> in <span class="ansi-cyan-fg">poll</span><span class="ansi-blue-fg">(self, timeout)</span>
+<span class="ansi-green-intense-fg ansi-bold">    255</span>         self<span class="ansi-blue-fg">.</span>_check_closed<span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">)</span>
+<span class="ansi-green-intense-fg ansi-bold">    256</span>         self<span class="ansi-blue-fg">.</span>_check_readable<span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">)</span>
+<span class="ansi-green-fg">--&gt; 257</span><span class="ansi-red-fg">         </span><span class="ansi-green-fg">return</span> self<span class="ansi-blue-fg">.</span>_poll<span class="ansi-blue-fg">(</span>timeout<span class="ansi-blue-fg">)</span>
+<span class="ansi-green-intense-fg ansi-bold">    258</span> 
+<span class="ansi-green-intense-fg ansi-bold">    259</span>     <span class="ansi-green-fg">def</span> __enter__<span class="ansi-blue-fg">(</span>self<span class="ansi-blue-fg">)</span><span class="ansi-blue-fg">:</span>
+
+<span class="ansi-green-fg">~/miniconda3/lib/python3.8/multiprocessing/connection.py</span> in <span class="ansi-cyan-fg">_poll</span><span class="ansi-blue-fg">(self, timeout)</span>
+<span class="ansi-green-intense-fg ansi-bold">    422</span> 
+<span class="ansi-green-intense-fg ansi-bold">    423</span>     <span class="ansi-green-fg">def</span> _poll<span class="ansi-blue-fg">(</span>self<span class="ansi-blue-fg">,</span> timeout<span class="ansi-blue-fg">)</span><span class="ansi-blue-fg">:</span>
+<span class="ansi-green-fg">--&gt; 424</span><span class="ansi-red-fg">         </span>r <span class="ansi-blue-fg">=</span> wait<span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">[</span>self<span class="ansi-blue-fg">]</span><span class="ansi-blue-fg">,</span> timeout<span class="ansi-blue-fg">)</span>
+<span class="ansi-green-intense-fg ansi-bold">    425</span>         <span class="ansi-green-fg">return</span> bool<span class="ansi-blue-fg">(</span>r<span class="ansi-blue-fg">)</span>
+<span class="ansi-green-intense-fg ansi-bold">    426</span> 
+
+<span class="ansi-green-fg">~/miniconda3/lib/python3.8/multiprocessing/connection.py</span> in <span class="ansi-cyan-fg">wait</span><span class="ansi-blue-fg">(object_list, timeout)</span>
+<span class="ansi-green-intense-fg ansi-bold">    929</span> 
+<span class="ansi-green-intense-fg ansi-bold">    930</span>             <span class="ansi-green-fg">while</span> <span class="ansi-green-fg">True</span><span class="ansi-blue-fg">:</span>
+<span class="ansi-green-fg">--&gt; 931</span><span class="ansi-red-fg">                 </span>ready <span class="ansi-blue-fg">=</span> selector<span class="ansi-blue-fg">.</span>select<span class="ansi-blue-fg">(</span>timeout<span class="ansi-blue-fg">)</span>
+<span class="ansi-green-intense-fg ansi-bold">    932</span>                 <span class="ansi-green-fg">if</span> ready<span class="ansi-blue-fg">:</span>
+<span class="ansi-green-intense-fg ansi-bold">    933</span>                     <span class="ansi-green-fg">return</span> <span class="ansi-blue-fg">[</span>key<span class="ansi-blue-fg">.</span>fileobj <span class="ansi-green-fg">for</span> <span class="ansi-blue-fg">(</span>key<span class="ansi-blue-fg">,</span> events<span class="ansi-blue-fg">)</span> <span class="ansi-green-fg">in</span> ready<span class="ansi-blue-fg">]</span>
+
+<span class="ansi-green-fg">~/miniconda3/lib/python3.8/selectors.py</span> in <span class="ansi-cyan-fg">select</span><span class="ansi-blue-fg">(self, timeout)</span>
+<span class="ansi-green-intense-fg ansi-bold">    413</span>         ready <span class="ansi-blue-fg">=</span> <span class="ansi-blue-fg">[</span><span class="ansi-blue-fg">]</span>
+<span class="ansi-green-intense-fg ansi-bold">    414</span>         <span class="ansi-green-fg">try</span><span class="ansi-blue-fg">:</span>
+<span class="ansi-green-fg">--&gt; 415</span><span class="ansi-red-fg">             </span>fd_event_list <span class="ansi-blue-fg">=</span> self<span class="ansi-blue-fg">.</span>_selector<span class="ansi-blue-fg">.</span>poll<span class="ansi-blue-fg">(</span>timeout<span class="ansi-blue-fg">)</span>
+<span class="ansi-green-intense-fg ansi-bold">    416</span>         <span class="ansi-green-fg">except</span> InterruptedError<span class="ansi-blue-fg">:</span>
+<span class="ansi-green-intense-fg ansi-bold">    417</span>             <span class="ansi-green-fg">return</span> ready
+
+<span class="ansi-red-fg">KeyboardInterrupt</span>: </pre>
 </div>
 </div>
 
