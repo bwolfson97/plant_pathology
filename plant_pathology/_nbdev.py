@@ -18,7 +18,7 @@ index = {"load_data": "00_utils.ipynb",
          "train_cv": "03_train.ipynb",
          "generate_pseudo_labels": "04_generate_pseudo_labels.ipynb",
          "create_folds": "06_create_folds.ipynb",
-         "models": "07_pretrained_models.ipynb",
+         "MODELS": "07_pretrained_models.ipynb",
          "get_model": "07_pretrained_models.ipynb",
          "DATA_PATH": "config.ipynb",
          "TEST_DATA_PATH": "config.ipynb"}
