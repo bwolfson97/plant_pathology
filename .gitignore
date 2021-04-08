@@ -153,3 +153,9 @@ wandb/
 
 # Tarballs
 *.tar.gz
+
+# Experiments
+exps
+
+# Dev notebooks
+dev_nbs
