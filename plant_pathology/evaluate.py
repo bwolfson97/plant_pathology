@@ -9,12 +9,12 @@ from typing import *
 
 # Cell
 def infer_on_test_set(
-    learn: Learner, path: Path, tta: bool=False, **kwargs
+    learn: Learner, path: Path, tta: bool = False, bs: int = 64,
 ) -> Tensor:
     """Infers on test CSV at `path` using `learn`, optionally performing TTA."""
     df_test = pd.read_csv(path)
-    test_dl = learn.dls.test_dl(df_test)
-    preds, _ = (learn.tta if tta else learn.get_preds)(dl=test_dl, **kwargs)
+    test_dl = learn.dls.test_dl(df_test, bs=bs)
+    preds, _ = (learn.tta if tta else learn.get_preds)(dl=test_dl)
     return preds
 
 # Cell
