@@ -7,5 +7,5 @@ from pathlib import Path
 
 # Cell
 # Change to reflect your machine
-DATA_PATH = Path("/home/brandon/kaggle/plant_pathology/data/")
-TEST_DATA_PATH = Path("/home/brandon/kaggle/plant_pathology/test_data/")
+DATA_PATH = Path("../data/")
+TEST_DATA_PATH = Path("../test_data/")
