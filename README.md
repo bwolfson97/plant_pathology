@@ -1,13 +1,10 @@
-
 # Plant Pathology Classifier
-> A neural network that takes in an image of a leaf and classifies the leaf as healthy or diseased!
+> A neural network classifies images of leaves as healthy or diseased!
 
-
-![A leaf](nbks/../example_image.jpg)
-
+<img alt="A picture of a leaf" src="nbks/images/leaf.jpg">
 Recently, I've been learning about [Fast.ai](https://docs.fast.ai/) and [PyTorch](https://pytorch.org/) in my free time and wanted to apply my knowledge. I'm trying to learn how to win Kaggle competitions, so I decided to build a model for the completed Kaggle [Plant Pathology Competition](https://www.kaggle.com/c/plant-pathology-2020-fgvc7/overview).
 
-I built this model using [Nbdev](https://nbdev.fast.ai/), which provides an [literate programming](https://en.wikipedia.org/wiki/Literate_programming) environment as originally envisioned by Donald Knuth. This means the notebooks in the `nbks` folder are the library's "source code". They get converted into regular python files, a full documentation site, and contain unit and functional test, all in one place.
+I built this model using [Nbdev](https://nbdev.fast.ai/), which provides an [literate programming](https://en.wikipedia.org/wiki/Literate_programming) environment as originally envisioned by Donald Knuth. This means the notebooks in the `nbks` folder are the library's "source code". They get converted into regular python files, a full [documentation site](https://bwolfson97.github.io/plant_pathology/), and contain unit and functional test, all in one place.
 
 ## Install
 
@@ -20,26 +17,9 @@ I built this model using [Nbdev](https://nbdev.fast.ai/), which provides an [lit
 ```python
 from plant_pathology.pretrained_models import get_model
 
-model = get_model("**FIXME**")
+model = get_model("resnet18_2021-07-04")
 prediction = model.predict("/path/to/image.jpg")
 ```
-
-
-    ---------------------------------------------------------------------------
-
-    ModuleNotFoundError                       Traceback (most recent call last)
-
-    <ipython-input-8-14608c339b37> in <module>
-    ----> 1 from plant_pathology.pretrained_models import get_model
-          2 
-          3 model = get_model("**FIXME**")
-          4 prediction = model.predict(image_path)
-
-
-    ModuleNotFoundError: No module named 'plant_pathology.pretrained_models'
-
-
-**FIXME**: Colab notebook with an example: ![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)
 
 ### Training
 
@@ -75,8 +55,4 @@ optional arguments:
 
 ## Testing
 
-To run the tests found in all the notebook in parallel, just run `nbdev_test_nbs` from the terminal! :)
-
-## Web app
-
-**TODO**
+To run all the tests in the notebooks in parallel, just run `nbdev_test_nbs` from the terminal! :)
