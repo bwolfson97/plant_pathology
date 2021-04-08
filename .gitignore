@@ -150,3 +150,6 @@ wandb/
 
 # Pickle files
 *.pkl
+
+# Tarballs
+*.tar.gz
