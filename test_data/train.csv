@@ -1,0 +1,6 @@
+image_id,healthy,multiple_diseases,rust,scab
+Train_0,0,0,0,1
+Train_1,0,1,0,0
+Train_2,1,0,0,0
+Train_3,0,0,1,0
+Train_4,1,0,0,0

@@ -1,0 +1,6 @@
+image_id,healthy,multiple_diseases,rust,scab,fold
+Train_0,0,0,1,0,0
+Train_1,1,0,0,0,1
+Train_2,1,0,0,0,2
+Train_3,0,0,1,0,3
+Train_4,1,0,0,0,4
