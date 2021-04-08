@@ -9,7 +9,7 @@ I built this model using [Nbdev](https://nbdev.fast.ai/), which provides an [lit
 
 ## Install
 
-`pip install plant_pathology`
+`pip install plant-pathology`
 
 ## How to use
 
