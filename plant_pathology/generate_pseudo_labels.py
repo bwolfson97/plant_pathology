@@ -5,24 +5,26 @@ __all__ = ['generate_pseudo_labels']
 # Cell
 from fastcore.all import *
 import pandas as pd
+import numpy as np
 from .utils import *
 
 # Cell
 @call_parse
 def generate_pseudo_labels(
     path:   Param("Directory of prediction CSVs to average", Path)=".",
-    name:   Param("File name", str)="pseudo_labels.csv",
+    name:   Param("File name to save as", str)="pseudo_labels.csv",
     thresh: Param("Min probabilty for pseudo label", float)=0.95,
 ) -> Path:
     """Generates pseudo labels and saves in path dir."""
-    avg_preds = average_preds(path)
+    avg_preds_df = get_averaged_preds(path)
 
-    # Only keep preds with high enough confidence
-    pseudo_labels = (avg_preds.iloc[:, 1:] >= thresh)*1.0
-    mask = pseudo_labels.any(axis=1)
-    pseudo_labels.insert(0, "image_id", avg_preds["image_id"])
-    pseudo_labels["fold"] = -1
-    pseudo_labels = pseudo_labels[mask]
+    # One-hot encode highly confident predictions
+    high_confidence_preds_mask = avg_preds_df >= thresh
+    avg_preds_df[high_confidence_preds_mask] = 1.0
+    avg_preds_df[~high_confidence_preds_mask] = 0.0
 
-    pseudo_labels.to_csv(path/name, index=False)
+    # Only keep predictions model was highly confident on
+    pseudo_labels = avg_preds_df[high_confidence_preds_mask.any(axis=1)]
+
+    pseudo_labels.to_csv(path/name)
     return path/name
