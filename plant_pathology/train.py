@@ -27,7 +27,7 @@ def timm_or_fastai_arch(arch: str) -> (Union[Any, str], Callable[..., Learner]):
 
 # Cell
 def train(
-    data_path: Path, epochs: int, lr: Union[float, str], frz: int=1, pre: int=800, re: int=256,
+    data_path: Path, epochs: int = 1, lr: Union[float, str] = 3e-4, frz: int=1, pre: int=800, re: int=256,
     bs: int=200, fold: int=4, smooth: bool=False,
     arch: str='resnet18', dump: bool=False, log: bool=False, mixup: float=0.,
     fp16: bool=False, dls: DataLoaders=None, save: bool=False, pseudo: Path=None,
@@ -71,10 +71,10 @@ def softmax_RocAuc(logits, labels):
 @call_parse
 def train_cv(
     path:     Param("Path to data dir", Path),
-    epochs:   Param("Number of unfrozen epochs", int),
-    lr:       Param("Initial learning rate", float),
+    epochs:   Param("Number of unfrozen epochs", int)=1,
+    lr:       Param("Initial learning rate", float)=3e-4,
     frz:      Param("Number of frozen epochs", int)=1,
-    pre:      Param("Image presize", tuple)=(682, 1024),
+    pre:      Param("Image presize", int, nargs="+")=(682, 1024),
     re:       Param("Image resize", int)=256,
     bs:       Param("Batch size", int)=256,
     smooth:   Param("Label smoothing?", store_true)=False,
@@ -85,10 +85,11 @@ def train_cv(
     mixup:    Param("Mixup (0.4 is good)", float)=0.0,
     tta:      Param("Test-time augmentation", store_true)=False,
     fp16:     Param("Mixed-precision training", store_true)=False,
-    eval_dir: Param("Evaluate model and save results in dir", Path)=None,
+    do_eval: Param("Evaluate model and save predictions CSV", store_true)=False,
     val_fold: Param("Don't go cross-validation, just do 1 fold (or pass 9 "
                     "to train on all data)", int)=None,
     pseudo:   Param("Path to pseudo labels to train on", Path)=None,
+    export:   Param("Export learner(s) to export_val_on_{fold}.pkl", store_true)=False,
 ):
     print(locals())
     scores = []
@@ -108,8 +109,9 @@ def train_cv(
         scores.append(res)
 
         # Create submission file for this model
-        if eval_dir: print("Evaluating"); evaluate(learn, Path(eval_dir)/f"predictions_fold_{fold}.csv", tta=tta)
+        if do_eval: print("Evaluating"); evaluate(learn, path=path/"test.csv", name=f"predictions_fold_{fold}.csv", tta=tta)
 
+        if export: learn.export(f"export_val_on_{fold}.pkl")
         # Delete learner to avoid OOM
         del learn
         if val_fold is not None: break
