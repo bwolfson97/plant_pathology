@@ -72,6 +72,6 @@ To run all the tests in the notebooks in parallel, just run `nbdev_test_nbs` fro
 
 ## Web App
 
-I deployed the classifier as a simple web app using [Streamlit](https://streamlit.io/) and [Heroku](https://www.heroku.com/). Check it out [here](https://plant-pathology-classifier.herokuapp.com/)! (It may take a few minutes to start up.)
+I deployed the classifier as a simple [web app](https://plant-pathology-classifier.herokuapp.com/) using [Streamlit](https://streamlit.io/) and [Heroku](https://www.heroku.com/). Note, it may take a few minutes to start up.
 
-The code for the web app is [here](https://github.com/bwolfson97/plant_pathology_app).
+The code for the app is [here](https://github.com/bwolfson97/plant_pathology_app).
