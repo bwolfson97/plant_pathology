@@ -18,6 +18,8 @@ index = {"load_data": "00_utils.ipynb",
          "train_cv": "03_train.ipynb",
          "generate_pseudo_labels": "04_generate_pseudo_labels.ipynb",
          "create_folds": "06_create_folds.ipynb",
+         "models": "07_pretrained_models.ipynb",
+         "get_model": "07_pretrained_models.ipynb",
          "DATA_PATH": "config.ipynb"}
 
 modules = ["utils.py",
@@ -27,6 +29,7 @@ modules = ["utils.py",
            "generate_pseudo_labels.py",
            "self_knowledge_distillation.py",
            "create_folds.py",
+           "pretrained_models.py",
            "config.py"]
 
 doc_url = "https://bwolfson97.github.io/plant_pathology/"
