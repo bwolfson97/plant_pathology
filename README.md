@@ -18,9 +18,21 @@ I built this model using [Nbdev](https://nbdev.fast.ai/), which provides an [lit
 ```python
 from plant_pathology.pretrained_models import get_model
 
-model = get_model("resnet18_2021-07-04")
-prediction = model.predict("/path/to/image.jpg")
+model = get_model("resnet18_2021-04-07")
+prediction = model.predict("images/leaf.jpg")
+prediction
 ```
+
+
+
+
+
+
+
+
+    ('healthy', tensor(0), tensor([0.3196, 0.3038, 0.1818, 0.1948]))
+
+
 
 ### Training
 
@@ -57,3 +69,9 @@ optional arguments:
 ## Testing
 
 To run all the tests in the notebooks in parallel, just run `nbdev_test_nbs` from the terminal! :)
+
+## Web App
+
+I deployed the classifier as a simple web app using [Streamlit](https://streamlit.io/) and [Heroku](https://www.heroku.com/). Check it out [here](https://plant-pathology-classifier.herokuapp.com/)! (It may take a few minutes to start up.)
+
+The code for the web app is [here](https://github.com/bwolfson97/plant_pathology_app).
