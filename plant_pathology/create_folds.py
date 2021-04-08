@@ -34,6 +34,9 @@ def create_folds(
     for fold, (_, val_idxs) in enumerate(kf.split(df, lbls.values)):
         df.loc[val_idxs, "fold"] = fold
 
+    # Correct dtype of folds column
+    df.fold = df.fold.astype(int)
+
     if print_stats:
         stats_df = df.groupby("fold").describe()
         print("Proportion of each class out of total examples in each fold:")
