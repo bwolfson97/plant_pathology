@@ -2,6 +2,7 @@
 > A neural network classifies images of leaves as healthy or diseased!
 
 <img alt="A picture of a leaf" src="nbks/images/leaf.jpg">
+
 Recently, I've been learning about [Fast.ai](https://docs.fast.ai/) and [PyTorch](https://pytorch.org/) in my free time and wanted to apply my knowledge. I'm trying to learn how to win Kaggle competitions, so I decided to build a model for the completed Kaggle [Plant Pathology Competition](https://www.kaggle.com/c/plant-pathology-2020-fgvc7/overview).
 
 I built this model using [Nbdev](https://nbdev.fast.ai/), which provides an [literate programming](https://en.wikipedia.org/wiki/Literate_programming) environment as originally envisioned by Donald Knuth. This means the notebooks in the `nbks` folder are the library's "source code". They get converted into regular python files, a full [documentation site](https://bwolfson97.github.io/plant_pathology/), and contain unit and functional test, all in one place.
