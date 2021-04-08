@@ -1,2 +1,0 @@
-plant-pathology
-streamlit
