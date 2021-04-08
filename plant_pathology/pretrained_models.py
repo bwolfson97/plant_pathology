@@ -3,14 +3,22 @@
 __all__ = ['MODELS', 'get_model']
 
 # Cell
+from fastai.data.external import untar_data
+from fastai.learner import load_learner
+from fastcore.test import ExceptionExpected
+
+# Cell
 MODELS = {
-    "resnet18_2021-04-07": ""
+    "resnet18_2021-04-07": "GitHub Release URL to pkl file"
 }
 
 # Cell
 def get_model(model_name: str):
     """Downloads and builds pretrained model."""
-    # TODO: Download file from URL and untar it
-    learner_state = MODELS[model_name]
+    try:
+        url = MODELS[model_name]
+    except KeyError:
+        raise KeyError("Invalid model name. No such pretrained model exists.")
 
-    # TODO: Use load_learner to load pickle file and return learner
+    pickle_file = untar_data(url, fname=model_name)
+    return load_learner(pickle_file)
