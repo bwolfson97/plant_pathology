@@ -1,13 +1,13 @@
 ---
 
-title: Project name here
+title: Plant Pathology Classifier
 
 
 keywords: fastai
 sidebar: home_sidebar
 
-summary: "Summary description here."
-description: "Summary description here."
+summary: "A neural network classifies images of leaves as healthy or diseased!"
+description: "A neural network classifies images of leaves as healthy or diseased!"
 nb_path: "nbks/index.ipynb"
 ---
 <!--
@@ -28,10 +28,11 @@ nb_path: "nbks/index.ipynb"
 
 </div>
     {% endraw %}
-
+<img alt="A picture of a leaf" src="nbks/images/leaf.jpg">
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>This file will become your README and also the index of your documentation.</p>
+<p>Recently, I've been learning about <a href="https://docs.fast.ai/">Fast.ai</a> and <a href="https://pytorch.org/">PyTorch</a> in my free time and wanted to apply my knowledge. I'm trying to learn how to win Kaggle competitions, so I decided to build a model for the completed Kaggle <a href="https://www.kaggle.com/c/plant-pathology-2020-fgvc7/overview">Plant Pathology Competition</a>.</p>
+<p>I built this model using <a href="https://nbdev.fast.ai/">Nbdev</a>, which provides an <a href="https://en.wikipedia.org/wiki/Literate_programming">literate programming</a> environment as originally envisioned by Donald Knuth. This means the notebooks in the <code>nbks</code> folder are the library's "source code". They get converted into regular python files, a full <a href="https://bwolfson97.github.io/plant_pathology/">documentation site</a>, and contain unit and functional test, all in one place.</p>
 
 </div>
 </div>
@@ -44,7 +45,7 @@ nb_path: "nbks/index.ipynb"
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p><code>pip install your_project_name</code></p>
+<p><code>pip install plant_pathology</code></p>
 
 </div>
 </div>
@@ -57,44 +58,72 @@ nb_path: "nbks/index.ipynb"
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>Fill me in please! Don't forget code examples:</p>
+<h3 id="Inference-example">Inference example<a class="anchor-link" href="#Inference-example"> </a></h3>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">plant_pathology.pretrained_models</span> <span class="kn">import</span> <span class="n">get_model</span>
 
-</div>
-</div>
-</div>
-    {% raw %}
-    
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="mi">1</span><span class="o">+</span><span class="mi">1</span>
+<span class="n">model</span> <span class="o">=</span> <span class="n">get_model</span><span class="p">(</span><span class="s2">&quot;resnet18_2021-07-04&quot;</span><span class="p">)</span>
+<span class="n">prediction</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="s2">&quot;/path/to/image.jpg&quot;</span><span class="p">)</span>
 </pre></div>
 
-    </div>
 </div>
 </div>
-
-<div class="output_wrapper">
-<div class="output">
-
-<div class="output_area">
-
-
-
-<div class="output_text output_subarea output_execute_result">
-<pre>2</pre>
 </div>
-
-</div>
-
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Training">Training<a class="anchor-link" href="#Training"> </a></h3>
 </div>
 </div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Run-training-script">Run training script<a class="anchor-link" href="#Run-training-script"> </a></h3>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+
+<pre><code>python -m plant_pathology.train -h
+usage: train.py [-h] [--frz FRZ] [--pre PRE] [--re RE] [--bs BS] [--smooth] [--arch ARCH] [--dump] [--log] [--save] [--mixup MIXUP] [--tta] [--fp16] [--eval_dir EVAL_DIR] [--val_fold VAL_FOLD] [--pseudo PSEUDO] path epochs lr
+
+positional arguments:
+  path                 Path to data dir
+  epochs               Number of unfrozen epochs
+  lr                   Initial learning rate
+
+optional arguments:
+  -h, --help           show this help message and exit
+  --frz FRZ            Number of frozen epochs (default: 1)
+  --pre PRE            Image presize (default: (682, 1024))
+  --re RE              Image resize (default: 256)
+  --bs BS              Batch size (default: 256)
+  --smooth             Label smoothing? (default: False)
+  --arch ARCH          Architecture (default: resnet18)
+  --dump               Don't train, just print model (default: False)
+  --log                Log w/ W&amp;B (default: False)
+  --save               Save model based on RocAuc (default: False)
+  --mixup MIXUP        Mixup (0.4 is good) (default: 0.0)
+  --tta                Test-time augmentation (default: False)
+  --fp16               Mixed-precision training (default: False)
+  --eval_dir EVAL_DIR  Evaluate model and save results in dir
+  --val_fold VAL_FOLD  Don't go cross-validation, just do 1 fold (or pass 9 to train on all data)
+  --pseudo PSEUDO      Path to pseudo labels to train on</code></pre>
 
 </div>
-    {% endraw %}
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Testing">Testing<a class="anchor-link" href="#Testing"> </a></h2><p>To run all the tests in the notebooks in parallel, just run <code>nbdev_test_nbs</code> from the terminal! :)</p>
 
+</div>
+</div>
+</div>
 </div>
  
 

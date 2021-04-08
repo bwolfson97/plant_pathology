@@ -31,6 +31,9 @@ entries:
       title: Create Cross Validation Folds
       url: create_folds.html
     - output: web,pdf
+      title: Pretrained Models
+      url: pretrained_models.html
+    - output: web,pdf
       title: Config
       url: config.html
     output: web

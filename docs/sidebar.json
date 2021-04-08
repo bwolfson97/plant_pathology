@@ -8,6 +8,7 @@
     "Generate Pseudo Labels": "generate_pseudo_labels.html",
     "Self-Knowledge Distillation": "self_knowledge_distillation.html",
     "Create Cross Validation Folds": "create_folds.html",
+    "Pretrained Models": "pretrained_models.html",
     "Config": "config.html"
   }
 }
