@@ -6,14 +6,18 @@ __all__ = ['get_datablock', 'get_dls', 'get_dls_all_in_1']
 from fastai.vision.all import *
 from .utils import *
 from typing import *
+import pandas as pd
+
+# Cell
+def _get_y(row, df: pd.DataFrame):
+    return df.columns[row == 1][0]
 
 # Cell
 def get_datablock(path: Path, df: pd.DataFrame, presize: int,
                   resize: int, val_fold: int=4) -> DataBlock:
-    def get_y(row): return df.columns[row==1][0]
     return DataBlock(blocks=(ImageBlock, CategoryBlock),
                 get_x=ColReader("image_id", pref=path/'images', suff=".jpg"),
-                get_y=get_y,
+                get_y=partial(_get_y, df=df),
                 splitter=MaskSplitter(df["fold"]==val_fold),
                 item_tfms=Resize(presize),
                 batch_tfms=aug_transforms(mult=1.5, max_rotate=22.5, min_zoom=0.9,
