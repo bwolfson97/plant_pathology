@@ -35,5 +35,5 @@ def format_submission(preds: Tensor, save_path: Union[Path, str]) -> Path:
 # Cell
 def evaluate(learn: Learner, path: Path, name: str = "submission.csv", tta: bool=False) -> Path:
     """Evaluates `learn` on test CSV at `path` and saves as `name`, optionally applying TTA."""
-    preds = infer_on_test_set(learn, pathtta=tta)
+    preds = infer_on_test_set(learn, path=path, tta=tta)
     return format_submission(preds, name)
