@@ -9,7 +9,7 @@ from fastcore.test import ExceptionExpected
 
 # Cell
 MODELS = {
-    "resnet18_2021-04-07": "GitHub Release URL to pkl file"
+    "resnet18_2021-04-07": "https://github.com/bwolfson97/plant_pathology/releases/download/v0.1-alpha/export.tar.gz"
 }
 
 # Cell
@@ -20,5 +20,5 @@ def get_model(model_name: str):
     except KeyError:
         raise KeyError("Invalid model name. No such pretrained model exists.")
 
-    pickle_file = untar_data(url, fname=model_name)
+    pickle_file = untar_data(url)
     return load_learner(pickle_file)
