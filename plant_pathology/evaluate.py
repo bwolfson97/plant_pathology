@@ -3,30 +3,33 @@
 __all__ = ['infer_on_test_set', 'format_submission', 'evaluate']
 
 # Cell
+from .config import DATA_PATH
 from fastai.vision.all import *
 from typing import *
 
 # Cell
-def infer_on_test_set(learn: Learner, tta: bool=False, path_test: Path=Path("/home/brandon/projects/plant_pathology/data/test.csv")) -> Tensor:
-    df_test = pd.read_csv(path_test)
+def infer_on_test_set(
+    learn: Learner, path: Path = DATA_PATH/"test.csv", tta: bool=False, **kwargs
+) -> Tensor:
+    """Infers on test CSV at `path` using `learn`, optionally performing TTA."""
+    df_test = pd.read_csv(path)
     test_dl = learn.dls.test_dl(df_test)
-    preds, _ = (learn.tta if tta else learn.get_preds)(dl=test_dl)
+    preds, _ = (learn.tta if tta else learn.get_preds)(dl=test_dl, **kwargs)
     return preds
 
 # Cell
-def format_submission(preds: Tensor, save_path: Union[Path, str], path_data: Path=Path("/home/brandon/projects/plant_pathology/data")) -> Path:
-    submission = pd.read_csv(path_data/"sample_submission.csv")
-
-    # Update cols with preds
-    submission["healthy"] = preds[:, 0]
-    submission["multiple_diseases"] = preds[:, 1]
-    submission["rust"] = preds[:, 2]
-    submission["scab"] = preds[:, 3]
+def format_submission(preds: Tensor, save_path: Union[Path, str]) -> Path:
+    # Build submission CSV
+    image_filenames = [f"Test_{i}" for i in range(len(preds))]
+    column_names = ["healthy", "multiple_diseaes", "rust", "scab"]
+    submission = pd.DataFrame(preds, index=image_filenames, columns=column_names)
 
     # Make parent dirs
     save_path = Path(save_path)
     Path(save_path.parent).mkdir(parents=True, exist_ok=True)
-    submission.to_csv(save_path, index=False)
+
+    # Save submission
+    submission.to_csv(save_path)
     return save_path
 
 # Cell
