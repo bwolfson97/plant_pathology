@@ -9,7 +9,7 @@ from fastcore.test import ExceptionExpected
 
 # Cell
 MODELS = {
-    "resnet18_2021-04-07": "https://github.com/bwolfson97/plant_pathology/releases/download/v0.1-alpha/export.tar.gz"
+    "resnet18_2021-04-08": "https://github.com/bwolfson97/plant_pathology/releases/download/v0.1.1-alpha/resnet18_2021-04-08.tar.gz"
 }
 
 # Cell
