@@ -18,20 +18,47 @@ I built this model using [Nbdev](https://nbdev.fast.ai/), which provides an [lit
 ```python
 from plant_pathology.pretrained_models import get_model
 
-model = get_model("resnet18_2021-04-07")
+model = get_model("resnet18_2021-04-08")
 prediction = model.predict("images/leaf.jpg")
 prediction
 ```
 
 
+    ---------------------------------------------------------------------------
+
+    KeyError                                  Traceback (most recent call last)
+
+    ~/kaggle/plant_pathology/plant_pathology/pretrained_models.py in get_model(model_name)
+         18     try:
+    ---> 19         url = MODELS[model_name]
+         20     except KeyError:
 
 
+    KeyError: 'resnet18_2021-04-08'
+
+    
+    During handling of the above exception, another exception occurred:
 
 
+    KeyError                                  Traceback (most recent call last)
+
+    <ipython-input-3-536b66509ee9> in <module>
+          1 from plant_pathology.pretrained_models import get_model
+          2 
+    ----> 3 model = get_model("resnet18_2021-04-08")
+          4 prediction = model.predict("images/leaf.jpg")
+          5 prediction
 
 
-    ('healthy', tensor(0), tensor([0.3196, 0.3038, 0.1818, 0.1948]))
+    ~/kaggle/plant_pathology/plant_pathology/pretrained_models.py in get_model(model_name)
+         19         url = MODELS[model_name]
+         20     except KeyError:
+    ---> 21         raise KeyError("Invalid model name. No such pretrained model exists.")
+         22 
+         23     pickle_file = untar_data(url)
 
+
+    KeyError: 'Invalid model name. No such pretrained model exists.'
 
 
 ### Training
