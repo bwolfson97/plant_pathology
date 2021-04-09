@@ -18,7 +18,7 @@ def get_model(model_name: str):
     try:
         url = MODELS[model_name]
     except KeyError:
-        raise KeyError("Invalid model name. No such pretrained model exists.")
+        raise KeyError(f"Invalid model name. Received: {model_name}")
 
     pickle_file = untar_data(url)
     return load_learner(pickle_file)
