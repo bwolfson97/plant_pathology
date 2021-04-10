@@ -15,7 +15,7 @@ I built this model using [Nbdev](https://nbdev.fast.ai/), which provides an [lit
 
 ### Inference example
 
-```
+```python
 from plant_pathology.pretrained_models import get_model
 
 model = get_model("resnet18_2021-04-08")
@@ -43,18 +43,19 @@ prediction
 ### Run training script
 
 ```
-python -m plant_pathology.train -h
-usage: train.py [-h] [--frz FRZ] [--pre PRE] [--re RE] [--bs BS] [--smooth] [--arch ARCH] [--dump] [--log] [--save] [--mixup MIXUP] [--tta] [--fp16] [--eval_dir EVAL_DIR] [--val_fold VAL_FOLD] [--pseudo PSEUDO] path epochs lr
+❯ python -m plant_pathology.train -h
+usage: train.py [-h] [--epochs EPOCHS] [--lr LR] [--frz FRZ] [--pre PRE [PRE ...]] [--re RE] [--bs BS] [--smooth] [--arch ARCH] [--dump] [--log] [--save] [--mixup MIXUP] [--tta] [--fp16] [--do_eval] [--val_fold VAL_FOLD] [--pseudo PSEUDO] [--export]
+                path
 
 positional arguments:
   path                 Path to data dir
-  epochs               Number of unfrozen epochs
-  lr                   Initial learning rate
 
 optional arguments:
   -h, --help           show this help message and exit
+  --epochs EPOCHS      Number of unfrozen epochs (default: 1)
+  --lr LR              Initial learning rate (default: 0.0003)
   --frz FRZ            Number of frozen epochs (default: 1)
-  --pre PRE            Image presize (default: (682, 1024))
+  --pre PRE [PRE ...]  Image presize (default: (682, 1024))
   --re RE              Image resize (default: 256)
   --bs BS              Batch size (default: 256)
   --smooth             Label smoothing? (default: False)
@@ -65,9 +66,10 @@ optional arguments:
   --mixup MIXUP        Mixup (0.4 is good) (default: 0.0)
   --tta                Test-time augmentation (default: False)
   --fp16               Mixed-precision training (default: False)
-  --eval_dir EVAL_DIR  Evaluate model and save results in dir
+  --do_eval            Evaluate model and save predictions CSV (default: False)
   --val_fold VAL_FOLD  Don't go cross-validation, just do 1 fold (or pass 9 to train on all data)
   --pseudo PSEUDO      Path to pseudo labels to train on
+  --export             Export learner(s) to export_val_on_{fold}.pkl (default: False)
 ```
 
 ## Testing
