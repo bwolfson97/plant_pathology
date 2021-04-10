@@ -10,9 +10,9 @@ from .utils import get_averaged_preds
 # Cell
 @call_parse
 def generate_pseudo_labels(
-    path:   Param("Directory of prediction CSVs to average", Path)=".",
-    name:   Param("File name to save as", str)="pseudo_labels.csv",
-    thresh: Param("Min probabilty for pseudo label", float)=0.95,
+    path:   Param("Directory of prediction CSVs to average", Path) = ".",
+    name:   Param("File name to save as", str) = "pseudo_labels.csv",
+    thresh: Param("Min probabilty for pseudo label", float) = 0.95,
 ) -> Path:
     """Generates pseudo labels and saves in path dir."""
     avg_preds_df = get_averaged_preds(path)
@@ -25,5 +25,5 @@ def generate_pseudo_labels(
     # Only keep predictions model was highly confident on
     pseudo_labels = avg_preds_df[high_confidence_preds_mask.any(axis=1)]
 
-    pseudo_labels.to_csv(path/name)
-    return path/name
+    pseudo_labels.to_csv(path / name)
+    return path / name

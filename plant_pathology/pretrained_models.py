@@ -13,7 +13,10 @@ MODELS = {
 
 # Cell
 def get_model(model_name: str):
-    """Downloads and builds pretrained model."""
+    """Downloads and builds pretrained model.
+
+    `model_name` must be in `MODELS` dict.
+    """
     try:
         url = MODELS[model_name]
     except KeyError:

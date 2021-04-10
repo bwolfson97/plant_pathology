@@ -67,7 +67,7 @@ nb_path: "nbks/00_utils.ipynb"
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="load_data" class="doc_header"><code>load_data</code><a href="https://github.com/bwolfson97/plant_pathology/tree/master/plant_pathology/utils.py#L13" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>load_data</code>(<strong><code>data_path</code></strong>:<code>Path</code>, <strong><code>with_folds</code></strong>:<code>bool</code>=<em><code>False</code></em>, <strong><code>pseudo_labels_path</code></strong>:<code>str</code>=<em><code>None</code></em>)</p>
+<h4 id="load_data" class="doc_header"><code>load_data</code><a href="https://github.com/bwolfson97/plant_pathology/tree/master/plant_pathology/utils.py#L12" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>load_data</code>(<strong><code>data_path</code></strong>:<code>Path</code>, <strong><code>with_folds</code></strong>:<code>bool</code>=<em><code>False</code></em>, <strong><code>pseudo_labels_path</code></strong>:<code>str</code>=<em><code>None</code></em>)</p>
 </blockquote>
 <p>Load data (with/without cross-validation folds) into DataFrame.</p>
 
@@ -191,82 +191,6 @@ nb_path: "nbks/00_utils.ipynb"
 
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Print-Command-to-Submit-to-Kaggle">Print Command to Submit to Kaggle<a class="anchor-link" href="#Print-Command-to-Submit-to-Kaggle"> </a></h2>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p>This prints the kaggle submission command so you don't have to remember it.</p>
-
-</div>
-</div>
-</div>
-    {% raw %}
-    
-<div class="cell border-box-sizing code_cell rendered">
-
-<div class="output_wrapper">
-<div class="output">
-
-<div class="output_area">
-
-
-<div class="output_markdown rendered_html output_subarea ">
-<h4 id="kaggle_submit_command" class="doc_header"><code>kaggle_submit_command</code><a href="https://github.com/bwolfson97/plant_pathology/tree/master/plant_pathology/utils.py#L22" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>kaggle_submit_command</code>()</p>
-</blockquote>
-<p>Print terminal command to submit submission file.</p>
-
-</div>
-
-</div>
-
-</div>
-</div>
-
-</div>
-    {% endraw %}
-
-    {% raw %}
-    
-<div class="cell border-box-sizing code_cell rendered">
-
-</div>
-    {% endraw %}
-
-    {% raw %}
-    
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">kaggle_submit_command</span><span class="p">()</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-<div class="output_area">
-
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>kaggle competitions submit -c plant-pathology-2020-fgvc7 -f {submission_path} -m &#39;message&#39;
-</pre>
-</div>
-</div>
-
-</div>
-</div>
-
-</div>
-    {% endraw %}
-
-<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
 <h2 id="Average-Predictions">Average Predictions<a class="anchor-link" href="#Average-Predictions"> </a></h2>
 </div>
 </div>
@@ -282,7 +206,7 @@ nb_path: "nbks/00_utils.ipynb"
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="average_preds" class="doc_header"><code>average_preds</code><a href="https://github.com/bwolfson97/plant_pathology/tree/master/plant_pathology/utils.py#L27" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>average_preds</code>(<strong><code>dfs</code></strong>:<code>List</code>[<code>DataFrame</code>])</p>
+<h4 id="average_preds" class="doc_header"><code>average_preds</code><a href="https://github.com/bwolfson97/plant_pathology/tree/master/plant_pathology/utils.py#L29" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>average_preds</code>(<strong><code>dfs</code></strong>:<code>List</code>[<code>DataFrame</code>])</p>
 </blockquote>
 <p>Average predictions on test examples across prediction DataFrames in <code>dfs</code>.</p>
 
@@ -586,7 +510,7 @@ nb_path: "nbks/00_utils.ipynb"
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="get_averaged_preds" class="doc_header"><code>get_averaged_preds</code><a href="https://github.com/bwolfson97/plant_pathology/tree/master/plant_pathology/utils.py#L34" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>get_averaged_preds</code>(<strong><code>path</code></strong>:<code>Path</code>, <strong><code>verbose</code></strong>:<code>bool</code>=<em><code>False</code></em>)</p>
+<h4 id="get_averaged_preds" class="doc_header"><code>get_averaged_preds</code><a href="https://github.com/bwolfson97/plant_pathology/tree/master/plant_pathology/utils.py#L36" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>get_averaged_preds</code>(<strong><code>path</code></strong>:<code>Path</code>, <strong><code>verbose</code></strong>:<code>bool</code>=<em><code>False</code></em>)</p>
 </blockquote>
 <p>Returns DataFrame of averaged of averaged predictions of prediction CSVs in <code>path</code> dir.</p>
 
