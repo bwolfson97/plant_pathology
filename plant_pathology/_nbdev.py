@@ -28,7 +28,6 @@ modules = ["utils.py",
            "evaluate.py",
            "train.py",
            "generate_pseudo_labels.py",
-           "self_knowledge_distillation.py",
            "create_folds.py",
            "pretrained_models.py",
            "config.py"]

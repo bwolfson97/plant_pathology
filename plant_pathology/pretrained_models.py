@@ -5,7 +5,6 @@ __all__ = ['MODELS', 'get_model']
 # Cell
 from fastai.data.external import untar_data
 from fastai.learner import load_learner
-from fastcore.test import ExceptionExpected
 
 # Cell
 MODELS = {

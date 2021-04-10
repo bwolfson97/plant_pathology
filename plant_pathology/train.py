@@ -3,20 +3,20 @@
 __all__ = ['timm_or_fastai_arch', 'train', 'softmax_RocAuc', 'train_cv']
 
 # Cell
-from .dataset import *
-from .evaluate import *
-
-from fastai.vision.all import *
-from fastcore.script import *
-from fastai.callback.wandb import *
-from wwf.vision.timm import *
-import timm
-import wandb
-from typing import *
 from sys import exit
+from typing import Any, Callable, Tuple, Union
+
+import numpy as np
+import wandb
+from fastai.callback.wandb import WandbCallback, wandb
+from fastai.vision.all import *
+from wwf.vision.timm import timm_learner
+
+from .dataset import get_dls_all_in_1
+from .evaluate import evaluate
 
 # Cell
-def timm_or_fastai_arch(arch: str) -> (Union[Any, str], Callable[..., Learner]):
+def timm_or_fastai_arch(arch: str) -> Tuple[Union[Any, str], Callable[..., Learner]]:
     try:  # Check if fastai arch
         model = globals()[arch]
         learner_func = cnn_learner
@@ -85,7 +85,7 @@ def train_cv(
     mixup:    Param("Mixup (0.4 is good)", float)=0.0,
     tta:      Param("Test-time augmentation", store_true)=False,
     fp16:     Param("Mixed-precision training", store_true)=False,
-    do_eval: Param("Evaluate model and save predictions CSV", store_true)=False,
+    do_eval:  Param("Evaluate model and save predictions CSV", store_true)=False,
     val_fold: Param("Don't go cross-validation, just do 1 fold (or pass 9 "
                     "to train on all data)", int)=None,
     pseudo:   Param("Path to pseudo labels to train on", Path)=None,

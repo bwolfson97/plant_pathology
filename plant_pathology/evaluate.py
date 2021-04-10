@@ -3,9 +3,10 @@
 __all__ = ['infer_on_test_set', 'format_submission', 'evaluate']
 
 # Cell
-from .config import TEST_DATA_PATH
-from fastai.vision.all import *
-from typing import *
+from typing import Union
+
+import pandas as pd
+from fastai.vision.all import Learner, Path, Tensor
 
 # Cell
 def infer_on_test_set(

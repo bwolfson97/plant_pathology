@@ -3,10 +3,9 @@
 __all__ = ['generate_pseudo_labels']
 
 # Cell
-from fastcore.all import *
-import pandas as pd
-import numpy as np
-from .utils import *
+from fastcore.all import Param, Path, call_parse
+
+from .utils import get_averaged_preds
 
 # Cell
 @call_parse

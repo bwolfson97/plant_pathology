@@ -3,10 +3,10 @@
 __all__ = ['load_data', 'kaggle_submit_command', 'average_preds', 'get_averaged_preds']
 
 # Cell
-from fastcore.all import *
-from typing import Tuple, List
+from typing import List, Tuple
+
 import pandas as pd
-from sklearn.model_selection import StratifiedKFold
+from fastcore.all import Path
 
 # Cell
 def load_data(data_path: Path, with_folds: bool = False, pseudo_labels_path: str = None) -> Tuple[Path, pd.DataFrame]:
