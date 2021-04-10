@@ -3,34 +3,78 @@
 __all__ = ['get_datablock', 'get_dls', 'get_dls_all_in_1']
 
 # Cell
-from fastai.vision.all import *
-from .utils import *
-from typing import *
+from typing import Union
+
 import pandas as pd
+from fastai.vision.all import (CategoryBlock, ColReader, DataBlock,
+                               DataLoaders, ImageBlock, MaskSplitter, Path,
+                               Resize, aug_transforms, delegates, partial)
+
+from .utils import load_data
 
 # Cell
 def _get_y(row, df: pd.DataFrame):
+    """Returns label of DataFrame row."""
     return df.columns[row == 1][0]
 
 # Cell
-def get_datablock(path: Path, df: pd.DataFrame, presize: int,
-                  resize: int, val_fold: int=4) -> DataBlock:
-    return DataBlock(blocks=(ImageBlock, CategoryBlock),
-                get_x=ColReader("image_id", pref=path/'images', suff=".jpg"),
-                get_y=partial(_get_y, df=df),
-                splitter=MaskSplitter(df["fold"]==val_fold),
-                item_tfms=Resize(presize),
-                batch_tfms=aug_transforms(mult=1.5, max_rotate=22.5, min_zoom=0.9,
-                                         size=resize, min_scale=0.5, flip_vert=True,
-                                         max_zoom=1.2))
+def get_datablock(
+    path: Path, df: pd.DataFrame, presize: int, resize: int, val_fold: int = 4,
+) -> DataBlock:
+    """Build DataBlock from `df` where images are in `path`/images.
+
+    Args:
+        path:     Path to data dir containing 'images' subdir
+        df:       DataFrame created from train CSV with folds
+        presize:  Size to presize images too before augmentation
+        resize:   Size of images after augmentation
+        val_fold: Fold to use for validation set
+    """
+    return DataBlock(
+        blocks=(ImageBlock, CategoryBlock),
+        get_x=ColReader("image_id", pref=path/'images', suff=".jpg"),
+        get_y=partial(_get_y, df=df),
+        splitter=MaskSplitter(df["fold"] == val_fold),
+        item_tfms=Resize(presize),
+        batch_tfms=aug_transforms(
+            mult=1.5, max_rotate=22.5, min_zoom=0.9, size=resize,
+            min_scale=0.5, flip_vert=True, max_zoom=1.2,
+        )
+    )
 
 # Cell
-def get_dls(path: Path, df: pd.DataFrame, presize: Union[tuple, int]=(682, 1024),
-            resize: int=256, bs: int=256, val_fold: int=4) -> DataLoaders:
+def get_dls(
+    path: Path,
+    df: pd.DataFrame,
+    presize: Union[tuple, int] = (682, 1024),
+    resize: int = 256,
+    val_fold: int = 4,
+    bs: int = 256,
+) -> DataLoaders:
+    """Get DataLoaders from `df` and `path`.
+
+    Args:
+        path:     Path to data dir containing 'images' subdir
+        df:       DataFrame created from train CSV with folds
+        presize:  Size to presize images too before augmentation
+        resize:   Size of images after augmentation
+        val_fold: Fold to use for validation set
+        bs:       Batch size
+    """
     return get_datablock(path, df, presize, resize, val_fold).dataloaders(df, bs=bs)
 
 # Cell
 @delegates(get_dls)
 def get_dls_all_in_1(data_path: Path, pseudo_labels_path: str=None, **kwargs) -> DataLoaders:
+    """Get DataLoaders built from train CSV at `data_path`, optionally with pseudo-labels added.
+
+    Args:
+        data_path:          Path to data directory
+        pseudo_labels_path: Path to CSV containing pseudo-labels
+        presize:            Size to presize images too before augmentation
+        resize:             Size of images after augmentation
+        val_fold:           Fold to use for validation set
+        bs:                 Batch size
+    """
     path, df = load_data(data_path, with_folds=True, pseudo_labels_path=pseudo_labels_path)
     return get_dls(path, df, **kwargs)

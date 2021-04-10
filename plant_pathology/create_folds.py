@@ -4,17 +4,17 @@ __all__ = ['create_folds']
 
 # Cell
 from pathlib import Path
+
 import pandas as pd
+from fastcore.script import Param, bool_arg, call_parse, store_true
 from sklearn.model_selection import StratifiedKFold
-from fastcore.script import call_parse, Param
-from fastcore.script import store_true, bool_arg
 
 # Cell
 @call_parse
 def create_folds(
     path:        Param("Path to train CSV", Path),
     print_stats: Param("Print class distributions across folds?", store_true),
-    save: Param("Save CSV with added folds", bool_arg)=True,
+    save: Param("Save CSV with added folds", bool_arg) = True,
 ) -> pd.DataFrame:
     """Saves train CSV at `path` with 5-fold CV splits added.
 
@@ -27,7 +27,7 @@ def create_folds(
     df = df.sample(frac=1.0, random_state=42).reset_index(drop=True)
 
     # Get class labels to stratify on
-    lbls = df.apply(lambda r: df.columns[r==1].item(), axis=1)
+    lbls = df.apply(lambda r: df.columns[r == 1].item(), axis=1)
 
     # Create 5 folds
     kf = StratifiedKFold(n_splits=5)
@@ -43,7 +43,7 @@ def create_folds(
         print(stats_df.iloc[:, stats_df.columns.get_level_values(1) == "mean"])
 
     if save:
-        save_path = path.parent/"train_folds.csv"
+        save_path = path.parent / "train_folds.csv"
         df.to_csv(save_path, index=False)
         print(f"Saved to {save_path}")
 

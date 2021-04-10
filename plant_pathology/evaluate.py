@@ -3,13 +3,17 @@
 __all__ = ['infer_on_test_set', 'format_submission', 'evaluate']
 
 # Cell
-from .config import TEST_DATA_PATH
-from fastai.vision.all import *
-from typing import *
+from typing import Union
+
+import pandas as pd
+from fastai.vision.all import Learner, Path, Tensor
 
 # Cell
 def infer_on_test_set(
-    learn: Learner, path: Path, tta: bool = False, bs: int = 64,
+    learn: Learner,
+    path: Path,
+    tta: bool = False,
+    bs: int = 64,
 ) -> Tensor:
     """Infers on test CSV at `path` using `learn`, optionally performing TTA."""
     df_test = pd.read_csv(path)
@@ -19,6 +23,7 @@ def infer_on_test_set(
 
 # Cell
 def format_submission(preds: Tensor, save_path: Union[Path, str]) -> Path:
+    """Formats raw `preds` into submission CSV, saving at `save_path`."""
     # Build submission CSV
     image_filenames = [f"Test_{i}" for i in range(len(preds))]
     column_names = ["healthy", "multiple_diseaes", "rust", "scab"]
@@ -33,7 +38,9 @@ def format_submission(preds: Tensor, save_path: Union[Path, str]) -> Path:
     return save_path
 
 # Cell
-def evaluate(learn: Learner, path: Path, name: str = "submission.csv", tta: bool=False) -> Path:
+def evaluate(
+    learn: Learner, path: Path, name: str = "submission.csv", tta: bool = False
+) -> Path:
     """Evaluates `learn` on test CSV at `path` and saves as `name`, optionally applying TTA."""
     preds = infer_on_test_set(learn, path=path, tta=tta)
     return format_submission(preds, name)

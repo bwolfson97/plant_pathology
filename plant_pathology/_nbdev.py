@@ -3,7 +3,6 @@
 __all__ = ["index", "modules", "custom_doc_links", "git_url"]
 
 index = {"load_data": "00_utils.ipynb",
-         "kaggle_submit_command": "00_utils.ipynb",
          "average_preds": "00_utils.ipynb",
          "get_averaged_preds": "00_utils.ipynb",
          "get_datablock": "01_dataset.ipynb",
@@ -28,7 +27,6 @@ modules = ["utils.py",
            "evaluate.py",
            "train.py",
            "generate_pseudo_labels.py",
-           "self_knowledge_distillation.py",
            "create_folds.py",
            "pretrained_models.py",
            "config.py"]

@@ -3,20 +3,21 @@
 __all__ = ['timm_or_fastai_arch', 'train', 'softmax_RocAuc', 'train_cv']
 
 # Cell
-from .dataset import *
-from .evaluate import *
-
-from fastai.vision.all import *
-from fastcore.script import *
-from fastai.callback.wandb import *
-from wwf.vision.timm import *
-import timm
-import wandb
-from typing import *
 from sys import exit
+from typing import Callable, Tuple, Union
+
+import numpy as np
+import wandb
+from fastai.callback.wandb import WandbCallback, wandb
+from fastai.vision.all import *
+from wwf.vision.timm import timm_learner
+
+from .dataset import get_dls_all_in_1
+from .evaluate import evaluate
 
 # Cell
-def timm_or_fastai_arch(arch: str) -> (Union[Any, str], Callable[..., Learner]):
+def timm_or_fastai_arch(arch: str) -> Tuple[Union[Callable, str], Callable]:
+    """Check if `arch` is a fast.ai or timm architecture and return appropriate functions."""
     try:  # Check if fastai arch
         model = globals()[arch]
         learner_func = cnn_learner
@@ -27,43 +28,91 @@ def timm_or_fastai_arch(arch: str) -> (Union[Any, str], Callable[..., Learner]):
 
 # Cell
 def train(
-    data_path: Path, epochs: int = 1, lr: Union[float, str] = 3e-4, frz: int=1, pre: int=800, re: int=256,
-    bs: int=200, fold: int=4, smooth: bool=False,
-    arch: str='resnet18', dump: bool=False, log: bool=False, mixup: float=0.,
-    fp16: bool=False, dls: DataLoaders=None, save: bool=False, pseudo: Path=None,
- ) -> Learner:
-    # Prep Data, Opt, Loss, Arch
+    data_path: Path,
+    epochs: int = 1,
+    lr: Union[float, str] = 3e-4,
+    frz: int = 1,
+    pre: int = 800,
+    re: int = 256,
+    bs: int = 200,
+    fold: int = 4,
+    smooth: bool = False,
+    arch: str = "resnet18",
+    dump: bool = False,
+    log: bool = False,
+    mixup: float = 0.0,
+    fp16: bool = False,
+    dls: DataLoaders = None,
+    save: bool = False,
+    pseudo: Path = None,
+) -> Learner:
+    """"Train a learner on training CSV (w/folds) at `data_path`."""
+    # Build DataLoaders
     if dls is None:
         dls = get_dls_all_in_1(
-            data_path=data_path, presize=pre, resize=re, bs=bs, val_fold=fold, pseudo_labels_path=pseudo
+            data_path=data_path,
+            presize=pre,
+            resize=re,
+            bs=bs,
+            val_fold=fold,
+            pseudo_labels_path=pseudo,
         )
-    if log: wandb.init(project="plant-pathology")
-    if smooth: loss_func = LabelSmoothingCrossEntropyFlat()
-    else:      loss_func = CrossEntropyLossFlat()
+
+    # Initialize wandb logging
+    if log:
+        wandb.init(project="plant-pathology")
+
+    # Get correct loss, depending on if using label smoothing
+    if smooth:
+        loss_func = LabelSmoothingCrossEntropyFlat()
+    else:
+        loss_func = CrossEntropyLossFlat()
+
+    # Get model and learner_func
     m, learner_func = timm_or_fastai_arch(arch)
 
-    # Add callbacks
-    cbs = [SaveModelCallback("roc_auc_score", fname=f"model_val_on_{fold}")] if save or log else []
-    if log: cbs.append(WandbCallback())
-    if mixup: cbs.append(MixUp(mixup))
+    # Build callbacks
+    cbs = []
+    if save or log:
+        cbs.append(SaveModelCallback("roc_auc_score", fname=f"model_val_on_{fold}"))
+    if log:
+        cbs.append(WandbCallback())
+    if mixup:
+        cbs.append(MixUp(mixup))
 
     # Build learner
     print(f"# train exs: {len(dls.train_ds)}, val exs: {len(dls.valid_ds)}")
-    learn = learner_func(dls, m, loss_func=loss_func,
-                    metrics=[accuracy, RocAuc()], cbs=cbs)
-    if dump: print(learn.model); exit()
-    if lr=="find": learn.lr_find(); exit()
-    if fp16: learn.to_fp16()
+    learn = learner_func(
+        dls, m, loss_func=loss_func, metrics=[accuracy, RocAuc()], cbs=cbs
+    )
 
-    # Train
+    # If we just want to print architecture, do that and exit
+    if dump:
+        print(learn.model)
+        exit()
+
+    # If we are just running learning rate finder, do that and exit
+    if lr == "find":
+        learn.lr_find()
+        exit()
+
+    # Use mixed-precision training if desired
+    if fp16:
+        learn.to_fp16()
+
+    # Train only head at first
     learn.freeze()
     learn.fit_one_cycle(frz, lr)
+
+    # Train all layers, using discriminative learning rate
     learn.unfreeze()
-    learn.fit_one_cycle(epochs, slice(lr/100, lr/2))  # Explore other divs
+    learn.fit_one_cycle(epochs, slice(lr / 100, lr / 2))
+
     return learn
 
 # Cell
 def softmax_RocAuc(logits, labels):
+    """Compute RocAuc, first taking softmax of `logits`."""
     probs = logits.softmax(-1)
     return RocAuc()(probs, labels)
 
@@ -71,50 +120,92 @@ def softmax_RocAuc(logits, labels):
 @call_parse
 def train_cv(
     path:     Param("Path to data dir", Path),
-    epochs:   Param("Number of unfrozen epochs", int)=1,
-    lr:       Param("Initial learning rate", float)=3e-4,
-    frz:      Param("Number of frozen epochs", int)=1,
-    pre:      Param("Image presize", int, nargs="+")=(682, 1024),
-    re:       Param("Image resize", int)=256,
-    bs:       Param("Batch size", int)=256,
-    smooth:   Param("Label smoothing?", store_true)=False,
-    arch:     Param("Architecture", str)='resnet18',
-    dump:     Param("Don't train, just print model", store_true)=False,
-    log:      Param("Log w/ W&B", store_true)=False,
-    save:     Param("Save model based on RocAuc", store_true)=False,
-    mixup:    Param("Mixup (0.4 is good)", float)=0.0,
-    tta:      Param("Test-time augmentation", store_true)=False,
-    fp16:     Param("Mixed-precision training", store_true)=False,
-    do_eval: Param("Evaluate model and save predictions CSV", store_true)=False,
-    val_fold: Param("Don't go cross-validation, just do 1 fold (or pass 9 "
-                    "to train on all data)", int)=None,
-    pseudo:   Param("Path to pseudo labels to train on", Path)=None,
-    export:   Param("Export learner(s) to export_val_on_{fold}.pkl", store_true)=False,
+    epochs:   Param("Number of unfrozen epochs", int) = 1,
+    lr:       Param("Initial learning rate", float) = 3e-4,
+    frz:      Param("Number of frozen epochs", int) = 1,
+    pre:      Param("Image presize", int, nargs="+") = (682, 1024),
+    re:       Param("Image resize", int) = 256,
+    bs:       Param("Batch size", int) = 256,
+    smooth:   Param("Label smoothing?", store_true) = False,
+    arch:     Param("Architecture", str) = "resnet18",
+    dump:     Param("Don't train, just print model", store_true) = False,
+    log:      Param("Log w/ W&B", store_true) = False,
+    save:     Param("Save model based on RocAuc", store_true) = False,
+    mixup:    Param("Mixup (0.4 is good)", float) = 0.0,
+    tta:      Param("Test-time augmentation", store_true) = False,
+    fp16:     Param("Mixed-precision training", store_true) = False,
+    do_eval:  Param("Evaluate model and save predictions CSV", store_true) = False,
+    val_fold: Param("Don't do cross-validation, just do 1 fold", int) = None,
+    pseudo:   Param("Path to pseudo labels to train on", Path) = None,
+    export:   Param("Export learner(s) to export_val_on_{fold}.pkl", store_true) = False,
 ):
+    """Train models using 5-fold cross-validation."""
+    # Print parameters this was called with
     print(locals())
+
+    # Do 5-fold cross-validation
     scores = []
     for fold in range(5):
-        if val_fold is not None: fold = val_fold  # Not doing CV
+        if val_fold is not None:
+            # User passed specific fold, so don't do CV. Just do single run w/val_fold.
+            fold = val_fold
+
         print(f"\nTraining on fold {fold}")
-        learn = train(data_path=path, epochs=epochs, lr=lr, frz=frz, pre=pre,
-                      re=re, bs=bs, smooth=smooth, arch=arch, dump=dump, log=log,
-                      fold=fold, mixup=mixup, fp16=fp16, save=save, pseudo=pseudo)
+        learn = train(
+            data_path=path,
+            epochs=epochs,
+            lr=lr,
+            frz=frz,
+            pre=pre,
+            re=re,
+            bs=bs,
+            smooth=smooth,
+            arch=arch,
+            dump=dump,
+            log=log,
+            fold=fold,
+            mixup=mixup,
+            fp16=fp16,
+            save=save,
+            pseudo=pseudo,
+        )
 
-        if hasattr(learn, "mixup") and tta: learn.remove_cb(MixUp)  # Bug when doing tta w/Mixup
+        # Bug when doing tta w/Mixup
+        if hasattr(learn, "mixup") and tta:
+            learn.remove_cb(MixUp)
 
-        if tta and val_fold != 9:  # There IS a valid set
+        # Add final record from this split to scores
+        if tta and len(learn.dls.valid_ds) != 0:  # There is a validation set
+            # Must get final metrics manually if using TTA
             preds, lbls = learn.tta()
             res = [f(preds, lbls) for f in [learn.loss_func, accuracy, softmax_RocAuc]]
-        else: res = learn.final_record
+        else:
+            res = learn.final_record
         scores.append(res)
 
-        # Create submission file for this model
-        if do_eval: print("Evaluating"); evaluate(learn, path=path/"test.csv", name=f"predictions_fold_{fold}.csv", tta=tta)
+        # Create submission file
+        if do_eval:
+            print("Evaluating")
+            evaluate(
+                learn,
+                path=path / "test.csv",
+                name=f"predictions_fold_{fold}.csv",
+                tta=tta,
+            )
 
-        if export: learn.export(f"export_val_on_{fold}.pkl")
+        if export:
+            learn.export(f"export_val_on_{fold}.pkl")
+
         # Delete learner to avoid OOM
         del learn
-        if val_fold is not None: break
+
+        # If only training on single fold, break
+        if val_fold is not None:
+            break
+
     scores = np.array(scores)
     print(f"Scores: {scores}\n")
-    if val_fold is None: print(f"Mean: {scores.mean(0)}")
+
+    # Print average stats across folds, if trained on multiple folds
+    if val_fold is None:
+        print(f"Mean: {scores.mean(0)}")
