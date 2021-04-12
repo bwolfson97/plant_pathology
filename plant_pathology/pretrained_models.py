@@ -3,8 +3,10 @@
 __all__ = ['MODELS', 'get_model']
 
 # Cell
+import numpy as np
 from fastai.data.external import untar_data
-from fastai.learner import load_learner
+from fastai.learner import Learner, load_learner
+from fastcore.basics import patch
 
 # Cell
 MODELS = {
@@ -24,3 +26,24 @@ def get_model(model_name: str):
 
     pickle_file = untar_data(url)
     return load_learner(pickle_file)
+
+# Cell
+@patch
+def predict_leaf(self: Learner, image, decimals: int = 2):
+    """Predict on image and return predicted class and decoded probabilities.
+
+    Rounds probabilities to `decimals` decimal places.
+    """
+    predicted_class, _, probabilities = self.predict(image)
+
+    # Round probabilities
+    probabilities = np.around(probabilities.tolist(), decimals=decimals)
+
+    # Decode probabilities using class names
+    decoded_probabilities = dict(zip(self.dls.vocab, probabilities))
+
+    # Format results
+    return {
+        "predicted_class": predicted_class,
+        "probabilities": decoded_probabilities
+    }
