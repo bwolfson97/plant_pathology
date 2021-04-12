@@ -19,6 +19,7 @@ index = {"load_data": "00_utils.ipynb",
          "create_folds": "06_create_folds.ipynb",
          "MODELS": "07_pretrained_models.ipynb",
          "get_model": "07_pretrained_models.ipynb",
+         "Learner.predict_leaf": "07_pretrained_models.ipynb",
          "DATA_PATH": "config.ipynb",
          "TEST_DATA_PATH": "config.ipynb"}
 

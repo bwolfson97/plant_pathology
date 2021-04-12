@@ -15,11 +15,11 @@ I built this model using [Nbdev](https://nbdev.fast.ai/), which provides an [lit
 
 ### Inference example
 
-```
+```python
 from plant_pathology.pretrained_models import get_model
 
 model = get_model("resnet18_2021-04-08")
-prediction = model.predict("images/leaf.jpg")
+prediction = model.predict_leaf("images/leaf.jpg")
 prediction
 ```
 
@@ -30,11 +30,11 @@ prediction
 
 
 
-
-
-
-
-    ('rust', tensor(2), tensor([0.0456, 0.0402, 0.8795, 0.0347]))
+    {'predicted_class': 'rust',
+     'probabilities': {'healthy': 0.05,
+      'multiple_diseases': 0.04,
+      'rust': 0.88,
+      'scab': 0.03}}
 
 
 
