@@ -6,7 +6,7 @@ __all__ = ['infer_on_test_set', 'format_submission', 'evaluate']
 from typing import Union
 
 import pandas as pd
-from fastai.vision.all import Learner, Path, Tensor
+from fastai.vision.all import *
 
 # Cell
 def infer_on_test_set(

@@ -60,7 +60,7 @@ nb_path: "nbks/01_dataset.ipynb"
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="get_datablock" class="doc_header"><code>get_datablock</code><a href="https://github.com/bwolfson97/plant_pathology/tree/master/plant_pathology/dataset.py#L21" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>get_datablock</code>(<strong><code>path</code></strong>:<code>Path</code>, <strong><code>df</code></strong>:<code>DataFrame</code>, <strong><code>presize</code></strong>:<code>int</code>, <strong><code>resize</code></strong>:<code>int</code>, <strong><code>val_fold</code></strong>:<code>int</code>=<em><code>4</code></em>)</p>
+<h4 id="get_datablock" class="doc_header"><code>get_datablock</code><a href="https://github.com/bwolfson97/plant_pathology/tree/master/plant_pathology/dataset.py#L19" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>get_datablock</code>(<strong><code>path</code></strong>:<code>Path</code>, <strong><code>df</code></strong>:<code>DataFrame</code>, <strong><code>presize</code></strong>:<code>int</code>, <strong><code>resize</code></strong>:<code>int</code>, <strong><code>val_fold</code></strong>:<code>int</code>=<em><code>4</code></em>)</p>
 </blockquote>
 <p>Build DataBlock from <code>df</code> where images are in <code>path</code>/images.</p>
 <p>Args:
@@ -227,7 +227,7 @@ nb_path: "nbks/01_dataset.ipynb"
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="get_dls" class="doc_header"><code>get_dls</code><a href="https://github.com/bwolfson97/plant_pathology/tree/master/plant_pathology/dataset.py#L46" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>get_dls</code>(<strong><code>path</code></strong>:<code>Path</code>, <strong><code>df</code></strong>:<code>DataFrame</code>, <strong><code>presize</code></strong>:<code>Union</code>[<code>tuple</code>, <code>int</code>]=<em><code>(682, 1024)</code></em>, <strong><code>resize</code></strong>:<code>int</code>=<em><code>256</code></em>, <strong><code>val_fold</code></strong>:<code>int</code>=<em><code>4</code></em>, <strong><code>bs</code></strong>:<code>int</code>=<em><code>256</code></em>)</p>
+<h4 id="get_dls" class="doc_header"><code>get_dls</code><a href="https://github.com/bwolfson97/plant_pathology/tree/master/plant_pathology/dataset.py#L44" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>get_dls</code>(<strong><code>path</code></strong>:<code>Path</code>, <strong><code>df</code></strong>:<code>DataFrame</code>, <strong><code>presize</code></strong>:<code>Union</code>[<code>tuple</code>, <code>int</code>]=<em><code>(682, 1024)</code></em>, <strong><code>resize</code></strong>:<code>int</code>=<em><code>256</code></em>, <strong><code>val_fold</code></strong>:<code>int</code>=<em><code>4</code></em>, <strong><code>bs</code></strong>:<code>int</code>=<em><code>256</code></em>)</p>
 </blockquote>
 <p>Get DataLoaders from <code>df</code> and <code>path</code>.</p>
 <p>Args:
@@ -308,7 +308,7 @@ nb_path: "nbks/01_dataset.ipynb"
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="get_dls_all_in_1" class="doc_header"><code>get_dls_all_in_1</code><a href="https://github.com/bwolfson97/plant_pathology/tree/master/plant_pathology/dataset.py#L67" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>get_dls_all_in_1</code>(<strong><code>data_path</code></strong>:<code>Path</code>, <strong><code>pseudo_labels_path</code></strong>:<code>str</code>=<em><code>None</code></em>, <strong><code>presize</code></strong>:<code>Union</code>[<code>tuple</code>, <code>int</code>]=<em><code>(682, 1024)</code></em>, <strong><code>resize</code></strong>:<code>int</code>=<em><code>256</code></em>, <strong><code>val_fold</code></strong>:<code>int</code>=<em><code>4</code></em>, <strong><code>bs</code></strong>:<code>int</code>=<em><code>256</code></em>)</p>
+<h4 id="get_dls_all_in_1" class="doc_header"><code>get_dls_all_in_1</code><a href="https://github.com/bwolfson97/plant_pathology/tree/master/plant_pathology/dataset.py#L65" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>get_dls_all_in_1</code>(<strong><code>data_path</code></strong>:<code>Path</code>, <strong><code>pseudo_labels_path</code></strong>:<code>str</code>=<em><code>None</code></em>, <strong><code>presize</code></strong>:<code>Union</code>[<code>tuple</code>, <code>int</code>]=<em><code>(682, 1024)</code></em>, <strong><code>resize</code></strong>:<code>int</code>=<em><code>256</code></em>, <strong><code>val_fold</code></strong>:<code>int</code>=<em><code>4</code></em>, <strong><code>bs</code></strong>:<code>int</code>=<em><code>256</code></em>)</p>
 </blockquote>
 <p>Get DataLoaders built from train CSV at <code>data_path</code>, optionally with pseudo-labels added.</p>
 <p>Args:
