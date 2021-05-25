@@ -15,7 +15,7 @@ I built this model using [Nbdev](https://nbdev.fast.ai/), which provides an [lit
 
 ### Inference example
 
-```
+```python
 from plant_pathology.pretrained_models import get_model
 
 model = get_model("resnet18_2021-04-08")
