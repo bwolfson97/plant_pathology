@@ -14,7 +14,7 @@ from sklearn.model_selection import StratifiedKFold
 def create_folds(
     path:        Param("Path to train CSV", Path),
     print_stats: Param("Print class distributions across folds?", store_true),
-    save: Param("Save CSV with added folds", bool_arg) = True,
+    save:        Param("Save CSV with added folds", bool_arg) = True,
 ) -> pd.DataFrame:
     """Saves train CSV at `path` with 5-fold CV splits added.
 
