@@ -6,7 +6,7 @@ __all__ = ['load_data', 'average_preds', 'get_averaged_preds']
 from typing import List, Tuple
 
 import pandas as pd
-from fastcore.all import Path
+from fastcore.all import *
 
 # Cell
 def load_data(

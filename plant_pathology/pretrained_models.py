@@ -4,9 +4,7 @@ __all__ = ['MODELS', 'get_model']
 
 # Cell
 import numpy as np
-from fastai.data.external import untar_data
-from fastai.learner import Learner, load_learner
-from fastcore.basics import patch
+from fastai.vision.all import *
 
 # Cell
 MODELS = {

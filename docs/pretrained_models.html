@@ -107,10 +107,9 @@ nb_path: "nbks/07_pretrained_models.ipynb"
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="get_model" class="doc_header"><code>get_model</code><a href="https://github.com/bwolfson97/plant_pathology/tree/master/plant_pathology/pretrained_models.py#L17" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>get_model</code>(<strong><code>model_name</code></strong>:<code>str</code>)</p>
+<h4 id="get_model" class="doc_header"><code>get_model</code><a href="https://github.com/fastai/fastai/tree/master/fastai/torch_core.py#L580" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>get_model</code>(<strong><code>model</code></strong>)</p>
 </blockquote>
-<p>Downloads and builds pretrained model.</p>
-<p><code>model_name</code> must be in <a href="/plant_pathology/pretrained_models.html#MODELS"><code>MODELS</code></a> dict.</p>
+<p>Return the model maybe wrapped inside <code>model</code>.</p>
 
 </div>
 
@@ -153,7 +152,7 @@ nb_path: "nbks/07_pretrained_models.ipynb"
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="Learner.predict_leaf" class="doc_header"><code>Learner.predict_leaf</code><a href="https://github.com/bwolfson97/plant_pathology/tree/master/plant_pathology/pretrained_models.py#L31" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>Learner.predict_leaf</code>(<strong><code>image</code></strong>, <strong><code>decimals</code></strong>:<code>int</code>=<em><code>2</code></em>)</p>
+<h4 id="Learner.predict_leaf" class="doc_header"><code>Learner.predict_leaf</code><a href="https://github.com/bwolfson97/plant_pathology/tree/master/plant_pathology/pretrained_models.py#L29" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>Learner.predict_leaf</code>(<strong><code>image</code></strong>, <strong><code>decimals</code></strong>:<code>int</code>=<em><code>2</code></em>)</p>
 </blockquote>
 <p>Predict on image and return predicted class and decoded probabilities.</p>
 <p>Rounds probabilities to <code>decimals</code> decimal places.</p>

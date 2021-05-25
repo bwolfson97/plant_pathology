@@ -6,7 +6,7 @@ __all__ = ['create_folds']
 from pathlib import Path
 
 import pandas as pd
-from fastcore.script import Param, bool_arg, call_parse, store_true
+from fastcore.all import *
 from sklearn.model_selection import StratifiedKFold
 
 # Cell

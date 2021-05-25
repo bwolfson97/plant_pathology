@@ -6,9 +6,7 @@ __all__ = ['get_datablock', 'get_dls', 'get_dls_all_in_1']
 from typing import Union
 
 import pandas as pd
-from fastai.vision.all import (CategoryBlock, ColReader, DataBlock,
-                               DataLoaders, ImageBlock, MaskSplitter, Path,
-                               Resize, aug_transforms, delegates, partial)
+from fastai.vision.all import *
 
 from .utils import load_data
 
